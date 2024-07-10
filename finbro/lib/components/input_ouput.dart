@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +26,14 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.screenWidth * 0.8,
-      height: widget.screenHeight * 0.1,
+      height: widget.screenHeight * 0.08,
       decoration:
           BoxDecoration(color: third, borderRadius: BorderRadius.circular(30)),
       child: Row(children: [
         // Icon
         Container(
             width: widget.screenWidth * 0.15,
-            height: widget.screenHeight * 0.1,
+            height: widget.screenHeight * 0.08,
             decoration: BoxDecoration(
                 border: Border(right: BorderSide(width: 1, color: outline)),
                 color: third,
@@ -61,6 +61,41 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
                   hintText: widget.text)),
         ))
       ]),
+    );
+  }
+}
+
+class FinBroButton extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String buttonText;
+
+  const FinBroButton(
+      {Key? key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.buttonText})
+      : super(key: key);
+
+  @override
+  State<FinBroButton> createState() => _FinBroButton();
+}
+
+class _FinBroButton extends State<FinBroButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.5,
+      height: widget.screenHeight * 0.08,
+      decoration: BoxDecoration(
+          color: primary, borderRadius: BorderRadius.circular(30)),
+      child: Center(
+          child: Text(widget.buttonText,
+              style: GoogleFonts.poppins(
+                  textStyle: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: widget.screenWidth * 0.04)))),
     );
   }
 }
