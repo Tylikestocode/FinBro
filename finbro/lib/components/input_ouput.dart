@@ -28,7 +28,7 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
       width: widget.screenWidth * 0.8,
       height: widget.screenHeight * 0.08,
       decoration:
-          BoxDecoration(color: third, borderRadius: BorderRadius.circular(30)),
+          BoxDecoration(color: third, borderRadius: BorderRadius.circular(25)),
       child: Row(children: [
         // Icon
         Container(
@@ -38,8 +38,8 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
                 border: Border(right: BorderSide(width: 1, color: outline)),
                 color: third,
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    bottomLeft: Radius.circular(30))),
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25))),
             child: Icon(
               EvaIcons.email,
               size: widget.screenWidth * 0.08,
@@ -85,10 +85,10 @@ class _FinBroButton extends State<FinBroButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.screenWidth * 0.5,
-      height: widget.screenHeight * 0.08,
+      width: widget.screenWidth * 0.45,
+      height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: primary, borderRadius: BorderRadius.circular(30)),
+          color: primary, borderRadius: BorderRadius.circular(25)),
       child: Center(
           child: Text(widget.buttonText,
               style: GoogleFonts.poppins(

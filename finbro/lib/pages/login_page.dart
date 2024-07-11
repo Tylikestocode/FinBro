@@ -22,16 +22,17 @@ class _LoginPage extends State<LoginPage> {
     return Scaffold(
       backgroundColor: secondary,
       body: Column(children: [
-        SizedBox(height: screenHeight * 0.05),
+        SizedBox(height: screenHeight * 0.1),
         // Logo
         Center(
             child: Container(
-                width: screenWidth * 0.5,
+                width: screenWidth * 0.8,
                 height: screenHeight * 0.2,
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(
                             'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\image_placeholder.png'))))),
+        SizedBox(height: screenHeight * 0.05),
         // Welcome Back Text
         Center(
             child: Text('Welcome Back',
@@ -48,6 +49,7 @@ class _LoginPage extends State<LoginPage> {
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: screenWidth * 0.04)))),
+        SizedBox(height: screenHeight * 0.05),
         // Email TextField
         Center(
           child: FinBroTextField(
@@ -55,18 +57,22 @@ class _LoginPage extends State<LoginPage> {
               screenWidth: screenWidth,
               text: 'Email'),
         ),
-        SizedBox(height: screenHeight * 0.01),
+        SizedBox(height: screenHeight * 0.035),
         // Password TextField
         Center(
             child: FinBroTextField(
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
                 text: 'Password')),
+        SizedBox(height: screenHeight * 0.05),
+
         // Continue Button
         FinBroButton(
             screenWidth: screenWidth,
             screenHeight: screenHeight,
             buttonText: 'Continue'),
+        SizedBox(height: screenHeight * 0.13),
+
         // No Account? Sign Up Text
         GestureDetector(
           onTap: () {},
@@ -87,7 +93,8 @@ class _LoginPage extends State<LoginPage> {
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth * 0.04))))
           ]),
-        )
+        ),
+        SizedBox(height: screenHeight * 0.01)
       ]),
     );
   }
