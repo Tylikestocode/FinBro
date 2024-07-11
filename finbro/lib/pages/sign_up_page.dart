@@ -5,7 +5,6 @@ import "package:finbro/pages/home_page.dart";
 import "package:finbro/pages/login_page.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 import "package:google_fonts/google_fonts.dart";
 
 class SignUpPage extends StatefulWidget {
