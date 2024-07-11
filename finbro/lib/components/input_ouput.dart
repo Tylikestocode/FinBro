@@ -2,6 +2,7 @@
 
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 
@@ -25,7 +26,7 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.screenWidth * 0.8,
+      width: widget.screenWidth * 0.85,
       height: widget.screenHeight * 0.08,
       decoration:
           BoxDecoration(color: third, borderRadius: BorderRadius.circular(25)),

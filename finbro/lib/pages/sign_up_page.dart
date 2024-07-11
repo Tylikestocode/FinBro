@@ -2,20 +2,20 @@
 
 import "package:finbro/components/input_ouput.dart";
 import "package:finbro/pages/home_page.dart";
-import "package:finbro/pages/sign_up_page.dart";
+import "package:finbro/pages/login_page.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:google_fonts/google_fonts.dart";
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPage();
+  State<SignUpPage> createState() => _SignUpPage();
 }
 
-class _LoginPage extends State<LoginPage> {
+class _SignUpPage extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -35,9 +35,9 @@ class _LoginPage extends State<LoginPage> {
                         image: AssetImage(
                             'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\image_placeholder.png'))))),
         SizedBox(height: screenHeight * 0.05),
-        // Welcome Back Text
+        // Registration Text
         Center(
-            child: Text('Welcome Back',
+            child: Text('Registration',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
                         color: Colors.white,
@@ -51,7 +51,7 @@ class _LoginPage extends State<LoginPage> {
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: screenWidth * 0.04)))),
-        SizedBox(height: screenHeight * 0.05),
+        SizedBox(height: screenHeight * 0.035),
         // Email TextField
         Center(
           child: FinBroTextField(
@@ -66,8 +66,15 @@ class _LoginPage extends State<LoginPage> {
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
                 text: 'Password')),
-        SizedBox(height: screenHeight * 0.05),
-
+        SizedBox(height: screenHeight * 0.035),
+        // Confirm Password
+        Center(
+          child: FinBroTextField(
+              screenHeight: screenHeight,
+              screenWidth: screenWidth,
+              text: 'Confirm Password'),
+        ),
+        SizedBox(height: screenHeight * 0.035),
         // Continue Button
         GestureDetector(
           onTap: () {
@@ -79,17 +86,17 @@ class _LoginPage extends State<LoginPage> {
               screenHeight: screenHeight,
               buttonText: 'Continue'),
         ),
-        SizedBox(height: screenHeight * 0.18),
+        SizedBox(height: screenHeight * 0.09),
 
         // No Account? Sign Up Text
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                context, MaterialPageRoute(builder: (context) => LoginPage()));
           },
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Center(
-                child: Text('No Account?',
+                child: Text('Got an Account?',
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             color: Colors.white,
@@ -97,7 +104,7 @@ class _LoginPage extends State<LoginPage> {
                             fontSize: screenWidth * 0.04)))),
             SizedBox(width: screenWidth * 0.01),
             Center(
-                child: Text('Sign Up',
+                child: Text('Login In',
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             color: primary,
