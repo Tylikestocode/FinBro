@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import "package:finbro/components/navigation.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
 
@@ -22,10 +21,7 @@ class _HomePage extends State<HomePage> {
         height: screenHeight,
         decoration: BoxDecoration(color: secondary),
         child: Column(
-          children: [
-            SizedBox(height: screenHeight * 0.89),
-            // NavBar
-          ],
+          children: [],
         ),
       ),
     );
