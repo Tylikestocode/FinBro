@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import "package:finbro/components/input_ouput.dart";
-import "package:finbro/pages/home_page.dart";
+import "package:finbro/pages/page_router.dart";
 import "package:finbro/pages/sign_up_page.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
@@ -71,14 +71,14 @@ class _LoginPage extends State<LoginPage> {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomePage()));
+                context, MaterialPageRoute(builder: (context) => PageRouter()));
           },
           child: FinBroButton(
               screenWidth: screenWidth,
               screenHeight: screenHeight,
               buttonText: 'Continue'),
         ),
-        SizedBox(height: screenHeight * 0.18),
+        SizedBox(height: screenHeight * 0.15),
 
         // No Account? Sign Up Text
         GestureDetector(
@@ -104,7 +104,6 @@ class _LoginPage extends State<LoginPage> {
                             fontSize: screenWidth * 0.04))))
           ]),
         ),
-        SizedBox(height: screenHeight * 0.01)
       ]),
     );
   }
