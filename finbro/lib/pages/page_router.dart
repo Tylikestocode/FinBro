@@ -5,9 +5,6 @@ import 'package:finbro/pages/analytics.dart';
 import 'package:finbro/pages/home_page.dart';
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:unicons/unicons.dart';
 
 class PageRouter extends StatefulWidget {
@@ -22,15 +19,15 @@ class _PageRouter extends State<PageRouter> {
   bool analyticsPressed = false;
   bool aiPressed = false;
 
-  int Index = 0;
-  List _pages = [HomePage(), AnalyticsPage(), AI()];
+  int pageIndex = 0;
+  final List _pages = [HomePage(), AnalyticsPage(), AI()];
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: _pages[Index],
+        body: _pages[pageIndex],
         backgroundColor: third,
         bottomNavigationBar: Container(
             width: screenWidth * 0.8,
@@ -52,7 +49,7 @@ class _PageRouter extends State<PageRouter> {
                           width: screenWidth * 0.15,
                           height: screenHeight * 0.07,
                           decoration: BoxDecoration(
-                              color: homePressed ? primary_half : third,
+                              color: homePressed ? primaryHalf : third,
                               borderRadius: BorderRadius.circular(15)),
                           child: GestureDetector(
                             onTap: () {
@@ -60,7 +57,7 @@ class _PageRouter extends State<PageRouter> {
                                 homePressed = true;
                                 analyticsPressed = false;
                                 aiPressed = false;
-                                Index = 0;
+                                pageIndex = 0;
                               });
                             },
                             child: Center(
@@ -80,7 +77,7 @@ class _PageRouter extends State<PageRouter> {
                           width: screenWidth * 0.15,
                           height: screenHeight * 0.07,
                           decoration: BoxDecoration(
-                              color: analyticsPressed ? primary_half : third,
+                              color: analyticsPressed ? primaryHalf : third,
                               borderRadius: BorderRadius.circular(15)),
                           child: GestureDetector(
                             onTap: () {
@@ -88,7 +85,7 @@ class _PageRouter extends State<PageRouter> {
                                 homePressed = false;
                                 analyticsPressed = true;
                                 aiPressed = false;
-                                Index = 1;
+                                pageIndex = 1;
                               });
                             },
                             child: Center(
@@ -109,7 +106,7 @@ class _PageRouter extends State<PageRouter> {
                           width: screenWidth * 0.15,
                           height: screenHeight * 0.07,
                           decoration: BoxDecoration(
-                              color: aiPressed ? primary_half : third,
+                              color: aiPressed ? primaryHalf : third,
                               borderRadius: BorderRadius.circular(15)),
                           child: GestureDetector(
                             onTap: () {
@@ -117,7 +114,7 @@ class _PageRouter extends State<PageRouter> {
                                 homePressed = false;
                                 analyticsPressed = false;
                                 aiPressed = true;
-                                Index = 2;
+                                pageIndex = 2;
                               });
                             },
                             child: Center(
