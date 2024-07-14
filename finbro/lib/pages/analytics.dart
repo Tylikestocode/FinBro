@@ -18,7 +18,7 @@ class _AnalyticsPage extends State<AnalyticsPage> {
     return Container(
       width: screenWidth,
       height: screenHeight,
-      color: secondary,
+      color: third,
       child: Center(
           child: Text('Analytics', style: TextStyle(color: Colors.white))),
     );

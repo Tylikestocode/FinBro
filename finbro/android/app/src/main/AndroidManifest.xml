@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="finbro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <!-- Required to fetch data from the internet. -->
         <activity
             android:name=".MainActivity"
             android:exported="true"

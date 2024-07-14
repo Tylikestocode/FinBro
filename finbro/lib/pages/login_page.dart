@@ -6,6 +6,8 @@ import "package:finbro/pages/sign_up_page.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:page_animation_transition/animations/right_to_left_transition.dart";
+import "package:page_animation_transition/page_animation_transition.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,7 +23,7 @@ class _LoginPage extends State<LoginPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: secondary,
+      backgroundColor: third,
       body: Column(children: [
         SizedBox(height: screenHeight * 0.07),
         // Logo
@@ -39,7 +41,7 @@ class _LoginPage extends State<LoginPage> {
             child: Text('Welcome Back',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: screenWidth * 0.08)))),
         // Enter your details Text
@@ -84,14 +86,17 @@ class _LoginPage extends State<LoginPage> {
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SignUpPage()));
+                context,
+                PageAnimationTransition(
+                    page: SignUpPage(),
+                    pageAnimationType: RightToLeftTransition()));
           },
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Center(
                 child: Text('No Account?',
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth * 0.04)))),
             SizedBox(width: screenWidth * 0.01),

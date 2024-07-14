@@ -28,43 +28,43 @@ class _PageRouter extends State<PageRouter> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         body: _pages[pageIndex],
-        backgroundColor: third,
+        backgroundColor: secondary,
         bottomNavigationBar: Container(
             width: screenWidth * 0.8,
             height: screenHeight * 0.1,
-            color: secondary,
+            color: third,
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Container(
                   width: screenWidth * 0.85,
                   height: screenHeight * 0.08,
                   decoration: BoxDecoration(
-                      color: third, borderRadius: BorderRadius.circular(16)),
+                      color: secondary,
+                      borderRadius: BorderRadius.circular(30)),
                   child: Row(children: [
                     // Home Icon
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: screenWidth * 0.15,
-                          height: screenHeight * 0.07,
-                          decoration: BoxDecoration(
-                              color: homePressed ? primaryHalf : third,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                homePressed = true;
-                                analyticsPressed = false;
-                                aiPressed = false;
-                                pageIndex = 0;
-                              });
-                            },
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              homePressed = true;
+                              analyticsPressed = false;
+                              aiPressed = false;
+                              pageIndex = 0;
+                            });
+                          },
+                          child: Container(
+                            width: screenWidth * 0.15,
+                            height: screenHeight * 0.07,
+                            decoration: BoxDecoration(
+                                color: secondary,
+                                borderRadius: BorderRadius.circular(30)),
                             child: Center(
                                 child: Icon(UniconsLine.home,
-                                    size: screenWidth * 0.09,
-                                    color:
-                                        homePressed ? primary : Colors.black)),
+                                    size: screenWidth * 0.08,
+                                    color: homePressed ? primary : iconColor)),
                           ),
                         ),
                       ),
@@ -73,27 +73,27 @@ class _PageRouter extends State<PageRouter> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: screenWidth * 0.15,
-                          height: screenHeight * 0.07,
-                          decoration: BoxDecoration(
-                              color: analyticsPressed ? primaryHalf : third,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                homePressed = false;
-                                analyticsPressed = true;
-                                aiPressed = false;
-                                pageIndex = 1;
-                              });
-                            },
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              homePressed = false;
+                              analyticsPressed = true;
+                              aiPressed = false;
+                              pageIndex = 1;
+                            });
+                          },
+                          child: Container(
+                            width: screenWidth * 0.15,
+                            height: screenHeight * 0.07,
+                            decoration: BoxDecoration(
+                                color: secondary,
+                                borderRadius: BorderRadius.circular(15)),
                             child: Center(
                                 child: Icon(UniconsLine.graph_bar,
-                                    size: screenWidth * 0.09,
+                                    size: screenWidth * 0.08,
                                     color: analyticsPressed
                                         ? primary
-                                        : Colors.black)),
+                                        : iconColor)),
                           ),
                         ),
                       ),
@@ -102,25 +102,25 @@ class _PageRouter extends State<PageRouter> {
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: screenWidth * 0.15,
-                          height: screenHeight * 0.07,
-                          decoration: BoxDecoration(
-                              color: aiPressed ? primaryHalf : third,
-                              borderRadius: BorderRadius.circular(15)),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                homePressed = false;
-                                analyticsPressed = false;
-                                aiPressed = true;
-                                pageIndex = 2;
-                              });
-                            },
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              homePressed = false;
+                              analyticsPressed = false;
+                              aiPressed = true;
+                              pageIndex = 2;
+                            });
+                          },
+                          child: Container(
+                            width: screenWidth * 0.15,
+                            height: screenHeight * 0.07,
+                            decoration: BoxDecoration(
+                                color: secondary,
+                                borderRadius: BorderRadius.circular(15)),
                             child: Center(
                                 child: Icon(UniconsLine.robot,
-                                    size: screenWidth * 0.09,
-                                    color: aiPressed ? primary : Colors.black)),
+                                    size: screenWidth * 0.08,
+                                    color: aiPressed ? primary : iconColor)),
                           ),
                         ),
                       ),

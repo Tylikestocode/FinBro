@@ -18,7 +18,7 @@ class _AI extends State<AI> {
     return Container(
       width: screenWidth,
       height: screenHeight,
-      color: secondary,
+      color: third,
       child:
           Center(child: Text('AI Page', style: TextStyle(color: Colors.white))),
     );

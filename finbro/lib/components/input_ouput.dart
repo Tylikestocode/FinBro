@@ -27,8 +27,10 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
     return Container(
       width: widget.screenWidth * 0.85,
       height: widget.screenHeight * 0.08,
-      decoration:
-          BoxDecoration(color: third, borderRadius: BorderRadius.circular(25)),
+      decoration: BoxDecoration(
+          color: third,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: outline)),
       child: Row(children: [
         // Icon
         Container(
