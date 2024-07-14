@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:finbro/components/list_view_components.dart';
+import 'package:finbro/components/main_components.dart';
+import 'package:finbro/pages/balance.dart';
 import 'package:finbro/pages/profile.dart';
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_animation_transition/animations/fade_animation_transition.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:unicons/unicons.dart';
@@ -26,12 +28,11 @@ class _HomePageState extends State<HomePage> {
       height: screenHeight,
       color: third,
       child: Column(children: [
-        SizedBox(height: screenHeight * 0.05),
+        SizedBox(height: 15),
         // Welcome Back Text and Profile Icon
         Padding(
-          padding: EdgeInsets.symmetric(vertical: screenWidth * 0.02),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
           child: Row(children: [
-            SizedBox(width: screenWidth * 0.07),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -40,18 +41,17 @@ class _HomePageState extends State<HomePage> {
                         textStyle: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: screenWidth * 0.05))),
+                            fontSize: 22))),
                 Text("johndoe@gmail.com",
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             color: primary,
                             fontWeight: FontWeight.bold,
-                            fontSize: screenWidth * 0.03))),
+                            fontSize: 14))),
               ],
             ),
-            SizedBox(width: screenWidth * 0.31),
             Padding(
-              padding: EdgeInsets.symmetric(vertical: screenWidth * 0.02),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -60,47 +60,43 @@ class _HomePageState extends State<HomePage> {
                           page: ProfilePage(),
                           pageAnimationType: RightToLeftTransition()));
                 },
-                child: Container(
-                    width: screenWidth * 0.18,
-                    height: screenHeight * 0.07,
-                    decoration: BoxDecoration(
-                        color: primary,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Center(
-                        child: Icon(UniconsLine.head_side,
-                            size: screenWidth * 0.09))),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 115, top: 5),
+                  child: Container(
+                      width: screenWidth * 0.18,
+                      height: screenHeight * 0.07,
+                      decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Center(
+                          child: Icon(UniconsLine.head_side,
+                              size: screenWidth * 0.09))),
+                ),
               ),
             ),
-            SizedBox(width: screenWidth * 0.05)
           ]),
         ),
         // Balance Card
-        Container(
-            width: screenWidth * 0.9,
-            height: screenHeight * 0.25,
-            decoration: BoxDecoration(
-                color: secondary, borderRadius: BorderRadius.circular(30))),
+        GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  PageAnimationTransition(
+                      page: BalancePage(),
+                      pageAnimationType: FadeAnimationTransition()));
+            },
+            child: BalanceCard(
+                screenWidth: screenWidth, screenHeight: screenHeight)),
         // Recent Expenses
         Expanded(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8),
             child: Container(
               width: screenWidth * 0.9,
               height: screenHeight * 0.4,
               decoration: BoxDecoration(
                   color: secondary, borderRadius: BorderRadius.circular(30)),
-              child: ListView(children: [
-                FinBroListViewItem(
-                    screenWidth: screenWidth, screenHeight: screenHeight),
-                FinBroListViewItem(
-                    screenWidth: screenWidth, screenHeight: screenHeight),
-                FinBroListViewItem(
-                    screenWidth: screenWidth, screenHeight: screenHeight),
-                FinBroListViewItem(
-                    screenWidth: screenWidth, screenHeight: screenHeight),
-                FinBroListViewItem(
-                    screenWidth: screenWidth, screenHeight: screenHeight),
-              ]),
+              child: ListView(children: []),
             ),
           ),
         )

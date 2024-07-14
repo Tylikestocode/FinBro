@@ -7,7 +7,7 @@ import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
 import 'package:page_animation_transition/page_animation_transition.dart';
-import 'package:unicons/unicons.dart';
+import 'package:ionicons/ionicons.dart';
 
 class PageRouter extends StatefulWidget {
   const PageRouter({super.key});
@@ -62,7 +62,7 @@ class _PageRouter extends State<PageRouter> {
                                 color: secondary,
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
-                                child: Icon(UniconsLine.home,
+                                child: Icon(Ionicons.home,
                                     size: screenWidth * 0.08,
                                     color: homePressed ? primary : iconColor)),
                           ),
@@ -88,7 +88,7 @@ class _PageRouter extends State<PageRouter> {
                                 color: secondary,
                                 borderRadius: BorderRadius.circular(15)),
                             child: Center(
-                                child: Icon(UniconsLine.graph_bar,
+                                child: Icon(Ionicons.analytics,
                                     size: screenWidth * 0.08,
                                     color: analyticsPressed
                                         ? primary
@@ -128,7 +128,7 @@ class _PageRouter extends State<PageRouter> {
                                 color: secondary,
                                 borderRadius: BorderRadius.circular(15)),
                             child: Center(
-                                child: Icon(UniconsLine.robot,
+                                child: Icon(Ionicons.chatbox,
                                     size: screenWidth * 0.08,
                                     color: iconColor)),
                           ),

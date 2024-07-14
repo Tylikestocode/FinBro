@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unused_local_variable
 
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';

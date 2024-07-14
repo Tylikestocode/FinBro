@@ -14,6 +14,7 @@ dependencies:
   unicons: ^2.1.2
   page_animation_transition:
   http: ^1.2.1
+  ionicons: ^0.2.2
 
 
 
