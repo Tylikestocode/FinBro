@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .endpoint {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .endpoint h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .endpoint p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .endpoint p:first-of-type {
+            font-weight: bold;
+        }
+        .endpoint ul {
+            padding-left: 20px;
+            margin-top: 10px;
+            color: #666;
+        }
+        .endpoint li {
+            margin-bottom: 5px;
+        }
+        .endpoint li strong {
+            font-weight: bold;
+            color: #333;
+        }
+        .attributes-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .attributes-table th, .attributes-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .attributes-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            color: #333;
+        }
+        .attributes-table td {
+            color: #666;
+        }
+    </style>
+
+</head>
+<body>
+<h1>User API Documentation</h1>
+
+<div class="attributes-table">
+    <table>
+        <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Data Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Name</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>Surname</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>Integer</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>String</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>String</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="endpoint">
+    <h3>POST /api/users/addUser</h3>
+    <p>Adds a new user.</p>
+    <p><strong>Request Body:</strong> JSON representation of User object.</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>201 Created:</strong> User successfully added.</li>
+        <li><strong>400 Bad Request:</strong> If the request body is invalid or user already exists.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
+    <h3>GET /api/users/allUsers</h3>
+    <p>Retrieves all users.</p>
+    <p><strong>Responses:</strong> List of User objects.</p>
+</div>
+
+<div class="endpoint">
+    <h3>GET /api/users/getByUserId/{userId}</h3>
+    <p>Retrieves a user by their ID.</p>
+    <p><strong>Path Variable:</strong> userId (integer).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>200 OK:</strong> User found and returned.</li>
+        <li><strong>404 Not Found:</strong> If user with the specified ID does not exist.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
+    <h3>GET /api/users/getByUsername/{username}</h3>
+    <p>Retrieves a user by their username.</p>
+    <p><strong>Path Variable:</strong> username (string).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>200 OK:</strong> User found and returned.</li>
+        <li><strong>404 Not Found:</strong> If user with the specified username does not exist.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
+    <h3>DELETE /api/users/deleteByUserId/{userId}</h3>
+    <p>Deletes a user by their ID.</p>
+    <p><strong>Path Variable:</strong> userId (integer).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>204 No Content:</strong> User successfully deleted.</li>
+        <li><strong>404 Not Found:</strong> If user with the specified ID does not exist.</li>
+    </ul>
+</div>
+
+</body>
+</html>
