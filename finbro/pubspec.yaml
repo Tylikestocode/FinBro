@@ -12,6 +12,10 @@ dependencies:
   google_fonts: ^6.2.1
   icons_plus: ^5.0.0
   unicons: ^2.1.2
+  page_animation_transition:
+  http: ^1.2.1
+
+
 
 
 dev_dependencies:
