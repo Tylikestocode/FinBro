@@ -5,6 +5,7 @@ import 'package:finbro/pages/balance.dart';
 import 'package:finbro/pages/profile.dart';
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_animation_transition/animations/fade_animation_transition.dart';
 import 'package:page_animation_transition/animations/right_to_left_transition.dart';
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            Expanded(child: SizedBox(width: 10)),
           ]),
         ),
         // Balance Card
