@@ -19,8 +19,7 @@ class _AnalyticsPage extends State<AnalyticsPage> {
       width: screenWidth,
       height: screenHeight,
       color: third,
-      child: Center(
-          child: Text('Analytics', style: TextStyle(color: Colors.white))),
+      child: Center(child: Text('Analytics')),
     );
   }
 }

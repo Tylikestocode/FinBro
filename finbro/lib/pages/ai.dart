@@ -15,12 +15,9 @@ class _AI extends State<AI> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      width: screenWidth,
-      height: screenHeight,
-      color: third,
-      child:
-          Center(child: Text('AI Page', style: TextStyle(color: Colors.white))),
+    return Scaffold(
+      backgroundColor: third,
+      body: Center(child: Text('AI Page')),
     );
   }
 }

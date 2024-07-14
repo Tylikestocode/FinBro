@@ -5,6 +5,8 @@ import 'package:finbro/pages/analytics.dart';
 import 'package:finbro/pages/home_page.dart';
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:page_animation_transition/animations/right_to_left_transition.dart';
+import 'package:page_animation_transition/page_animation_transition.dart';
 import 'package:unicons/unicons.dart';
 
 class PageRouter extends StatefulWidget {
@@ -17,7 +19,6 @@ class PageRouter extends StatefulWidget {
 class _PageRouter extends State<PageRouter> {
   bool homePressed = true;
   bool analyticsPressed = false;
-  bool aiPressed = false;
 
   int pageIndex = 0;
   final List _pages = [HomePage(), AnalyticsPage(), AI()];
@@ -51,7 +52,6 @@ class _PageRouter extends State<PageRouter> {
                             setState(() {
                               homePressed = true;
                               analyticsPressed = false;
-                              aiPressed = false;
                               pageIndex = 0;
                             });
                           },
@@ -78,7 +78,6 @@ class _PageRouter extends State<PageRouter> {
                             setState(() {
                               homePressed = false;
                               analyticsPressed = true;
-                              aiPressed = false;
                               pageIndex = 1;
                             });
                           },
@@ -104,12 +103,23 @@ class _PageRouter extends State<PageRouter> {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              homePressed = false;
-                              analyticsPressed = false;
-                              aiPressed = true;
-                              pageIndex = 2;
-                            });
+                            Navigator.push(
+                                context,
+                                PageAnimationTransition(
+                                    page: AI(),
+                                    pageAnimationType:
+                                        RightToLeftTransition()));
+                            if (analyticsPressed == true) {
+                              setState(() {
+                                homePressed = false;
+                                analyticsPressed = true;
+                              });
+                            } else {
+                              setState(() {
+                                homePressed = true;
+                                analyticsPressed = false;
+                              });
+                            }
                           },
                           child: Container(
                             width: screenWidth * 0.15,
@@ -120,7 +130,7 @@ class _PageRouter extends State<PageRouter> {
                             child: Center(
                                 child: Icon(UniconsLine.robot,
                                     size: screenWidth * 0.08,
-                                    color: aiPressed ? primary : iconColor)),
+                                    color: iconColor)),
                           ),
                         ),
                       ),
