@@ -23,14 +23,14 @@ class _BalanceCardState extends State<BalanceCard> {
         width: widget.screenWidth * 0.9,
         height: widget.screenHeight * 0.25,
         decoration: BoxDecoration(
-            color: secondary, borderRadius: BorderRadius.circular(30)),
+            color: primary, borderRadius: BorderRadius.circular(30)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
             padding: const EdgeInsets.all(20),
             child: Text('Balance',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 16))),
           ),
@@ -41,7 +41,7 @@ class _BalanceCardState extends State<BalanceCard> {
               child: Text('R 5320.33',
                   style: GoogleFonts.poppins(
                       textStyle: TextStyle(
-                          color: primary,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 32))),
             ),

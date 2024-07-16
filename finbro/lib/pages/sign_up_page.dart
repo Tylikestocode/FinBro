@@ -2,11 +2,12 @@
 
 import "package:finbro/components/input_ouput.dart";
 import "package:finbro/pages/login_page.dart";
-import "package:finbro/pages/page_router.dart";
+import "package:finbro/pages/sign_up_cont.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:page_animation_transition/animations/left_to_right_transition.dart";
+import "package:page_animation_transition/animations/right_to_left_transition.dart";
 import "package:page_animation_transition/page_animation_transition.dart";
 
 class SignUpPage extends StatefulWidget {
@@ -23,6 +24,7 @@ class _SignUpPage extends State<SignUpPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: third,
       body: Column(children: [
         SizedBox(height: screenHeight * 0.07),
@@ -49,9 +51,9 @@ class _SignUpPage extends State<SignUpPage> {
             child: Text('Please enter your details',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                        color: Colors.grey,
+                        color: primary,
                         fontWeight: FontWeight.bold,
-                        fontSize: screenWidth * 0.04)))),
+                        fontSize: screenWidth * 0.035)))),
         SizedBox(height: screenHeight * 0.035),
         // Email TextField
         Center(
@@ -63,24 +65,27 @@ class _SignUpPage extends State<SignUpPage> {
         SizedBox(height: screenHeight * 0.035),
         // Password TextField
         Center(
-            child: FinBroTextField(
+            child: FinBroPasswordTextField(
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
                 text: 'Password')),
         SizedBox(height: screenHeight * 0.035),
         // Confirm Password
         Center(
-          child: FinBroTextField(
+          child: FinBroPasswordTextField(
               screenHeight: screenHeight,
               screenWidth: screenWidth,
               text: 'Confirm Password'),
         ),
-        SizedBox(height: screenHeight * 0.035),
+        SizedBox(height: screenHeight * 0.05),
         // Continue Button
         GestureDetector(
           onTap: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PageRouter()));
+                context,
+                PageAnimationTransition(
+                    page: SignUpPageContinued(),
+                    pageAnimationType: RightToLeftTransition()));
           },
           child: FinBroButton(
               screenWidth: screenWidth,

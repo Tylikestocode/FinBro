@@ -23,6 +23,7 @@ class _LoginPage extends State<LoginPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: third,
       body: Column(children: [
         SizedBox(height: screenHeight * 0.07),
@@ -49,9 +50,9 @@ class _LoginPage extends State<LoginPage> {
             child: Text('Please enter your details',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                        color: Colors.grey,
+                        color: primary,
                         fontWeight: FontWeight.bold,
-                        fontSize: screenWidth * 0.04)))),
+                        fontSize: screenWidth * 0.035)))),
         SizedBox(height: screenHeight * 0.05),
         // Email TextField
         Center(
@@ -63,7 +64,7 @@ class _LoginPage extends State<LoginPage> {
         SizedBox(height: screenHeight * 0.035),
         // Password TextField
         Center(
-            child: FinBroTextField(
+            child: FinBroPasswordTextField(
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
                 text: 'Password')),

@@ -67,6 +67,69 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
   }
 }
 
+class FinBroPasswordTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String text;
+
+  const FinBroPasswordTextField({
+    Key? key,
+    required this.screenWidth,
+    required this.screenHeight,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  State<FinBroPasswordTextField> createState() => _FinBroPasswordTextField();
+}
+
+class _FinBroPasswordTextField extends State<FinBroPasswordTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.85,
+      height: widget.screenHeight * 0.075,
+      decoration: BoxDecoration(
+          color: third,
+          borderRadius: BorderRadius.circular(25),
+          border: Border.all(color: outline)),
+      child: Row(children: [
+        // Icon
+        Container(
+            width: widget.screenWidth * 0.15,
+            height: widget.screenHeight * 0.08,
+            decoration: BoxDecoration(
+                border: Border(right: BorderSide(width: 1, color: outline)),
+                color: third,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    bottomLeft: Radius.circular(25))),
+            child: Icon(
+              EvaIcons.lock,
+              size: widget.screenWidth * 0.08,
+              color: outline,
+            )),
+        // TextField
+        Expanded(
+            child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+              obscureText: true,
+              cursorColor: outline,
+              decoration: InputDecoration(
+                  hintStyle: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          color: outline,
+                          fontWeight: FontWeight.bold,
+                          fontSize: widget.screenWidth * 0.04)),
+                  border: InputBorder.none,
+                  hintText: widget.text)),
+        ))
+      ]),
+    );
+  }
+}
+
 class FinBroButton extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;

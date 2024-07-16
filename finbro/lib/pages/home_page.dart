@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
       height: screenHeight,
       color: third,
       child: Column(children: [
-        SizedBox(height: 15),
+        SizedBox(height: screenHeight * 0.03),
         // Welcome Back Text and Profile Icon
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -41,13 +41,13 @@ class _HomePageState extends State<HomePage> {
                 Text("Welcome Back",
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
-                            color: Colors.black,
+                            color: primary,
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth * 0.053))),
                 Text("johndoe@gmail.com",
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
-                            color: primary,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: screenWidth * 0.035))),
               ],
@@ -68,11 +68,11 @@ class _HomePageState extends State<HomePage> {
                       width: screenWidth * 0.18,
                       height: screenHeight * 0.07,
                       decoration: BoxDecoration(
-                          color: primary,
+                          color: secondary,
                           borderRadius: BorderRadius.circular(30)),
                       child: Center(
                           child: Icon(UniconsLine.head_side,
-                              size: screenWidth * 0.09))),
+                              size: screenWidth * 0.09, color: primary))),
                 ),
               ),
             ),
@@ -99,7 +99,9 @@ class _HomePageState extends State<HomePage> {
               height: screenHeight * 0.4,
               decoration: BoxDecoration(
                   color: secondary, borderRadius: BorderRadius.circular(30)),
-              child: ListView(children: []),
+              child: Center(
+                  child: Text('Recent Expenses',
+                      style: TextStyle(color: Colors.white))),
             ),
           ),
         )
