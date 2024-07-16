@@ -154,6 +154,17 @@
 </div>
 
 <div class="endpoint">
+    <h3>PUT /api/users/updateUser</h3>
+    <p>Updates an existing user.</p>
+    <p><strong>Request Body:</strong> JSON representation of User object (Including UserID).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>201 Created:</strong> User successfully updated.</li>
+        <li><strong>400 Bad Request:</strong> If the request body is invalid or user already exists.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
     <h3>DELETE /api/users/deleteByUserId/{userId}</h3>
     <p>Deletes a user by their ID.</p>
     <p><strong>Path Variable:</strong> userId (integer).</p>
