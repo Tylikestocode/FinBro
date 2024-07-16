@@ -16,10 +16,14 @@ public class UserRepository {
         this.jdbc = jdbc;
     }
 
+
+
     // Create and store new User
     public void storeUser(User user) {
 
-        String sql = "INSERT INTO Users(Name, Surname, Age, Username, Email, Password) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql =
+                "INSERT INTO Users(Name, Surname, Age, Username, Email, Password)" +
+                " VALUES (?, ?, ?, ?, ?, ?)";
         jdbc.update(sql, user.getName(), user.getSurname(), user.getAge(), user.getUsername(), user.getEmail(), user.getPassword());
 
     }
@@ -93,16 +97,6 @@ public class UserRepository {
 
     }
 
-    // Delete User by UserID
-    public boolean deleteUserByID(int userID) {
-
-        String sql = "DELETE FROM Users WHERE UserID = ?";
-        int rowsAffected = jdbc.update(sql, userID);
-
-        return rowsAffected > 0;
-
-    }
-
     // Check if a username exists
     public boolean existsByUsername(String username) {
 
@@ -118,6 +112,42 @@ public class UserRepository {
         String sql = "SELECT COUNT(*) FROM Users WHERE UserID = ?";
         Integer count = jdbc.queryForObject(sql, Integer.class, userID);
         return count != null && count > 0;
+
+    }
+
+    // Update an existing User
+    public boolean updateUser(User user) {
+
+        String sql =
+                "UPDATE Users SET " +
+                "Name = ?," +
+                "Surname = ?," +
+                "Age = ?," +
+                "Username = ?," +
+                "Email = ?," +
+                "Password = ? " +
+                "WHERE UserID = ?";
+
+        int rowsAffected = jdbc.update(sql,
+                user.getName(),
+                user.getSurname(),
+                user.getAge(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getId());
+
+        return rowsAffected > 0;
+
+    }
+
+    // Delete User by UserID
+    public boolean deleteUserByID(int userID) {
+
+        String sql = "DELETE FROM Users WHERE UserID = ?";
+        int rowsAffected = jdbc.update(sql, userID);
+
+        return rowsAffected > 0;
 
     }
 
