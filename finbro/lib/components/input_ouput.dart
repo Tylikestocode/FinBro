@@ -26,7 +26,7 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
   Widget build(BuildContext context) {
     return Container(
       width: widget.screenWidth * 0.85,
-      height: widget.screenHeight * 0.08,
+      height: widget.screenHeight * 0.075,
       decoration: BoxDecoration(
           color: third,
           borderRadius: BorderRadius.circular(25),

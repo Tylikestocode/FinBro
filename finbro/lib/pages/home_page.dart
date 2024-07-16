@@ -32,8 +32,9 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: 15),
         // Welcome Back Text and Profile Icon
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           child: Row(children: [
+            SizedBox(width: screenWidth * 0.08),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,13 +43,13 @@ class _HomePageState extends State<HomePage> {
                         textStyle: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
-                            fontSize: 22))),
+                            fontSize: screenWidth * 0.053))),
                 Text("johndoe@gmail.com",
                     style: GoogleFonts.poppins(
                         textStyle: TextStyle(
                             color: primary,
                             fontWeight: FontWeight.bold,
-                            fontSize: 14))),
+                            fontSize: screenWidth * 0.035))),
               ],
             ),
             Padding(
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                           pageAnimationType: RightToLeftTransition()));
                 },
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 115, top: 5),
+                  padding: const EdgeInsets.only(left: 60, top: 5),
                   child: Container(
                       width: screenWidth * 0.18,
                       height: screenHeight * 0.07,

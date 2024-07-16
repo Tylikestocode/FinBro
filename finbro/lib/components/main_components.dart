@@ -8,7 +8,8 @@ class BalanceCard extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
 
-  BalanceCard({Key? key, required this.screenWidth, required this.screenHeight})
+  const BalanceCard(
+      {Key? key, required this.screenWidth, required this.screenHeight})
       : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class _BalanceCardState extends State<BalanceCard> {
                     textStyle: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20))),
+                        fontSize: 16))),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 18),
@@ -42,7 +43,7 @@ class _BalanceCardState extends State<BalanceCard> {
                       textStyle: TextStyle(
                           color: primary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 40))),
+                          fontSize: 32))),
             ),
           )
         ]));
