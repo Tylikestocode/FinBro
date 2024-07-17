@@ -21,6 +21,9 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+
+
+
     // Check new user details before adding to database
     public void storeUser(User user) {
         validateEmail(user.getEmail());
@@ -53,7 +56,6 @@ public class UserService {
         return user;
     }
 
-
     // Delete user by ID
     public boolean deleteUserByID(int userID) {
 
@@ -63,6 +65,30 @@ public class UserService {
         return false;
 
     }
+
+    // Update User details
+    public boolean updateUser(User user) {
+
+        System.out.println(user);
+
+        validateEmail(user.getEmail());
+
+        User exisitingUser = getUserByID(user.getId());
+        if (exisitingUser == null) {
+            throw new UserNotFoundException("User not found with ID: " + user.getId());
+        }
+
+        // If usernames is changing, first check if username already exists
+        if (!exisitingUser.getUsername().equals(user.getUsername())) {
+            checkIfUserExists(user.getUsername());
+        }
+
+        // Password hashing to be done here
+        // user.setPassword(hashPassword(user.getPassword());
+        return userRepository.updateUser(user);
+
+    }
+
 
 
     // HELPER METHODS

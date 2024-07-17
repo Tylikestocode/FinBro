@@ -1,3 +1,1 @@
-# finbro
-
-A new Flutter project.
+# FinBro Mobile App

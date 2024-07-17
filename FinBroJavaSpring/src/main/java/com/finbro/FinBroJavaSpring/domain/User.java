@@ -2,7 +2,7 @@ package com.finbro.FinBroJavaSpring.domain;
 
 public class User {
 
-    private long id;
+    private int id;
     private String name;
     private String surname;
     private int age;
@@ -10,11 +10,11 @@ public class User {
     private String email;
     private String password;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,7 +75,7 @@ public class User {
                 ", age=" + age +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", hashedPassword='" + password + '\'' +
+                ", Password='" + password + '\'' +
                 '}';
     }
 }

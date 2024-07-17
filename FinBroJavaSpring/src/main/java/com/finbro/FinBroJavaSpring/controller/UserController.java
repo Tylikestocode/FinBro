@@ -28,6 +28,7 @@ public class UserController {
     }
 
 
+
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody User user) {
         try {
@@ -66,6 +67,39 @@ public class UserController {
         catch (UserNotFoundException | EmptyResultDataAccessException e) {
             ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "User not found with Username: " + username, System.currentTimeMillis());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
+
+    @PutMapping("/updateUser")
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        try {
+            boolean updated = userService.updateUser(user);
+            if (updated) {
+                return ResponseEntity.ok(user);
+            }
+            else {
+                ErrorResponse errorResponse = new ErrorResponse(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User not found with ID: " + user.getId(),
+                        System.currentTimeMillis());
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            }
+        }
+        catch (IllegalArgumentException | UserNotFoundException e) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    e.getMessage(),
+                    System.currentTimeMillis()
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+        catch (UserAlreadyExistsException e) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.CONFLICT.value(),
+                    e.getMessage(),
+                    System.currentTimeMillis()
+            );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
         }
     }
 
