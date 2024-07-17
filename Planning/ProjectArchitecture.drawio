@@ -1,0 +1,40 @@
+<mxfile host="Electron" modified="2024-07-17T13:17:30.381Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="ZSqtkxXBNIazej-ggcnd" version="21.7.5" type="device">
+  <diagram name="Page-1" id="d2kMEzhgmwOuouo6e642">
+    <mxGraphModel dx="838" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BfDqHpyz541_O9lzyD4y-10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" parent="1" source="BfDqHpyz541_O9lzyD4y-1" target="BfDqHpyz541_O9lzyD4y-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" parent="1" source="BfDqHpyz541_O9lzyD4y-1" target="BfDqHpyz541_O9lzyD4y-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" parent="1" source="BfDqHpyz541_O9lzyD4y-1" target="BfDqHpyz541_O9lzyD4y-8" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-1" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;BACKEND&lt;br&gt;&lt;/u&gt;&lt;br&gt;Java Spring" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="520" y="240" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" parent="1" source="BfDqHpyz541_O9lzyD4y-3" target="BfDqHpyz541_O9lzyD4y-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-3" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;FRONT-END&lt;br&gt;&lt;/u&gt;&lt;br&gt;Flutter (mobile)&lt;br&gt;HTML, CSS, JavaScript (web)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="240" y="240" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-6" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;DATABASE&lt;/u&gt;&lt;br&gt;&lt;br&gt;MySQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
+          <mxGeometry x="540" y="440" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-7" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;DS / AI&lt;/u&gt;&lt;br&gt;&lt;br&gt;Python" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="800" y="240" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-8" value="&lt;b&gt;&lt;u&gt;BANK&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;Bank API" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="520" y="40" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="BfDqHpyz541_O9lzyD4y-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="200" width="840" height="640" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
