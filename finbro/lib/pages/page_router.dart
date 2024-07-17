@@ -37,7 +37,7 @@ class _PageRouter extends State<PageRouter> {
             child: Padding(
               padding: const EdgeInsets.all(10),
               child: Container(
-                  width: screenWidth * 0.85,
+                  width: screenWidth * 0.7,
                   height: screenHeight * 0.08,
                   decoration: BoxDecoration(
                       color: secondary,
@@ -63,7 +63,7 @@ class _PageRouter extends State<PageRouter> {
                                 borderRadius: BorderRadius.circular(30)),
                             child: Center(
                                 child: Icon(Ionicons.home,
-                                    size: screenWidth * 0.08,
+                                    size: screenWidth * 0.07,
                                     color: homePressed ? primary : iconColor)),
                           ),
                         ),
@@ -89,7 +89,7 @@ class _PageRouter extends State<PageRouter> {
                                 borderRadius: BorderRadius.circular(15)),
                             child: Center(
                                 child: Icon(Ionicons.analytics,
-                                    size: screenWidth * 0.08,
+                                    size: screenWidth * 0.07,
                                     color: analyticsPressed
                                         ? primary
                                         : iconColor)),
@@ -129,7 +129,7 @@ class _PageRouter extends State<PageRouter> {
                                 borderRadius: BorderRadius.circular(15)),
                             child: Center(
                                 child: Icon(Ionicons.chatbox,
-                                    size: screenWidth * 0.08,
+                                    size: screenWidth * 0.07,
                                     color: iconColor)),
                           ),
                         ),
