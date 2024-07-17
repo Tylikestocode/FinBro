@@ -1,8 +1,7 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.UserAlreadyExistsException;
-import com.finbro.FinBroJavaSpring.exception.UserNotFoundException;
+import com.finbro.FinBroJavaSpring.exception.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,9 @@ public class UserService {
 
     // Check new user details before adding to database
     public void storeUser(User user) {
-        validateEmail(user.getEmail());
+        trimStringData(user);
         checkIfUserExists(user.getUsername());
+        validateEmail(user.getEmail());
         user.setPassword(hashPassword(user.getPassword()));
         userRepository.storeUser(user);
     }
@@ -37,55 +37,61 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
-    // Get User by ID
+    // Get User by UserID
     public User getUserByID(int userId) {
 
-        User user = userRepository.getUserByID(userId);
-        if (user == null) {
-            throw new UserNotFoundException("User not found with ID: " + userId);
+        if (!userRepository.existsByID(userId)) {
+            throw new UserIDNotFoundException(String.valueOf(userId));
         }
-        return user;
+
+        return userRepository.getUserByID(userId);
     }
 
     // Get User by Username
     public User getUserByUsername(String username) {
-        User user = userRepository.getUserByUsername(username);
-        if (user == null) {
-            throw new UserNotFoundException("User not found with Username: " + username);
+
+        if (!userRepository.existsByUsername(username)) {
+            throw new UsernameNotFoundException(username);
         }
-        return user;
-    }
 
-    // Delete user by ID
-    public boolean deleteUserByID(int userID) {
-
-        if (userRepository.existsByID(userID)) {
-            return userRepository.deleteUserByID(userID);
-        }
-        return false;
-
+        return userRepository.getUserByUsername(username);
     }
 
     // Update User details
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
 
-        System.out.println(user);
-
-        validateEmail(user.getEmail());
-
-        User exisitingUser = getUserByID(user.getId());
-        if (exisitingUser == null) {
-            throw new UserNotFoundException("User not found with ID: " + user.getId());
+        if (!userRepository.existsByID(user.getId())) {
+            throw new UserIDNotFoundException(String.valueOf(user.getId()));
         }
 
-        // If usernames is changing, first check if username already exists
+        User exisitingUser = getUserByID(user.getId());
+
+        // If Username is changing, first check if Username already exists
         if (!exisitingUser.getUsername().equals(user.getUsername())) {
             checkIfUserExists(user.getUsername());
         }
 
+        // If Email is changing, first check if Email is valid
+        if (!exisitingUser.getEmail().equals(user.getEmail())){
+            validateEmail(user.getEmail());
+        }
+
         // Password hashing to be done here
         // user.setPassword(hashPassword(user.getPassword());
-        return userRepository.updateUser(user);
+        userRepository.updateUser(user);
+
+    }
+
+    // Delete user by UserID
+    public void deleteUserByID(int userID) {
+
+        if (!userRepository.existsByID(userID)) {
+            throw new UserIDNotFoundException(String.valueOf(userID));
+        }
+
+        if (userRepository.existsByID(userID)) {
+            userRepository.deleteUserByID(userID);
+        }
 
     }
 
@@ -93,20 +99,36 @@ public class UserService {
 
     // HELPER METHODS
 
+    private void trimStringData(User user) {
+
+        user.setName(user.getName().trim());
+        user.setSurname(user.getSurname().trim());
+        user.setUsername(user.getUsername().trim());
+        user.setEmail(user.getEmail().trim());
+
+    }
+
+    private void checkIfUserExists(String username) {
+
+        if (userRepository.existsByUsername(username)) {
+            throw new UserAlreadyExistsException(username);
+        }
+    }
+
     private void validateEmail(String email) {
+
+        if (userRepository.existsByEmail(email)) {
+            throw new EmailAlreadyExistsException(email);
+        }
+
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            throw new IllegalArgumentException("Invalid email format");
+            throw new InvalidEmailFormatException(email);
         }
     }
 
-    private void checkIfUserExists(String username) {
-        if (userRepository.existsByUsername(username)) {
-            throw new UserAlreadyExistsException("Username already exists: " + username);
-        }
-    }
 
     private String hashPassword(String password) {
         // Hashing will be done here
