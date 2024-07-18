@@ -3,8 +3,8 @@
 import 'package:finbro/components/list_view_components.dart';
 import 'package:finbro/styles/color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:unicons/unicons.dart';
 
 class BalanceCard extends StatefulWidget {
   final double screenWidth;
@@ -131,6 +131,163 @@ class _RecentTransactions extends State<RecentTransactions> {
           )
         ]),
       ),
+    );
+  }
+}
+
+class AiChatBubble extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String responseText;
+
+  AiChatBubble(
+      {Key? key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.responseText})
+      : super(key: key);
+
+  @override
+  State<AiChatBubble> createState() => _AiChatBubble();
+}
+
+class _AiChatBubble extends State<AiChatBubble> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(widget.screenWidth * 0.03),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Container(
+            width: widget.screenWidth * 0.7,
+            height: widget.screenHeight * 0.06,
+            decoration: BoxDecoration(
+                color: primary,
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))),
+            child: Padding(
+              padding: EdgeInsets.all(widget.screenWidth * 0.03),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(widget.responseText,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: widget.screenWidth * 0.03)))),
+            )),
+      ),
+    );
+  }
+}
+
+class UserChatBubble extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String chatText;
+
+  UserChatBubble(
+      {Key? key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.chatText})
+      : super(key: key);
+
+  @override
+  State<UserChatBubble> createState() => _UserChatBubble();
+}
+
+class _UserChatBubble extends State<UserChatBubble> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(widget.screenWidth * 0.03),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: Container(
+            width: widget.screenWidth * 0.7,
+            height: widget.screenHeight * 0.06,
+            decoration: BoxDecoration(
+                color: primarySecond,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))),
+            child: Padding(
+              padding: EdgeInsets.all(widget.screenWidth * 0.03),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(widget.chatText,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: widget.screenWidth * 0.03)))),
+            )),
+      ),
+    );
+  }
+}
+
+class PromptBox extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final String prompt;
+
+  PromptBox(
+      {Key? key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.prompt});
+
+  @override
+  State<PromptBox> createState() => _PromptBox();
+}
+
+class _PromptBox extends State<PromptBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+            width: widget.screenWidth * 0.7,
+            height: widget.screenHeight * 0.07,
+            decoration: BoxDecoration(
+                color: Color.fromARGB(102, 197, 197, 197),
+                borderRadius: BorderRadius.circular(30)),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 4.5, horizontal: 20.0),
+              child: TextField(
+                style: GoogleFonts.poppins(
+                    textStyle: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035)),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Enter your Prompt',
+                    hintStyle: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: widget.screenWidth * 0.035))),
+              ),
+            )),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+              width: widget.screenWidth * 0.14,
+              height: widget.screenWidth * 0.14,
+              decoration: BoxDecoration(
+                  color: primaryHalf, borderRadius: BorderRadius.circular(30)),
+              child: Icon(UniconsLine.arrow_circle_up,
+                  size: widget.screenWidth * 0.09)),
+        )
+      ],
     );
   }
 }

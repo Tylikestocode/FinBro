@@ -18,3 +18,7 @@ Future<User?> fetchPerson(String url) async {
   }
   return null;
 }
+
+Future aiResponse() async {
+  return;
+}
