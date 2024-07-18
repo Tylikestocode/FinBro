@@ -1,13 +1,8 @@
 package com.finbro.FinBroJavaSpring.controller;
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.ErrorResponse;
-import com.finbro.FinBroJavaSpring.exception.UserAlreadyExistsException;
-import com.finbro.FinBroJavaSpring.exception.UserNotFoundException;
-import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import com.finbro.FinBroJavaSpring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -31,14 +26,12 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody User user) {
-        try {
-            userService.storeUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).body(user);
-        }
-        catch (IllegalArgumentException | UserAlreadyExistsException e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
+
+        userService.storeUser(user);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(userService.getUserByUsername(user.getUsername()));
+
     }
 
     @GetMapping("/allUsers")
@@ -48,71 +41,38 @@ public class UserController {
 
     @GetMapping("/getByUserId/{userId}")
     public ResponseEntity<?> getUserByID(@PathVariable int userId) {
-        try {
-            User user = userService.getUserByID(userId);
-            return ResponseEntity.ok(user);
-        }
-        catch (UserNotFoundException | EmptyResultDataAccessException e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "User not found with ID: " + userId, System.currentTimeMillis());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
+
+        User user = userService.getUserByID(userId);
+        return ResponseEntity.ok(user);
+
     }
 
     @GetMapping("/getByUsername/{username}")
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
-        try {
-            User user = userService.getUserByUsername(username);
-            return ResponseEntity.ok(user);
-        }
-        catch (UserNotFoundException | EmptyResultDataAccessException e) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "User not found with Username: " + username, System.currentTimeMillis());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
+
+        User user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(user);
+
     }
 
     @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
-        try {
-            boolean updated = userService.updateUser(user);
-            if (updated) {
-                return ResponseEntity.ok(user);
-            }
-            else {
-                ErrorResponse errorResponse = new ErrorResponse(
-                        HttpStatus.NOT_FOUND.value(),
-                        "User not found with ID: " + user.getId(),
-                        System.currentTimeMillis());
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-            }
-        }
-        catch (IllegalArgumentException | UserNotFoundException e) {
-            ErrorResponse errorResponse = new ErrorResponse(
-                    HttpStatus.BAD_REQUEST.value(),
-                    e.getMessage(),
-                    System.currentTimeMillis()
-            );
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
-        catch (UserAlreadyExistsException e) {
-            ErrorResponse errorResponse = new ErrorResponse(
-                    HttpStatus.CONFLICT.value(),
-                    e.getMessage(),
-                    System.currentTimeMillis()
-            );
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
-        }
+
+        userService.updateUser(user);
+        return ResponseEntity
+                .status(HttpStatus.ACCEPTED)
+                .body(user);
+
     }
 
     @DeleteMapping("/deleteByUserId/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
-        boolean deleted = userService.deleteUserByID(userId);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        }
-        else {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "User not found with ID: " + userId, System.currentTimeMillis());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
+
+        userService.deleteUserByID(userId);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User successfully deleted");
+
     }
 
 }

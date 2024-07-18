@@ -115,8 +115,17 @@ public class UserRepository {
 
     }
 
+    // Check if the email already exists
+    public boolean existsByEmail(String email) {
+
+        String sql = "SELECT COUNT(*) FROM Users WHERE Email = ?";
+        Integer count = jdbc.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
+
+    }
+
     // Update an existing User
-    public boolean updateUser(User user) {
+    public void updateUser(User user) {
 
         String sql =
                 "UPDATE Users SET " +
@@ -128,7 +137,7 @@ public class UserRepository {
                 "Password = ? " +
                 "WHERE UserID = ?";
 
-        int rowsAffected = jdbc.update(sql,
+        jdbc.update(sql,
                 user.getName(),
                 user.getSurname(),
                 user.getAge(),
@@ -136,18 +145,13 @@ public class UserRepository {
                 user.getEmail(),
                 user.getPassword(),
                 user.getId());
-
-        return rowsAffected > 0;
-
     }
 
     // Delete User by UserID
-    public boolean deleteUserByID(int userID) {
+    public void deleteUserByID(int userID) {
 
         String sql = "DELETE FROM Users WHERE UserID = ?";
-        int rowsAffected = jdbc.update(sql, userID);
-
-        return rowsAffected > 0;
+        jdbc.update(sql, userID);
 
     }
 

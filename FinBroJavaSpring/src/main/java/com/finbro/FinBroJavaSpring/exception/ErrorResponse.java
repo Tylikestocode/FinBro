@@ -1,15 +1,17 @@
 package com.finbro.FinBroJavaSpring.exception;
 
+import java.time.LocalDateTime;
+
 public class ErrorResponse {
 
     private int status;
     private String message;
-    private long timestamp;
+    private LocalDateTime localDateTime;
 
-    public ErrorResponse(int status, String message, long timestamp) {
+    public ErrorResponse(int status, String message, LocalDateTime localDateTime) {
         this.status = status;
         this.message = message;
-        this.timestamp = timestamp;
+        this.localDateTime = localDateTime;
     }
 
     public int getStatus() {
@@ -28,11 +30,11 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 }
