@@ -1,8 +1,8 @@
 USE FinBroDB;
 
-DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS User;
 
-CREATE TABLE Users (
+CREATE TABLE User (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(50) NOT NULL,
     Surname VARCHAR(50) NOT NULL,
@@ -12,8 +12,7 @@ CREATE TABLE Users (
     Password VARCHAR(255) NOT NULL
 );
 
-INSERT INTO Users (Name, Surname, Age, Username, Email, Password)
+INSERT INTO User (Name, Surname, Age, Username, Email, Password)
 VALUES ('Alice', 'Johnson', 28, 'alice.j', 'alice.j@example.com', 'hashed_password1'),
        ('Bob', 'Smith', 35, 'bob.s', 'bob.s@example.com', 'hashed_password2'),
        ('Emily', 'Brown', 24, 'emily.b', 'emily.b@example.com', 'hashed_password3');
-

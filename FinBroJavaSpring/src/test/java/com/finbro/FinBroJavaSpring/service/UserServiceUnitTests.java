@@ -1,24 +1,18 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.*;
-import com.finbro.FinBroJavaSpring.repository.UserRepository;
+import com.finbro.FinBroJavaSpring.repository.jdbc_backup.UserRepository_jdbc_backup;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 public class UserServiceUnitTests {
 
     @Mock
-    private UserRepository userRepository;
+    private UserRepository_jdbc_backup userRepository;
 
     @InjectMocks
     private UserService userService;
