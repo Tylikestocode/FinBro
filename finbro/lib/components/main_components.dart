@@ -41,7 +41,7 @@ class _BalanceCardState extends State<BalanceCard> {
             child: Text('Balance',
                 style: GoogleFonts.poppins(
                     textStyle: TextStyle(
-                        color: primary,
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 16))),
           ),
@@ -155,29 +155,45 @@ class _AiChatBubble extends State<AiChatBubble> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(widget.screenWidth * 0.03),
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.screenWidth * 0.03,
+          vertical: widget.screenWidth * 0.003),
       child: Align(
         alignment: Alignment.topLeft,
-        child: Container(
-            width: widget.screenWidth * 0.7,
-            height: widget.screenHeight * 0.06,
-            decoration: BoxDecoration(
-                color: primary,
-                borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30))),
-            child: Padding(
-              padding: EdgeInsets.all(widget.screenWidth * 0.03),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(widget.responseText,
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: widget.screenWidth * 0.03)))),
-            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: widget.screenWidth * 0.001),
+              child: Text('AI Assistant',
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: widget.screenWidth * 0.03))),
+            ),
+            Container(
+                width: widget.screenWidth * 0.7,
+                height: widget.screenHeight * 0.06,
+                decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(30),
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30))),
+                child: Padding(
+                  padding: EdgeInsets.all(widget.screenWidth * 0.03),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(widget.responseText,
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: widget.screenWidth * 0.03)))),
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -203,29 +219,45 @@ class _UserChatBubble extends State<UserChatBubble> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(widget.screenWidth * 0.03),
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.screenWidth * 0.03,
+          vertical: widget.screenWidth * 0.04),
       child: Align(
         alignment: Alignment.topRight,
-        child: Container(
-            width: widget.screenWidth * 0.7,
-            height: widget.screenHeight * 0.06,
-            decoration: BoxDecoration(
-                color: primarySecond,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30))),
-            child: Padding(
-              padding: EdgeInsets.all(widget.screenWidth * 0.03),
-              child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(widget.chatText,
-                      style: GoogleFonts.poppins(
-                          textStyle: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: widget.screenWidth * 0.03)))),
-            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: widget.screenWidth * 0.07),
+              child: Text('You',
+                  style: GoogleFonts.poppins(
+                      textStyle: TextStyle(
+                          color: primarySecond,
+                          fontWeight: FontWeight.bold,
+                          fontSize: widget.screenWidth * 0.03))),
+            ),
+            Container(
+                width: widget.screenWidth * 0.7,
+                height: widget.screenHeight * 0.06,
+                decoration: BoxDecoration(
+                    color: primarySecond,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        bottomLeft: Radius.circular(30),
+                        bottomRight: Radius.circular(30))),
+                child: Padding(
+                  padding: EdgeInsets.all(widget.screenWidth * 0.03),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(widget.chatText,
+                          style: GoogleFonts.poppins(
+                              textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: widget.screenWidth * 0.03)))),
+                )),
+          ],
+        ),
       ),
     );
   }
@@ -289,5 +321,23 @@ class _PromptBox extends State<PromptBox> {
         )
       ],
     );
+  }
+}
+
+class MessageList extends StatefulWidget {
+  const MessageList({super.key});
+
+  Future getMessages() async {
+    return;
+  }
+
+  @override
+  State<MessageList> createState() => _MessageList();
+}
+
+class _MessageList extends State<MessageList> {
+  @override
+  Widget build(BuildContext context) {
+    return ListView();
   }
 }

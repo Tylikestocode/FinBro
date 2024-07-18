@@ -28,7 +28,9 @@ class _FinBroListViewItem extends State<FinBroListViewItem> {
         height: widget.screenHeight * 0.15,
         decoration: BoxDecoration(
             color: third,
-            border: Border(bottom: BorderSide(color: Colors.black))),
+            border: Border(
+                bottom:
+                    BorderSide(color: Color.fromRGBO(177, 177, 177, 0.384)))),
         child: Row(children: [
           Container(
               width: widget.screenWidth * 0.065,
