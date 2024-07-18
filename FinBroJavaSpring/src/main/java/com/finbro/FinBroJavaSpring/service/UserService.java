@@ -33,42 +33,43 @@ public class UserService {
         }
         validateEmail(user.getEmail());
         user.setPassword(hashPassword(user.getPassword()));
-        userRepository.storeUser(user);
+
+        userRepository.save(user);
     }
 
     // Get all Users
     public List<User> findAllUsers() {
-        return userRepository.findAllUsers();
+        return (List<User>) userRepository.findAll();
     }
 
     // Get User by UserID
     public User getUserByID(int userId) {
 
-        if (!userRepository.userIDExists(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new UserIDNotFoundException(String.valueOf(userId));
         }
 
-        return userRepository.getUserByID(userId);
+        return userRepository.findById(userId).orElse(null);
     }
 
     // Get User by Username
     public User getUserByUsername(String username) {
 
-        if (!userRepository.usernameExists(username)) {
+        if (!userRepository.existsByUsername(username)) {
             throw new UsernameNotFoundException(username);
         }
 
-        return userRepository.getUserByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     // Get User by Email
     public User getUserByEmail(String email) {
 
-        if (!userRepository.emailExists(email)) {
+        if (!userRepository.existsByEmail(email)) {
             throw new EmailNotFoundException(email);
         }
 
-        return userRepository.getUserByEmail(email);
+        return userRepository.findByEmail(email);
 
     }
 
@@ -80,11 +81,11 @@ public class UserService {
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
 
-        if (!userRepository.emailExists(email)) {
+        if (!userRepository.existsByEmail(email)) {
             throw new EmailNotFoundException(email);
         }
 
-        User user = userRepository.getUserByEmail(email);
+        User user = userRepository.findByEmail(email);
 
         if (!password.equals(user.getPassword())) {
             throw new InvalidLoginException("Invalid login details");
@@ -99,7 +100,7 @@ public class UserService {
 
         trimStringData(user);
 
-        if (!userRepository.userIDExists(user.getId())) {
+        if (!userRepository.existsById(user.getId())) {
             throw new UserIDNotFoundException(String.valueOf(user.getId()));
         }
 
@@ -107,7 +108,9 @@ public class UserService {
 
         // If Username is changing, first check if Username already exists
         if (!exisitingUser.getUsername().equals(user.getUsername())) {
-            usernameExists(user.getUsername());
+            if (usernameExists(user.getUsername())) {
+                throw new UserAlreadyExistsException(user.getUsername());
+            }
         }
 
         // If Email is changing, first check if Email is valid
@@ -117,19 +120,19 @@ public class UserService {
 
         // Password hashing to be done here
         // user.setPassword(hashPassword(user.getPassword());
-        userRepository.updateUser(user);
+        userRepository.save(user);
 
     }
 
     // Delete user by UserID
-    public void deleteUserByID(int userID) {
+    public void deleteUserByID(int id) {
 
-        if (!userRepository.userIDExists(userID)) {
-            throw new UserIDNotFoundException(String.valueOf(userID));
+        if (!userRepository.existsById(id)) {
+            throw new UserIDNotFoundException(String.valueOf(id));
         }
 
-        if (userRepository.userIDExists(userID)) {
-            userRepository.deleteUserByID(userID);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
         }
 
     }
@@ -149,19 +152,13 @@ public class UserService {
 
     private boolean usernameExists(String username) {
 
-        return userRepository.usernameExists(username);
-
-    }
-
-    private boolean emailExists(String email) {
-
-        return userRepository.emailExists(email);
+        return userRepository.existsByUsername(username);
 
     }
 
     private void validateEmail(String email) {
 
-        if (userRepository.emailExists(email)) {
+        if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyExistsException(email);
         }
 

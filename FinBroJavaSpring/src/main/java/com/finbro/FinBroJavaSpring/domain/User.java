@@ -1,7 +1,9 @@
 package com.finbro.FinBroJavaSpring.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
+@Table(name = "Users")
 public class User {
 
     @Id
