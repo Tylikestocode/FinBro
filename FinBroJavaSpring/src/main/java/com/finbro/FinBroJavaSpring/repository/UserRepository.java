@@ -97,8 +97,31 @@ public class UserRepository {
 
     }
 
+    // Get User by Email
+    public User getUserByEmail(String email) {
+
+        String sql = "SELECT * FROM Users WHERE Email = ?";
+
+        RowMapper<User> userRowMapper = (r, i) -> {
+
+            User rowObject = new User();
+            rowObject.setId(r.getInt("UserID"));
+            rowObject.setName(r.getString("Name"));
+            rowObject.setSurname(r.getString("Surname"));
+            rowObject.setAge(r.getInt("Age"));
+            rowObject.setUsername(r.getString("Username"));
+            rowObject.setEmail(r.getString("Email"));
+            rowObject.setPassword(r.getString("Password"));
+            return rowObject;
+
+        };
+
+        return jdbc.queryForObject(sql, userRowMapper, email);
+
+    }
+
     // Check if a username exists
-    public boolean existsByUsername(String username) {
+    public boolean usernameExists(String username) {
 
         String sql = "SELECT COUNT(*) FROM Users WHERE Username = ?";
         Integer count =  jdbc.queryForObject(sql, Integer.class, username);
@@ -107,7 +130,7 @@ public class UserRepository {
     }
 
     // Check if a UserID exists
-    public boolean existsByID(int userID) {
+    public boolean userIDExists(int userID) {
 
         String sql = "SELECT COUNT(*) FROM Users WHERE UserID = ?";
         Integer count = jdbc.queryForObject(sql, Integer.class, userID);
@@ -116,7 +139,7 @@ public class UserRepository {
     }
 
     // Check if the email already exists
-    public boolean existsByEmail(String email) {
+    public boolean emailExists(String email) {
 
         String sql = "SELECT COUNT(*) FROM Users WHERE Email = ?";
         Integer count = jdbc.queryForObject(sql, Integer.class, email);
