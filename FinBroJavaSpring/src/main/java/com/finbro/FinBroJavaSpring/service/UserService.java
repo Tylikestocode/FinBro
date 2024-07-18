@@ -5,8 +5,10 @@ import com.finbro.FinBroJavaSpring.exception.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +28,9 @@ public class UserService {
     // Check new user details before adding to database
     public void storeUser(User user) {
         trimStringData(user);
-        checkIfUserExists(user.getUsername());
+        if (usernameExists(user.getUsername())) {
+            throw new UserAlreadyExistsException(user.getUsername());
+        }
         validateEmail(user.getEmail());
         user.setPassword(hashPassword(user.getPassword()));
         userRepository.storeUser(user);
@@ -40,7 +44,7 @@ public class UserService {
     // Get User by UserID
     public User getUserByID(int userId) {
 
-        if (!userRepository.existsByID(userId)) {
+        if (!userRepository.userIDExists(userId)) {
             throw new UserIDNotFoundException(String.valueOf(userId));
         }
 
@@ -50,17 +54,52 @@ public class UserService {
     // Get User by Username
     public User getUserByUsername(String username) {
 
-        if (!userRepository.existsByUsername(username)) {
+        if (!userRepository.usernameExists(username)) {
             throw new UsernameNotFoundException(username);
         }
 
         return userRepository.getUserByUsername(username);
     }
 
+    // Get User by Email
+    public User getUserByEmail(String email) {
+
+        if (!userRepository.emailExists(email)) {
+            throw new EmailNotFoundException(email);
+        }
+
+        return userRepository.getUserByEmail(email);
+
+    }
+
+    // Validate Email and/or Username with Password
+    public User validateCredentials(@RequestBody Map<String, String> loginRequest) {
+
+        validateLoginRequest(loginRequest);
+
+        String email = loginRequest.get("email");
+        String password = loginRequest.get("password");
+
+        if (!userRepository.emailExists(email)) {
+            throw new EmailNotFoundException(email);
+        }
+
+        User user = userRepository.getUserByEmail(email);
+
+        if (!password.equals(user.getPassword())) {
+            throw new InvalidLoginException("Invalid login details");
+        }
+
+        return user;
+
+    }
+
     // Update User details
     public void updateUser(User user) {
 
-        if (!userRepository.existsByID(user.getId())) {
+        trimStringData(user);
+
+        if (!userRepository.userIDExists(user.getId())) {
             throw new UserIDNotFoundException(String.valueOf(user.getId()));
         }
 
@@ -68,7 +107,7 @@ public class UserService {
 
         // If Username is changing, first check if Username already exists
         if (!exisitingUser.getUsername().equals(user.getUsername())) {
-            checkIfUserExists(user.getUsername());
+            usernameExists(user.getUsername());
         }
 
         // If Email is changing, first check if Email is valid
@@ -85,11 +124,11 @@ public class UserService {
     // Delete user by UserID
     public void deleteUserByID(int userID) {
 
-        if (!userRepository.existsByID(userID)) {
+        if (!userRepository.userIDExists(userID)) {
             throw new UserIDNotFoundException(String.valueOf(userID));
         }
 
-        if (userRepository.existsByID(userID)) {
+        if (userRepository.userIDExists(userID)) {
             userRepository.deleteUserByID(userID);
         }
 
@@ -108,16 +147,21 @@ public class UserService {
 
     }
 
-    private void checkIfUserExists(String username) {
+    private boolean usernameExists(String username) {
 
-        if (userRepository.existsByUsername(username)) {
-            throw new UserAlreadyExistsException(username);
-        }
+        return userRepository.usernameExists(username);
+
+    }
+
+    private boolean emailExists(String email) {
+
+        return userRepository.emailExists(email);
+
     }
 
     private void validateEmail(String email) {
 
-        if (userRepository.existsByEmail(email)) {
+        if (userRepository.emailExists(email)) {
             throw new EmailAlreadyExistsException(email);
         }
 
@@ -127,6 +171,17 @@ public class UserService {
         if (!matcher.matches()) {
             throw new InvalidEmailFormatException(email);
         }
+    }
+
+    private void validateLoginRequest(Map<String, String> loginRequest) {
+
+        if (!loginRequest.containsKey("email")) {
+            throw new MissingParameterException("email");
+        }
+        if ((!loginRequest.containsKey("password"))) {
+            throw new MissingParameterException("password");
+        }
+
     }
 
 

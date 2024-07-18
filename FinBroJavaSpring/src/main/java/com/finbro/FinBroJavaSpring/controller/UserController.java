@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -51,6 +52,22 @@ public class UserController {
     public ResponseEntity<?> getUserByUsername(@PathVariable String username) {
 
         User user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(user);
+
+    }
+
+    @GetMapping("/getByEmail/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+
+        User user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+
+    }
+
+    @GetMapping("/validateCredentials")
+    public ResponseEntity<?> validateCredentials(@RequestBody Map<String, String> loginRequest) {
+
+        User user = userService.validateCredentials(loginRequest);
         return ResponseEntity.ok(user);
 
     }

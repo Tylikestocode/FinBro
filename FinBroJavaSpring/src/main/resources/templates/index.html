@@ -3,116 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
     <title>User API Documentation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #333;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .endpoint {
-            margin-bottom: 30px;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .endpoint h3 {
-            margin-top: 0;
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 5px;
-        }
-        .endpoint p {
-            margin-bottom: 10px;
-            color: #666;
-        }
-        .endpoint p:first-of-type {
-            font-weight: bold;
-        }
-        .endpoint ul {
-            padding-left: 20px;
-            margin-top: 10px;
-            color: #666;
-        }
-        .endpoint li {
-            margin-bottom: 5px;
-        }
-        .endpoint li strong {
-            font-weight: bold;
-            color: #333;
-        }
-        .attributes-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-        }
-        .attributes-table th, .attributes-table td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        .attributes-table th {
-            background-color: #f0f0f0;
-            font-weight: bold;
-            color: #333;
-        }
-        .attributes-table td {
-            color: #666;
-        }
-    </style>
 
 </head>
 <body>
-<h1>User API Documentation</h1>
-
-<div class="attributes-table">
-    <table>
-        <thead>
-        <tr>
-            <th>Attribute</th>
-            <th>Data Type</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Name</td>
-            <td>String</td>
-        </tr>
-        <tr>
-            <td>Surname</td>
-            <td>String</td>
-        </tr>
-        <tr>
-            <td>Age</td>
-            <td>Integer</td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>String</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>String</td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>String</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<h1 id="heading">User API Documentation</h1>
 
 <div class="endpoint">
     <h3>POST /api/users/addUser</h3>
@@ -154,6 +51,28 @@
 </div>
 
 <div class="endpoint">
+    <h3>GET /api/users/getByEmail/{email}</h3>
+    <p>Retrieves a user by their Email.</p>
+    <p><strong>Path Variable:</strong> email (string).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>200 OK:</strong> User found and returned.</li>
+        <li><strong>404 Not Found:</strong> If user with the specified email does not exist.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
+    <h3>GET /api/users/validateCredentials</h3>
+    <p>Retrieves a user by their email and password.</p>
+    <p><strong>Request body:</strong> username (string), password (string).</p>
+    <p><strong>Responses:</strong></p>
+    <ul>
+        <li><strong>200 OK:</strong> User found and returned.</li>
+        <li><strong>404 Not Found:</strong> If user with the given email does not exist or the password is invalid.</li>
+    </ul>
+</div>
+
+<div class="endpoint">
     <h3>PUT /api/users/updateUser</h3>
     <p>Updates an existing user.</p>
     <p><strong>Request Body:</strong> JSON representation of User object (Including UserID).</p>
@@ -174,6 +93,8 @@
         <li><strong>404 Not Found:</strong> If user with the specified ID does not exist.</li>
     </ul>
 </div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
