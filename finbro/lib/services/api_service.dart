@@ -5,27 +5,16 @@ import "package:http/http.dart" as http;
 // Define the function with a proper return type
 Future<User?> fetchPerson(String url) async {
   try {
-    var response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      if (data.isNotEmpty) {
-        var currentUser = User(
-          data[0]['name'],
-          data[0]['surname'],
-          data[0]['age'],
-          data[0]['email'],
-        );
-        return currentUser;
-      } else {
-        print('No data found');
-        return null;
-      }
+      final data = jsonDecode(response.body);
+      final currentUser = User(data[0], data[0], data[0], data[0]);
+      return currentUser;
     } else {
-      print('Response failed with status code ${response.statusCode}');
-      return null;
+      print('Error Status Code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error: $e');
-    return null;
   }
+  return null;
 }
