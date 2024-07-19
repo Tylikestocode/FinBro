@@ -64,7 +64,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/validateCredentials")
+    @PostMapping("/validateCredentials")
     public ResponseEntity<?> validateCredentials(@RequestBody Map<String, String> loginRequest) {
 
         User user = userService.validateCredentials(loginRequest);
