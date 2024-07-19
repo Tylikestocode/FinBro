@@ -9,13 +9,15 @@ class FinBroTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
   final String text;
+  final TextEditingController emailController;
 
   const FinBroTextField({
-    Key? key,
+    super.key,
     required this.screenWidth,
     required this.screenHeight,
     required this.text,
-  }) : super(key: key);
+    required this.emailController,
+  });
 
   @override
   State<FinBroTextField> createState() => _FinBroTextFieldState();
@@ -52,6 +54,7 @@ class _FinBroTextFieldState extends State<FinBroTextField> {
             child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+              controller: widget.emailController,
               cursorColor: outline,
               decoration: InputDecoration(
                   hintStyle: GoogleFonts.poppins(
@@ -71,13 +74,15 @@ class FinBroPasswordTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
   final String text;
+  final TextEditingController passwordController;
 
   const FinBroPasswordTextField({
-    Key? key,
+    super.key,
     required this.screenWidth,
     required this.screenHeight,
     required this.text,
-  }) : super(key: key);
+    required this.passwordController,
+  });
 
   @override
   State<FinBroPasswordTextField> createState() => _FinBroPasswordTextField();
@@ -114,6 +119,7 @@ class _FinBroPasswordTextField extends State<FinBroPasswordTextField> {
             child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+              controller: widget.passwordController,
               obscureText: true,
               cursorColor: outline,
               decoration: InputDecoration(
@@ -136,11 +142,10 @@ class FinBroButton extends StatefulWidget {
   final String buttonText;
 
   const FinBroButton(
-      {Key? key,
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
-      required this.buttonText})
-      : super(key: key);
+      required this.buttonText});
 
   @override
   State<FinBroButton> createState() => _FinBroButton();

@@ -11,8 +11,7 @@ class BalanceCard extends StatefulWidget {
   final double screenHeight;
 
   const BalanceCard(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<BalanceCard> createState() => _BalanceCardState();
@@ -65,9 +64,8 @@ class RecentTransactions extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
 
-  RecentTransactions(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+  const RecentTransactions(
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<RecentTransactions> createState() => _RecentTransactions();
@@ -140,12 +138,11 @@ class AiChatBubble extends StatefulWidget {
   final double screenHeight;
   final String responseText;
 
-  AiChatBubble(
-      {Key? key,
+  const AiChatBubble(
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
-      required this.responseText})
-      : super(key: key);
+      required this.responseText});
 
   @override
   State<AiChatBubble> createState() => _AiChatBubble();
@@ -204,12 +201,11 @@ class UserChatBubble extends StatefulWidget {
   final double screenHeight;
   final String chatText;
 
-  UserChatBubble(
-      {Key? key,
+  const UserChatBubble(
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
-      required this.chatText})
-      : super(key: key);
+      required this.chatText});
 
   @override
   State<UserChatBubble> createState() => _UserChatBubble();
@@ -268,8 +264,8 @@ class PromptBox extends StatefulWidget {
   final double screenHeight;
   final String prompt;
 
-  PromptBox(
-      {Key? key,
+  const PromptBox(
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
       required this.prompt});

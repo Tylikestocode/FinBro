@@ -3,6 +3,7 @@
 import "package:finbro/components/input_ouput.dart";
 import "package:finbro/pages/page_router.dart";
 import "package:finbro/pages/sign_up_page.dart";
+import "package:finbro/services/authentication.dart";
 import "package:finbro/styles/color_scheme.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
@@ -17,10 +18,45 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
+  bool loggedIn = false;
+  late TextEditingController emailController = TextEditingController();
+  late TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    void authenticate(String email, String password) async {
+      bool result = await loginUser(email, password);
+      setState(() {
+        loggedIn = result;
+      });
+      if (loggedIn) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PageRouter()));
+      } else {
+        // Handle login failure (e.g., show a snackbar or error message)
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text('Login failed. Please check your credentials.')),
+        );
+      }
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -59,7 +95,8 @@ class _LoginPage extends State<LoginPage> {
           child: FinBroTextField(
               screenHeight: screenHeight,
               screenWidth: screenWidth,
-              text: 'Email'),
+              text: 'Email',
+              emailController: emailController),
         ),
         SizedBox(height: screenHeight * 0.035),
         // Password TextField
@@ -67,14 +104,14 @@ class _LoginPage extends State<LoginPage> {
             child: FinBroPasswordTextField(
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
-                text: 'Password')),
+                text: 'Password',
+                passwordController: passwordController)),
         SizedBox(height: screenHeight * 0.05),
 
         // Continue Button
         GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => PageRouter()));
+            authenticate(emailController.text, passwordController.text);
           },
           child: FinBroButton(
               screenWidth: screenWidth,

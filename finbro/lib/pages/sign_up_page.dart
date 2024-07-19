@@ -22,6 +22,10 @@ class _SignUpPage extends State<SignUpPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -60,7 +64,8 @@ class _SignUpPage extends State<SignUpPage> {
           child: FinBroTextField(
               screenHeight: screenHeight,
               screenWidth: screenWidth,
-              text: 'Email'),
+              text: 'Email',
+              emailController: emailController),
         ),
         SizedBox(height: screenHeight * 0.035),
         // Password TextField
@@ -68,14 +73,16 @@ class _SignUpPage extends State<SignUpPage> {
             child: FinBroPasswordTextField(
                 screenHeight: screenHeight,
                 screenWidth: screenWidth,
-                text: 'Password')),
+                text: 'Password',
+                passwordController: passwordController)),
         SizedBox(height: screenHeight * 0.035),
         // Confirm Password
         Center(
           child: FinBroPasswordTextField(
               screenHeight: screenHeight,
               screenWidth: screenWidth,
-              text: 'Confirm Password'),
+              text: 'Confirm Password',
+              passwordController: confirmPasswordController),
         ),
         SizedBox(height: screenHeight * 0.05),
         // Continue Button
