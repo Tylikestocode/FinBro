@@ -3,7 +3,7 @@ package com.finbro.FinBroJavaSpring.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "Users")
+@Table(name = "USERS")
 public class User {
 
     @Id
