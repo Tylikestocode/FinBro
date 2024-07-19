@@ -28,10 +28,10 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody User user) {
 
-        userService.storeUser(user);
+        User savedUser = userService.saveUser(user);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.getUserByUsername(user.getUsername()));
+                .body(savedUser);
 
     }
 
@@ -75,10 +75,10 @@ public class UserController {
     @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
 
-        userService.updateUser(user);
+        User updatedUser = userService.updateUser(user);
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(user);
+                .body(updatedUser);
 
     }
 

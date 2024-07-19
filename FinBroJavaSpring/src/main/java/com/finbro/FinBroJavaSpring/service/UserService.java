@@ -26,7 +26,7 @@ public class UserService {
 
 
     // Check new user details before adding to database
-    public void storeUser(User user) {
+    public User saveUser(User user) {
         trimStringData(user);
         if (usernameExists(user.getUsername())) {
             throw new UserAlreadyExistsException(user.getUsername());
@@ -34,7 +34,8 @@ public class UserService {
         validateEmail(user.getEmail());
         user.setPassword(hashPassword(user.getPassword()));
 
-        userRepository.save(user);
+        return userRepository.save(user);
+
     }
 
     // Get all Users
@@ -96,7 +97,7 @@ public class UserService {
     }
 
     // Update User details
-    public void updateUser(User user) {
+    public User updateUser(User user) {
 
         trimStringData(user);
 
@@ -120,7 +121,7 @@ public class UserService {
 
         // Password hashing to be done here
         // user.setPassword(hashPassword(user.getPassword());
-        userRepository.save(user);
+        return userRepository.save(user);
 
     }
 
@@ -131,9 +132,7 @@ public class UserService {
             throw new UserIDNotFoundException(String.valueOf(id));
         }
 
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        }
+        userRepository.deleteById(id);
 
     }
 
