@@ -130,7 +130,7 @@ public class UserControllerUnitTests {
 
         String json = mapper.writeValueAsString(loginRequest);
 
-        mockMvc.perform(get("/api/users/validateCredentials")
+        mockMvc.perform(post("/api/users/validateCredentials")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk())
