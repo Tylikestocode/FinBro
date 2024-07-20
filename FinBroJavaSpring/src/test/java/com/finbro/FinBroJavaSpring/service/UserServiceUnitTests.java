@@ -4,7 +4,7 @@ package com.finbro.FinBroJavaSpring.service;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.EmailAlreadyExistsException;
 import com.finbro.FinBroJavaSpring.exception.InvalidEmailFormatException;
-import com.finbro.FinBroJavaSpring.exception.UserAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.UsernameAlreadyExistsException;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,7 +101,7 @@ public class UserServiceUnitTests {
         when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
 
         // Assert
-        assertThrows(UserAlreadyExistsException.class, () -> userService.saveUser(user1));
+        assertThrows(UsernameAlreadyExistsException.class, () -> userService.saveUser(user1));
 
     }
 

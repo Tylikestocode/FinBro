@@ -107,7 +107,7 @@ public class UserRepositoryTest {
 
         // Act
         User user = userRepository.findByUsername("john.d");
-        int userId = user.getId();
+        long userId = user.getId();
         User returnedUser = userRepository.findById(userId).orElse(null);
 
         // Assert

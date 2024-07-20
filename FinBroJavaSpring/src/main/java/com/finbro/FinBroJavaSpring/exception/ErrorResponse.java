@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 public class ErrorResponse {
 
     private int status;
-    private String message;
+    private String errorCode;
+    private String details;
     private LocalDateTime localDateTime;
 
-    public ErrorResponse(int status, String message, LocalDateTime localDateTime) {
+    public ErrorResponse(int status, String errorCode, String details, LocalDateTime localDateTime) {
         this.status = status;
-        this.message = message;
+        this.errorCode = errorCode;
+        this.details = details;
         this.localDateTime = localDateTime;
     }
 
@@ -22,12 +24,20 @@ public class ErrorResponse {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getErrorCode() {
+        return errorCode;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public LocalDateTime getLocalDateTime() {

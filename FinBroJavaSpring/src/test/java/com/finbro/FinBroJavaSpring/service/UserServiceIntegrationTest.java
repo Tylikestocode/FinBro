@@ -94,9 +94,9 @@ public class UserServiceIntegrationTest {
     public void UserService_SaveUser_ReturnsUserAlreadyExistsException() {
 
         userService.saveUser(user1);
-        User user = new User(1, "newUser", "NewSurname", 23, "john.d", "newEmail@john.com", "newPass");
+        User user = new User((long) 1, "newUser", "NewSurname", 23, "john.d", "newEmail@john.com", "newPass");
 
-        assertThrows(UserAlreadyExistsException.class, () -> userService.saveUser(user));
+        assertThrows(UsernameAlreadyExistsException.class, () -> userService.saveUser(user));
 
     }
 
@@ -119,7 +119,7 @@ public class UserServiceIntegrationTest {
     public void UserService_SaveUser_ReturnsEmailAlreadyExistsException() {
 
         userService.saveUser(user1);
-        User user = new User(1, "newUser", "NewSurname", 23, "newUsername", "john.d@example.com", "newPass");
+        User user = new User((long) 1, "newUser", "NewSurname", 23, "newUsername", "john.d@example.com", "newPass");
 
         assertThrows(EmailAlreadyExistsException.class, () -> userService.saveUser(user));
 
@@ -157,7 +157,7 @@ public class UserServiceIntegrationTest {
         userService.saveUser(user1);
 
 
-        int id = userService.getUserByUsername("john.d").getId(); // 5 Users were already added in data.sql
+        long id = userService.getUserByUsername("john.d").getId(); // 5 Users were already added in data.sql
         User user = userService.getUserByID(id);
 
         assertThat(user).isNotNull();
@@ -170,7 +170,7 @@ public class UserServiceIntegrationTest {
 
         userService.saveUser(user1);
 
-        int id = 12;
+        long id = 12;
 
         assertThrows(UserIDNotFoundException.class, () -> userService.getUserByID(id));
 
@@ -243,7 +243,7 @@ public class UserServiceIntegrationTest {
         userCredentials.put("email", "john.d@example.com");
         userCredentials.put("password", "wrongPassword");
 
-        assertThrows(InvalidLoginException.class, () -> userService.validateCredentials(userCredentials));
+        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(userCredentials));
 
     }
 
@@ -278,7 +278,7 @@ public class UserServiceIntegrationTest {
         userService.saveUser(user1);
 
         User user = userService.getUserByUsername("john.d");
-        user.setId(45);
+        user.setId((long) 45);
         user.setName("NewName");
         user.setSurname("newSurname");
         user.setAge(4);
@@ -300,10 +300,10 @@ public class UserServiceIntegrationTest {
         User user = userService.getUserByUsername("john.d");
 
         user.setUsername("alice.j");
-        assertThrows(UserAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(UsernameAlreadyExistsException.class, () -> userService.updateUser(user));
 
         user.setUsername("bob.s");
-        assertThrows(UserAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(UsernameAlreadyExistsException.class, () -> userService.updateUser(user));
 
     }
 
@@ -331,10 +331,10 @@ public class UserServiceIntegrationTest {
         userService.saveUser(user2);
         userService.saveUser(user3);
 
-        int id = userService.getUserByUsername("alice.j").getId();
+        long id = userService.getUserByUsername("alice.j").getId();
         userService.deleteUserByID(id);      // Deleting user2
 
-        assertThrows(UserIDNotFoundException.class, () -> userService.deleteUserByID(6));
+        assertThrows(UserIDNotFoundException.class, () -> userService.deleteUserByID((long) 6));
 
     }
 
