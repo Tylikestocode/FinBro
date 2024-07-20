@@ -39,13 +39,13 @@ public class UserControllerUnitTests {
     public void setUp() {
 
         user1 = new User();
-        user1.setId(1);
+        user1.setId((long) 1);
         user1.setUsername("testUser1");
         user1.setEmail("test1@example.com");
         user1.setPassword("password1");
 
         user2 = new User();
-        user2.setId(2);
+        user2.setId((long) 2);
         user2.setUsername("testUser2");
         user2.setEmail("test2@example.com");
         user2.setPassword("password2");
@@ -86,7 +86,7 @@ public class UserControllerUnitTests {
     @Test
     public void testGetUserByID() throws Exception {
 
-        Mockito.when(userService.getUserByID(1)).thenReturn(user1);
+        Mockito.when(userService.getUserByID((long) 1)).thenReturn(user1);
 
         mockMvc.perform(get("/api/users/getByUserId/1"))
                 .andExpect(status().isOk())
@@ -157,7 +157,7 @@ public class UserControllerUnitTests {
 
     @Test
     public void testDeleteUserById() throws Exception {
-        Mockito.doNothing().when(userService).deleteUserByID(1);
+        Mockito.doNothing().when(userService).deleteUserByID((long) 1);
 
         mockMvc.perform(delete("/api/users/deleteByUserId/1"))
                 .andExpect(status().isOk())
