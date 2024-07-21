@@ -3,98 +3,413 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinBro API Documentation</title>
     <link rel="stylesheet" href="style.css">
-
-    <title>User API Documentation</title>
-
 </head>
 <body>
-<h1 id="heading">User API Documentation</h1>
+<header>
+    <h1>FinBro API Documentation</h1>
+</header>
+<main>
+    <section class="api-group">
+        <h2>Users</h2>
+        <p>http://testvps.us.to:8080/api/users/</p>
 
-<div class="endpoint">
-    <h3>POST /api/users/addUser</h3>
-    <p>Adds a new user.</p>
-    <p><strong>Request Body:</strong> JSON representation of User object.</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>201 Created:</strong> User successfully added.</li>
-        <li><strong>400 Bad Request:</strong> If the request body is invalid or user already exists.</li>
-    </ul>
-</div>
+        <!-- Table of Contents -->
+        <nav class="toc">
+            <h3>API Endpoints</h3>
+            <ul>
+                <li><a href="#create-user">Create User</a></li>
+                <li><a href="#get-all-users">Get All Users</a></li>
+                <li><a href="#get-user-by-id">Get User By ID</a></li>
+                <li><a href="#get-user-by-username">Get User By Username</a></li>
+                <li><a href="#get-user-by-email">Get User By Email</a></li>
+                <li><a href="#validate-credentials">ValidateCredentials</a></li>
+                <li><a href="#update-user">Update User</a></li>
+                <li><a href="#delete-user-by-id">Delete User</a></li>
+            </ul>
+        </nav>
 
-<div class="endpoint">
-    <h3>GET /api/users/allUsers</h3>
-    <p>Retrieves all users.</p>
-    <p><strong>Responses:</strong> List of User objects.</p>
-</div>
+        <!-- Error Messages Summary -->
+        <div class="error-summary">
+            <h3>Possible Error Messages</h3>
+            <ul>
+                <li><code>400 Bad Request</code> - The request could not be understood by the server due to malformed syntax or invalid data.</li>
+                <li><code>USERNAME_ALREADY_EXISTS</code> - User with the given username already exists.</li>
+                <li><code>USER_ID_NOT_FOUND</code> - User with the given id does not exist.</li>
+                <li><code>USERNAME_NOT_FOUND</code> - User with the given username does not exist.</li>
+                <li><code>EMAIL_ALREADY_EXISTS</code> - Given email already belongs to a User.</li>
+                <li><code>EMAIL_NOT_FOUND</code> - Given email does belong to an existing User.</li>
+                <li><code>INVALID_EMAIL_FORMAT</code> - Given email does not fit expected format.</li>
+                <li><code>MISSING_PARAMETER</code> - Given response body is missing parameter/s.</li>
+                <li><code>INCORRECT_PASSWORD</code> - Given password is incorrect.</li>
 
-<div class="endpoint">
-    <h3>GET /api/users/getByUserId/{userId}</h3>
-    <p>Retrieves a user by their ID.</p>
-    <p><strong>Path Variable:</strong> userId (integer).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>200 OK:</strong> User found and returned.</li>
-        <li><strong>404 Not Found:</strong> If user with the specified ID does not exist.</li>
-    </ul>
-</div>
+            </ul>
+        </div>
 
-<div class="endpoint">
-    <h3>GET /api/users/getByUsername/{username}</h3>
-    <p>Retrieves a user by their username.</p>
-    <p><strong>Path Variable:</strong> username (string).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>200 OK:</strong> User found and returned.</li>
-        <li><strong>404 Not Found:</strong> If user with the specified username does not exist.</li>
-    </ul>
-</div>
+        <!-- API Documentation Blocks -->
+        <div id="create-user" class="api-endpoint">
+            <h3>Create User</h3>
 
-<div class="endpoint">
-    <h3>GET /api/users/getByEmail/{email}</h3>
-    <p>Retrieves a user by their Email.</p>
-    <p><strong>Path Variable:</strong> email (string).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>200 OK:</strong> User found and returned.</li>
-        <li><strong>404 Not Found:</strong> If user with the specified email does not exist.</li>
-    </ul>
-</div>
+            <div class="section">
+                <h4>Path</h4>
+                <p>/addUser</p>
+            </div>
 
-<div class="endpoint">
-    <h3>GET /api/users/validateCredentials</h3>
-    <p>Retrieves a user by their email and password.</p>
-    <p><strong>Request body:</strong> username (string), password (string).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>200 OK:</strong> User found and returned.</li>
-        <li><strong>404 Not Found:</strong> If user with the given email does not exist or the password is invalid.</li>
-    </ul>
-</div>
+            <div class="section">
+                <h4>Description</h4>
+                <p>Creates a new Users and stores in the database.</p>
+            </div>
 
-<div class="endpoint">
-    <h3>PUT /api/users/updateUser</h3>
-    <p>Updates an existing user.</p>
-    <p><strong>Request Body:</strong> JSON representation of User object (Including UserID).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>201 Created:</strong> User successfully updated.</li>
-        <li><strong>400 Bad Request:</strong> If the request body is invalid or user already exists.</li>
-    </ul>
-</div>
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>POST</p>
+            </div>
 
-<div class="endpoint">
-    <h3>DELETE /api/users/deleteByUserId/{userId}</h3>
-    <p>Deletes a user by their ID.</p>
-    <p><strong>Path Variable:</strong> userId (integer).</p>
-    <p><strong>Responses:</strong></p>
-    <ul>
-        <li><strong>204 No Content:</strong> User successfully deleted.</li>
-        <li><strong>404 Not Found:</strong> If user with the specified ID does not exist.</li>
-    </ul>
-</div>
+            <div class="section">
+                <h4>Request Body Example</h4>
+                <pre>
+{
+    "name": "Bob",
+    "surname": "Smith",
+    "age": 35,
+    "username": "bob.s",
+    "email": "bob.s@example.com",
+    "password": "hashed_password2"
+}
+                    </pre>
+            </div>
 
-<script src="script.js"></script>
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+{
+    "id": 2,
+    "name": "Bob",
+    "surname": "Smith",
+    "age": 35,
+    "username": "bob.s",
+    "email": "bob.s@example.com",
+    "password": "hashed_password2"
+}
+                    </pre>
+            </div>
+        </div>
 
+        <div id="get-all-users" class="api-endpoint">
+            <h3>Get All UserS</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/allUsers</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Retrieves all Users.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>GET</p>
+            </div>
+
+<!--            <div class="section">-->
+<!--                <h4>Path Variables</h4>-->
+<!--                <p><code>id</code> (User ID)</p>-->
+<!--            </div>-->
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+{
+    {
+        "id": 1,
+        "name": "Alice",
+        "surname": "Johnson",
+        "age": 28,
+        "username": "alice.j",
+        "email": "alice.j@example.com",
+        "password": "hashed_password1"
+    },
+    {
+        "id": 2,
+        "name": "Bob",
+        "surname": "Smith",
+        "age": 35,
+        "username": "bob.s",
+        "email": "bob.s@example.com",
+        "password": "hashed_password2"
+    },
+    {
+        "id": 3,
+        "name": "New",
+        "surname": "User",
+        "age": 40,
+        "username": "newUser",
+        "email": "newbie@example.com",
+        "password": "NewPass"
+    }
+}
+                    </pre>
+            </div>
+        </div>
+
+        <div id="get-user-by-id" class="api-endpoint">
+            <h3>Get User By ID</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/getByUserId/{id}</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Retrieve User with the given id.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>GET</p>
+            </div>
+
+            <div class="section">
+                <h4>Path Variables</h4>
+                <p><code>id</code> (User ID)</p>
+            </div>
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+
+{
+    "id": 1,
+    "name": "Alice",
+    "surname": "Johnson",
+    "age": 28,
+    "username": "alice.j",
+    "email": "alice.j@example.com",
+    "password": "hashed_password1"
+}
+
+                </pre>
+            </div>
+        </div>
+
+        <div id="get-user-by-username" class="api-endpoint">
+            <h3>Get User By Username</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/getByUsername/{username}</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Retrieve User with the given Username.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>GET</p>
+            </div>
+
+            <div class="section">
+                <h4>Path Variables</h4>
+                <p><code>username</code> (Username)</p>
+            </div>
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+
+{
+    "id": 1,
+    "name": "Alice",
+    "surname": "Johnson",
+    "age": 28,
+    "username": "alice.j",
+    "email": "alice.j@example.com",
+    "password": "hashed_password1"
+}
+
+                </pre>
+            </div>
+        </div>
+
+        <div id="get-user-by-email" class="api-endpoint">
+            <h3>Get User By Email</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/getByEmail/{email}</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Retrieve User with the given Email.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>GET</p>
+            </div>
+
+            <div class="section">
+                <h4>Path Variables</h4>
+                <p><code>email</code> (Email)</p>
+            </div>
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+
+{
+    "id": 1,
+    "name": "Alice",
+    "surname": "Johnson",
+    "age": 28,
+    "username": "alice.j",
+    "email": "alice.j@example.com",
+    "password": "hashed_password1"
+}
+
+                </pre>
+            </div>
+        </div>
+
+        <div id="validate-credentials" class="api-endpoint">
+            <h3>Validate User Email and Password</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/validateCredentials</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Validates given email and password.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>POST</p>
+            </div>
+
+            <div class="section">
+                <h4>Request Body Example</h4>
+                <pre>
+
+{
+    "email": "alice.j@example.com",
+    "password": "hashed_password1"
+}
+
+                </pre>
+            </div>
+
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+
+{
+    "id": 1,
+    "name": "Alice",
+    "surname": "Johnson",
+    "age": 28,
+    "username": "alice.j",
+    "email": "alice.j@example.com",
+    "password": "hashed_password1"
+}
+
+                </pre>
+            </div>
+        </div>
+
+        <div id="update-user" class="api-endpoint">
+            <h3>Update User</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/updateUser</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Updates the given user details.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>PUT</p>
+            </div>
+
+            <div class="section">
+                <h4>Request Body Example</h4>
+                <pre>
+{
+    "id": 2
+    "name": "Bob",
+    "surname": "newSurname",
+    "age": 44,
+    "username": "newUsername",
+    "email": "new.email@gmail.com",
+    "password": "new_password"
+}
+                    </pre>
+            </div>
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+{
+    "id": 2
+    "name": "Bob",
+    "surname": "newSurname",
+    "age": 44,
+    "username": "newUsername",
+    "email": "new.email@gmail.com",
+    "password": "new_password"
+}
+                    </pre>
+            </div>
+        </div>
+
+        <div id="delete-user-by-id" class="api-endpoint">
+            <h3>Get User By ID</h3>
+
+            <div class="section">
+                <h4>Path</h4>
+                <p>/users/deleteUserById/{id}</p>
+            </div>
+
+            <div class="section">
+                <h4>Description</h4>
+                <p>Deletes User by given id.</p>
+            </div>
+
+            <div class="section">
+                <h4>HTTP Method</h4>
+                <p>DELETE</p>
+            </div>
+
+            <div class="section">
+                <h4>Path Variables</h4>
+                <p><code>id</code> (User ID)</p>
+            </div>
+
+            <div class="section">
+                <h4>Response Example</h4>
+                <pre>
+
+"User successfully deleted"
+
+                </pre>
+            </div>
+        </div>
+
+    </section>
+</main>
 </body>
 </html>

@@ -3,11 +3,11 @@ package com.finbro.FinBroJavaSpring.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table(name = "Users")
+@Table(name = "USERS")
 public class User {
 
     @Id
-    private int id;
+    private Long id;
     private String name;
     private String surname;
     private int age;
@@ -15,7 +15,7 @@ public class User {
     private String email;
     private String password;
 
-    public User(int id, String name, String surname, int age, String username, String email, String password) {
+    public User(Long id, String name, String surname, int age, String username, String email, String password) {
 
         this.id = id;
         this.name = name;
@@ -28,11 +28,11 @@ public class User {
     }
     public User() {}
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

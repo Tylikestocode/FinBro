@@ -26,15 +26,21 @@ public class UserService {
 
 
     // Check new user details before adding to database
-    public void storeUser(User user) {
+    public User saveUser(User user) {
+
+        if (user.getId() != null) {
+            user.setId(null);
+        }
+
         trimStringData(user);
         if (usernameExists(user.getUsername())) {
-            throw new UserAlreadyExistsException(user.getUsername());
+            throw new UsernameAlreadyExistsException(user.getUsername());
         }
         validateEmail(user.getEmail());
         user.setPassword(hashPassword(user.getPassword()));
 
-        userRepository.save(user);
+        return userRepository.save(user);
+
     }
 
     // Get all Users
@@ -43,7 +49,7 @@ public class UserService {
     }
 
     // Get User by UserID
-    public User getUserByID(int userId) {
+    public User getUserByID(Long userId) {
 
         if (!userRepository.existsById(userId)) {
             throw new UserIDNotFoundException(String.valueOf(userId));
@@ -76,7 +82,7 @@ public class UserService {
     // Validate Email and/or Username with Password
     public User validateCredentials(@RequestBody Map<String, String> loginRequest) {
 
-        validateLoginRequest(loginRequest);
+        validateUsernamePassword(loginRequest);
 
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
@@ -88,7 +94,7 @@ public class UserService {
         User user = userRepository.findByEmail(email);
 
         if (!password.equals(user.getPassword())) {
-            throw new InvalidLoginException("Invalid login details");
+            throw new IncorrectPasswordException(loginRequest.get("email"));
         }
 
         return user;
@@ -96,7 +102,7 @@ public class UserService {
     }
 
     // Update User details
-    public void updateUser(User user) {
+    public User updateUser(User user) {
 
         trimStringData(user);
 
@@ -109,7 +115,7 @@ public class UserService {
         // If Username is changing, first check if Username already exists
         if (!exisitingUser.getUsername().equals(user.getUsername())) {
             if (usernameExists(user.getUsername())) {
-                throw new UserAlreadyExistsException(user.getUsername());
+                throw new UsernameAlreadyExistsException(user.getUsername());
             }
         }
 
@@ -120,20 +126,18 @@ public class UserService {
 
         // Password hashing to be done here
         // user.setPassword(hashPassword(user.getPassword());
-        userRepository.save(user);
+        return userRepository.save(user);
 
     }
 
     // Delete user by UserID
-    public void deleteUserByID(int id) {
+    public void deleteUserByID(Long id) {
 
         if (!userRepository.existsById(id)) {
             throw new UserIDNotFoundException(String.valueOf(id));
         }
 
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        }
+        userRepository.deleteById(id);
 
     }
 
@@ -170,7 +174,7 @@ public class UserService {
         }
     }
 
-    private void validateLoginRequest(Map<String, String> loginRequest) {
+    private void validateUsernamePassword(Map<String, String> loginRequest) {
 
         if (!loginRequest.containsKey("email")) {
             throw new MissingParameterException("email");

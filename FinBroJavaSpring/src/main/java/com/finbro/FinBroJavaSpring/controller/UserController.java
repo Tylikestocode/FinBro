@@ -28,10 +28,10 @@ public class UserController {
     @PostMapping("/addUser")
     public ResponseEntity<?> addUser(@RequestBody User user) {
 
-        userService.storeUser(user);
+        User savedUser = userService.saveUser(user);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.getUserByUsername(user.getUsername()));
+                .body(savedUser);
 
     }
 
@@ -43,7 +43,7 @@ public class UserController {
     @GetMapping("/getByUserId/{userId}")
     public ResponseEntity<?> getUserByID(@PathVariable int userId) {
 
-        User user = userService.getUserByID(userId);
+        User user = userService.getUserByID((long) userId);
         return ResponseEntity.ok(user);
 
     }
@@ -64,7 +64,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/validateCredentials")
+    @PostMapping("/validateCredentials")
     public ResponseEntity<?> validateCredentials(@RequestBody Map<String, String> loginRequest) {
 
         User user = userService.validateCredentials(loginRequest);
@@ -75,17 +75,17 @@ public class UserController {
     @PutMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
 
-        userService.updateUser(user);
+        User updatedUser = userService.updateUser(user);
         return ResponseEntity
                 .status(HttpStatus.ACCEPTED)
-                .body(user);
+                .body(updatedUser);
 
     }
 
     @DeleteMapping("/deleteByUserId/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
 
-        userService.deleteUserByID(userId);
+        userService.deleteUserByID((long) userId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body("User successfully deleted");

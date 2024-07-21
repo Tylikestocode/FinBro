@@ -36,7 +36,7 @@ public class UserRepository_jdbc_backup {
         RowMapper<User> userRowMapper = (r, i) -> {
 
             User rowObject = new User();
-            rowObject.setId(r.getInt("UserID"));
+            rowObject.setId((long) r.getInt("UserID"));
             rowObject.setName(r.getString("Name"));
             rowObject.setSurname(r.getString("Surname"));
             rowObject.setAge(r.getInt("Age"));
@@ -59,7 +59,7 @@ public class UserRepository_jdbc_backup {
         RowMapper<User> userRowMapper = (r, i) -> {
 
             User rowObject = new User();
-            rowObject.setId(r.getInt("ID"));
+            rowObject.setId((long) r.getInt("ID"));
             rowObject.setName(r.getString("Name"));
             rowObject.setSurname(r.getString("Surname"));
             rowObject.setAge(r.getInt("Age"));
@@ -82,7 +82,7 @@ public class UserRepository_jdbc_backup {
         RowMapper<User> userRowMapper = (r, i) -> {
 
             User rowObject = new User();
-            rowObject.setId(r.getInt("ID"));
+            rowObject.setId((long) r.getInt("ID"));
             rowObject.setName(r.getString("Name"));
             rowObject.setSurname(r.getString("Surname"));
             rowObject.setAge(r.getInt("Age"));
@@ -105,7 +105,7 @@ public class UserRepository_jdbc_backup {
         RowMapper<User> userRowMapper = (r, i) -> {
 
             User rowObject = new User();
-            rowObject.setId(r.getInt("ID"));
+            rowObject.setId((long) r.getInt("ID"));
             rowObject.setName(r.getString("Name"));
             rowObject.setSurname(r.getString("Surname"));
             rowObject.setAge(r.getInt("Age"));
