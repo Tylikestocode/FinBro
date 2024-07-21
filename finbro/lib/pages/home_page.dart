@@ -41,8 +41,6 @@ class _HomePageState extends State<HomePage> {
             child: BalanceCard(
                 screenWidth: screenWidth, screenHeight: screenHeight)),
         SizedBox(height: screenHeight * 0.02),
-        RecentTransactions(
-            screenWidth: screenWidth, screenHeight: screenHeight),
       ]),
     );
   }
