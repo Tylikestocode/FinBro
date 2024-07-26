@@ -2,9 +2,9 @@ package com.finbro.FinBroJavaSpring.service;
 
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.EmailAlreadyExistsException;
-import com.finbro.FinBroJavaSpring.exception.InvalidEmailFormatException;
-import com.finbro.FinBroJavaSpring.exception.UsernameAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.EmailAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.InvalidEmailFormatException;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.UsernameAlreadyExistsException;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

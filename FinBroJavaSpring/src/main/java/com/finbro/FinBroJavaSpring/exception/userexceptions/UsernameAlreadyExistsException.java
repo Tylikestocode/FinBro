@@ -1,4 +1,4 @@
-package com.finbro.FinBroJavaSpring.exception;
+package com.finbro.FinBroJavaSpring.exception.userexceptions;
 
 public class UsernameAlreadyExistsException extends RuntimeException {
 

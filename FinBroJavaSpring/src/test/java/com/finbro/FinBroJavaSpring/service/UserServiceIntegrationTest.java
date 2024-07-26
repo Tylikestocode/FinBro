@@ -1,7 +1,7 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.*;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

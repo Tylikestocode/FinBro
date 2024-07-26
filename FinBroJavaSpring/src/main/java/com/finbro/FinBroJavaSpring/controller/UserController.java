@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/allUsers")
-    public List<User> getUsers(Model page) {
+    public List<User> getUsers() {
         return userService.findAllUsers();
     }
 
@@ -82,7 +82,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/deleteByUserId/{userId}")
+    @DeleteMapping("/deleteById/{userId}")
     public ResponseEntity<?> deleteUserById(@PathVariable int userId) {
 
         userService.deleteUserByID((long) userId);

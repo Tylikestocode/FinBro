@@ -8,16 +8,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    @Query("SELECT COUNT(*) FROM USERS WHERE Username = :username;")
+    @Query("SELECT COUNT(*) FROM USERS WHERE username = :username;")
     boolean existsByUsername(String username);
 
-    @Query("SELECT * FROM USERS WHERE Username = :username;")
+    @Query("SELECT * FROM USERS WHERE username = :username;")
     User findByUsername(String username);
 
-    @Query("SELECT COUNT(*) FROM USERS WHERE Email = :email;")
+    @Query("SELECT COUNT(*) FROM USERS WHERE email = :email;")
     boolean existsByEmail(String email);
 
-    @Query("SELECT * FROM USERS WHERE Email = :email;")
+    @Query("SELECT * FROM USERS WHERE email = :email;")
     User findByEmail(String email);
 
 }

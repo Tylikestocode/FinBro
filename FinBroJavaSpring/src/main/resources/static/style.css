@@ -17,6 +17,10 @@ h1 {
     margin: 0;
 }
 
+.path {
+
+}
+
 main {
     padding: 20px;
 }
@@ -105,4 +109,32 @@ ul {
 
 ul li {
     margin-bottom: 5px;
+}
+
+
+.table-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
