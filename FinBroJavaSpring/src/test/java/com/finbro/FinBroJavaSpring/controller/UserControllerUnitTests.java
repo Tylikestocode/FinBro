@@ -159,7 +159,7 @@ public class UserControllerUnitTests {
     public void testDeleteUserById() throws Exception {
         Mockito.doNothing().when(userService).deleteUserByID((long) 1);
 
-        mockMvc.perform(delete("/api/users/deleteByUserId/1"))
+        mockMvc.perform(delete("/api/users/deleteById/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("User successfully deleted"));
     }

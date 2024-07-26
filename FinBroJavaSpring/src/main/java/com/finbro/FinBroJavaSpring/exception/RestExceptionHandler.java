@@ -1,5 +1,11 @@
 package com.finbro.FinBroJavaSpring.exception;
 
+import com.finbro.FinBroJavaSpring.exception.accountexceptions.AccountIDNotFoundException;
+import com.finbro.FinBroJavaSpring.exception.accountexceptions.NegativeBalanceException;
+import com.finbro.FinBroJavaSpring.exception.accountexceptions.NotesTooLongException;
+import com.finbro.FinBroJavaSpring.exception.accountexceptions.UnderMinimumBalanceException;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
+import com.finbro.FinBroJavaSpring.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,7 +26,12 @@ public class RestExceptionHandler {
         EMAIL_NOT_FOUND("EMAIL_NOT_FOUND", "Email not found."),
         INVALID_EMAIL_FORMAT("INVALID_EMAIL_FORMAT", "Invalid email format."),
         MISSING_PARAMETER("MISSING_PARAMETER", "Missing parameter."),
-        INCORRECT_PASSWORD("INCORRECT_PASSWORD", "Incorrect password.");
+        INCORRECT_PASSWORD("INCORRECT_PASSWORD", "Incorrect password."),
+        BALANCE_BELOW_ZERO("BALANCE_BELOW_ZERO", "Balance below 0"),
+        BALANCE_BELOW_MINIMUM("BALANCE_BELOW_MINIMUM", "Balance is below minimum balance"),
+        NOTES_TOO_LONG("NOTES_TOO_LONG", "Notes exceed maximum characters"),
+        INVALID_DATE_FORMAT("INVALID_DATE_FORMAT", "Invalid date format"),
+        ACCOUNT_ID_NOT_FOUND("ACCOUNT_ID_NOT_FOUND", "Account ID not found");
 
         private final String code;
         private final String description;
@@ -38,6 +49,26 @@ public class RestExceptionHandler {
             return description;
         }
     }
+
+    @ExceptionHandler(MissingParameterException.class)
+    public ResponseEntity<ErrorResponse> exceptionMissingParameter(MissingParameterException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.MISSING_PARAMETER.getCode(),
+                "Missing parameter: " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+
+
+    // USER SPECIFIC
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ResponseEntity<ErrorResponse> exceptionUsernameAlreadyExists(UsernameAlreadyExistsException e) {
@@ -132,22 +163,6 @@ public class RestExceptionHandler {
 
     }
 
-    @ExceptionHandler(MissingParameterException.class)
-    public ResponseEntity<ErrorResponse> exceptionMissingParameter(MissingParameterException e) {
-
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.MISSING_PARAMETER.getCode(),
-                "Missing parameter: " + e.getMessage(),
-                LocalDateTime.now()
-        );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
-
-    }
-
     @ExceptionHandler(IncorrectPasswordException.class)
     public ResponseEntity<ErrorResponse> exceptionIncorrectPassword(IncorrectPasswordException e) {
 
@@ -162,4 +177,89 @@ public class RestExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(errorResponse);
     }
+
+
+    // ACCOUNT SPECIFIC
+
+    @ExceptionHandler(NegativeBalanceException.class)
+    public ResponseEntity<ErrorResponse> exceptionNegativeBalance(NegativeBalanceException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.BALANCE_BELOW_ZERO.getCode(),
+                "Balance cannot be below 0: " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(UnderMinimumBalanceException.class)
+    public ResponseEntity<ErrorResponse> exceptionUnderMinimumBalance(UnderMinimumBalanceException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.BALANCE_BELOW_MINIMUM.getCode(),
+                "Balance cannot be below the minimum balance: " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(NotesTooLongException.class)
+    public ResponseEntity<ErrorResponse> exceptionNoteTooLong(NotesTooLongException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.NOTES_TOO_LONG.getCode(),
+                "Notes cannot be longer than " + AccountService.MAX_NOTES_LENGTH + " characters: " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(AccountIDNotFoundException.class)
+    public ResponseEntity<ErrorResponse> exceptionAccountIDNotFound(AccountIDNotFoundException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(),
+                ErrorCode.ACCOUNT_ID_NOT_FOUND.getCode(),
+                "Account ID was not found: " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(errorResponse);
+
+    }
+
+    @ExceptionHandler(InvalidDateFormatException.class)
+    public ResponseEntity<ErrorResponse> exceptionInvalidDateFormatException(InvalidDateFormatException e) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorCode.INVALID_DATE_FORMAT.getCode(),
+                "Invalid date format (yyyy-MM-dd HH:mm:ss): " + e.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(errorResponse);
+
+    }
+
+
 }

@@ -1,3 +1,58 @@
+USE FinBroDB;
+
+DROP TABLE IF EXISTS Transactions;
+DROP TABLE IF EXISTS Accounts;
+DROP TABLE IF EXISTS Categories;
+DROP TABLE IF EXISTS Users;
+
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    surname VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Categories (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    type ENUM('account', 'transaction', 'budget') NOT NULL,
+    is_user_defined BOOLEAN NOT NULL,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    CHECK ((is_user_defined = 1 AND user_id IS NOT NULL) OR (is_user_defined = 0 AND user_id IS NULL))
+);
+
+CREATE TABLE Accounts (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    balance DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    minimum_balance DECIMAL(10, 2),
+    notes TEXT,
+    user_id INT NOT NULL,
+    category_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Categories(id)
+);
+
+CREATE TABLE Transactions (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    amount DECIMAL(10, 2) NOT NULL,
+    description TEXT,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    notes TEXT,
+    user_id INT NULL,
+    account_id INT NOT NULL,
+    category_id INT,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    FOREIGN KEY (account_id) REFERENCES Accounts(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES Categories(id)
+);
+
 INSERT INTO Users (name, surname, age, username, email, password)
 VALUES ('Alice', 'Johnson', 28, 'alice.j', 'alice.j@example.com', 'hashed_password1'),
        ('Bob', 'Smith', 35, 'bob.s', 'bob.s@example.com', 'hashed_password2'),
@@ -27,3 +82,4 @@ VALUES (50.00, 'Grocery shopping', '2023-06-01 10:30:00', 'Bought groceries at S
        (100.00, 'Investment deposit', '2023-06-03 12:30:00', 'Monthly investment', 3, 3, 4),
        (30.00, 'Savings deposit', '2023-06-04 14:00:00', 'Added to savings', 4, 4, 1),
        (25.00, 'Dining out', '2023-06-05 15:30:00', 'Dinner at a restaurant', 5, 5, 5);
+

@@ -13,7 +13,7 @@
 <main>
     <section class="api-group">
         <h2>Users</h2>
-        <p>http://testvps.us.to:8080/api/users/</p>
+        <h3 class="path">http://testvps.us.to:8080/api/users/</h3>
 
         <!-- Table of Contents -->
         <nav class="toc">
@@ -27,6 +27,70 @@
                 <li><a href="#validate-credentials">ValidateCredentials</a></li>
                 <li><a href="#update-user">Update User</a></li>
                 <li><a href="#delete-user-by-id">Delete User</a></li>
+                <br>
+                <h4 class="path">http://testvps.us.to:8080/api/accounts/</h4>
+                <li><a href="#create-account">GET - /addAccount (@RequestBody Account)</a></li>
+                <li><a href="#get-all-accounts">GET - /allAccounts</a></li>
+                <li><a href="#get-account-by-id">GET - /getByAccountId/{accountId} (@PathVariable accountId)</a></li>
+                <li><a href="#get-accounts-by-user-id">GET - /getAllByUserId/{userId} (@PathVariable userId)</a></li>
+                <li><a href="#update-account">PUT - /updateAccount (@RequestBody Account)</a></li>
+                <li><a href="#delete-account">DELETE - /deleteById/{accountId} (@PathVariable accountId)</a></li>
+
+                <div class="table-container">
+                    <h2>Table name: Account</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Attribute Name</th>
+                            <th>Data Type</th>
+                            <th>Notes</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>id</td>
+                            <td>int</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>name</td>
+                            <td>String</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>balance (nullable)</td>
+                            <td>float</td>
+                            <td>cannot be below 0</td>
+                        </tr>
+                        <tr>
+                            <td>dateCreated (nullable)</td>
+                            <td>String</td>
+                            <td>format: yyyy-MM-dd HH:mm:ss</td>
+                        </tr>
+                        <tr>
+                            <td>minimumBalance (nullable)</td>
+                            <td>float</td>
+                            <td>cannot be below 0</td>
+                        </tr>
+                        <tr>
+                            <td>notes (nullable)</td>
+                            <td>String</td>
+                            <td>cannot exceed 500 characters</td>
+                        </tr>
+                        <tr>
+                            <td>userId</td>
+                            <td>int</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>categoryId (nullable)</td>
+                            <td>int</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </ul>
         </nav>
 
@@ -44,6 +108,11 @@
                 <li><code>MISSING_PARAMETER</code> - Given response body is missing parameter/s.</li>
                 <li><code>INCORRECT_PASSWORD</code> - Given password is incorrect.</li>
 
+                <li><code>BALANCE_BELOW_ZERO</code> - Bank balance is less than zero.</li>
+                <li><code>BALANCE_BELOW_MINIMUM</code> - Balance is less than the minimum set balance.</li>
+                <li><code>NOTES_TOO_LONG</code> - Account Notes exceed 500 characters.</li>
+                <li><code>INVALID_DATE_FORMAT</code> - Date format does not conform to the format yyyy-MM-dd HH:mm:ss.</li>
+                <li><code>ACCOUNT_ID_NOT_FOUND</code> - Account with given id does not exist.</li>
             </ul>
         </div>
 
@@ -377,11 +446,11 @@
         </div>
 
         <div id="delete-user-by-id" class="api-endpoint">
-            <h3>Get User By ID</h3>
+            <h3>Delete User By ID</h3>
 
             <div class="section">
                 <h4>Path</h4>
-                <p>/users/deleteUserById/{id}</p>
+                <p>/users/deleteById/{id}</p>
             </div>
 
             <div class="section">
