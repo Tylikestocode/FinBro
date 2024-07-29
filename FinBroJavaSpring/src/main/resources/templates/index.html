@@ -3,195 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinBro API Documentation</title>
+    <title>API Documentation</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-    <h1>FinBro API Documentation</h1>
-</header>
-<main>
-    <section class="api-group">
-        <h2>Users</h2>
-        <h3 class="path">http://testvps.us.to:8080/api/users/</h3>
 
-        <!-- Table of Contents -->
-        <nav class="toc">
-            <h3>API Endpoints</h3>
-            <ul>
-                <li><a href="#create-user">Create User</a></li>
-                <li><a href="#get-all-users">Get All Users</a></li>
-                <li><a href="#get-user-by-id">Get User By ID</a></li>
-                <li><a href="#get-user-by-username">Get User By Username</a></li>
-                <li><a href="#get-user-by-email">Get User By Email</a></li>
-                <li><a href="#validate-credentials">ValidateCredentials</a></li>
-                <li><a href="#update-user">Update User</a></li>
-                <li><a href="#delete-user-by-id">Delete User</a></li>
-                <br>
-                <h4 class="path">http://testvps.us.to:8080/api/accounts/</h4>
-                <li><a href="#create-account">GET - /addAccount (@RequestBody Account)</a></li>
-                <li><a href="#get-all-accounts">GET - /allAccounts</a></li>
-                <li><a href="#get-account-by-id">GET - /getByAccountId/{accountId} (@PathVariable accountId)</a></li>
-                <li><a href="#get-accounts-by-user-id">GET - /getAllByUserId/{userId} (@PathVariable userId)</a></li>
-                <li><a href="#update-account">PUT - /updateAccount (@RequestBody Account)</a></li>
-                <li><a href="#delete-account">DELETE - /deleteById/{accountId} (@PathVariable accountId)</a></li>
+<div class="top-nav">
+    <div class="app-name">FinBro Admin/Docs</div>
+    <div class="top-nav-mid"></div>
+    <!-- <button class="logout-button">Log Out</button> -->
+</div>
 
-                <div class="table-container">
-                    <h2>Table name: Account</h2>
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Attribute Name</th>
-                            <th>Data Type</th>
-                            <th>Notes</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>id</td>
-                            <td>int</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>name</td>
-                            <td>String</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>balance (nullable)</td>
-                            <td>float</td>
-                            <td>cannot be below 0</td>
-                        </tr>
-                        <tr>
-                            <td>dateCreated (nullable)</td>
-                            <td>String</td>
-                            <td>format: yyyy-MM-dd HH:mm:ss</td>
-                        </tr>
-                        <tr>
-                            <td>minimumBalance (nullable)</td>
-                            <td>float</td>
-                            <td>cannot be below 0</td>
-                        </tr>
-                        <tr>
-                            <td>notes (nullable)</td>
-                            <td>String</td>
-                            <td>cannot exceed 500 characters</td>
-                        </tr>
-                        <tr>
-                            <td>userId</td>
-                            <td>int</td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>categoryId (nullable)</td>
-                            <td>int</td>
-                            <td></td>
-                        </tr>
-                        </tbody>
-                    </table>
+<div class="main-container">
+    <div class="sidebar">
+        <button class="api-button" onclick="showSection('users-api')">Users</button>
+        <button class="api-button" onclick="showSection('accounts-api')">Accounts</button>
+    </div>
+    <div class="main-content">
+
+        <div id="users-api" class="api-section">
+
+            <h2>User API</h2>
+            <p><strong>http://testvps.us.to/api/users</strong></p>
+
+            <div class="accordion">
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>PUT</strong> /addUser</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/addUser</p>
+                        <p><strong>HTTP Method: </strong>PUT</p>
+                        <p><strong>Description: </strong>Creates a new User object and stores it in the database</p>
+                        <p><strong>Request Body Example:</strong></p>
+                        <pre>
+{
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                        <p><strong>Response Example:</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                        <p>* id field not needed in request. If set, will be ignored</p>
+                    </div>
                 </div>
 
-            </ul>
-        </nav>
-
-        <!-- Error Messages Summary -->
-        <div class="error-summary">
-            <h3>Possible Error Messages</h3>
-            <ul>
-                <li><code>400 Bad Request</code> - The request could not be understood by the server due to malformed syntax or invalid data.</li>
-                <li><code>USERNAME_ALREADY_EXISTS</code> - User with the given username already exists.</li>
-                <li><code>USER_ID_NOT_FOUND</code> - User with the given id does not exist.</li>
-                <li><code>USERNAME_NOT_FOUND</code> - User with the given username does not exist.</li>
-                <li><code>EMAIL_ALREADY_EXISTS</code> - Given email already belongs to a User.</li>
-                <li><code>EMAIL_NOT_FOUND</code> - Given email does belong to an existing User.</li>
-                <li><code>INVALID_EMAIL_FORMAT</code> - Given email does not fit expected format.</li>
-                <li><code>MISSING_PARAMETER</code> - Given response body is missing parameter/s.</li>
-                <li><code>INCORRECT_PASSWORD</code> - Given password is incorrect.</li>
-
-                <li><code>BALANCE_BELOW_ZERO</code> - Bank balance is less than zero.</li>
-                <li><code>BALANCE_BELOW_MINIMUM</code> - Balance is less than the minimum set balance.</li>
-                <li><code>NOTES_TOO_LONG</code> - Account Notes exceed 500 characters.</li>
-                <li><code>INVALID_DATE_FORMAT</code> - Date format does not conform to the format yyyy-MM-dd HH:mm:ss.</li>
-                <li><code>ACCOUNT_ID_NOT_FOUND</code> - Account with given id does not exist.</li>
-            </ul>
-        </div>
-
-        <!-- API Documentation Blocks -->
-        <div id="create-user" class="api-endpoint">
-            <h3>Create User</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/addUser</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Creates a new Users and stores in the database.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>POST</p>
-            </div>
-
-            <div class="section">
-                <h4>Request Body Example</h4>
-                <pre>
-{
-    "name": "Bob",
-    "surname": "Smith",
-    "age": 35,
-    "username": "bob.s",
-    "email": "bob.s@example.com",
-    "password": "hashed_password2"
-}
-                    </pre>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-{
-    "id": 2,
-    "name": "Bob",
-    "surname": "Smith",
-    "age": 35,
-    "username": "bob.s",
-    "email": "bob.s@example.com",
-    "password": "hashed_password2"
-}
-                    </pre>
-            </div>
-        </div>
-
-        <div id="get-all-users" class="api-endpoint">
-            <h3>Get All UserS</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/allUsers</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Retrieves all Users.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>GET</p>
-            </div>
-
-<!--            <div class="section">-->
-<!--                <h4>Path Variables</h4>-->
-<!--                <p><code>id</code> (User ID)</p>-->
-<!--            </div>-->
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-{
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>GET </strong>/allUsers</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/allUsers</p>
+                        <p><strong>HTTP Method: </strong>GET</p>
+                        <p><strong>Description: </strong>Returns a list of all User objects</p>
+                        <p><strong>Request URL example:</strong></p>
+                        <pre>
+http://testvps.us.to/api/users/allUsers
+                            </pre>
+                        <p><strong>Response Example:</strong></p>
+                        <pre>
+[
     {
         "id": 1,
         "name": "Alice",
@@ -212,273 +94,388 @@
     },
     {
         "id": 3,
-        "name": "New",
-        "surname": "User",
-        "age": 40,
-        "username": "newUser",
-        "email": "newbie@example.com",
-        "password": "NewPass"
+        "name": "Emily",
+        "surname": "Brown",
+        "age": 24,
+        "username": "emily.b",
+        "email": "emily.b@example.com",
+        "password": "hashed_password3"
     }
+]
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>GET</strong> /getByUserId/{userId}</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/getByUserId/{userId}</p>
+                        <p><strong>HTTP Method: </strong>GET</p>
+                        <p><strong>Description: </strong>Returns User object with given id</p>
+                        <p><strong>Request Path Example:</strong></p>
+                        <pre>
+http://testvps.us.to/api/users/getByUserId/3
+                            </pre>
+                        <p><strong>Response Example:</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
 }
-                    </pre>
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>GET</strong> /getByUsername/{username}</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/getByUsername/{username}</p>
+                        <p><strong>HTTP Method: </strong>GET</p>
+                        <p><strong>Description: </strong>Returns User object with given username</p>
+                        <p><strong>Request Path Example:</strong></p>
+                        <pre>
+http://testvps.us.to/api/users/emily.b
+                            </pre>
+                        <p><strong>Response Example</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>GET</strong> /getByEmail/{email}</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/getByEmail/{email}</p>
+                        <p><strong>HTTP Method: </strong>GET</p>
+                        <p><strong>Description: </strong>Returns User object with given email</p>
+                        <p><strong>Request Path Example:</strong></p>
+                        <pre>
+http://testvps.us.to/api/users/emily.b@example.com
+                            </pre>
+                        <p><strong>Response Example</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>POST</strong> /validateCredentials</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/validateCredentials</p>
+                        <p><strong>HTTP Method: </strong>POST</p>
+                        <p><strong>Description: </strong>Checks if a user exists with given email and password. Returns the User if matching credentials are found</p>
+                        <p><strong>Request Body Example:</strong></p>
+                        <pre>
+{
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                        <p><strong>Response Example</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "Emily",
+    "surname": "Brown",
+    "age": 24,
+    "username": "emily.b",
+    "email": "emily.b@example.com",
+    "password": "hashed_password3"
+}
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>PUT</strong> /updateUser</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/updateUser</p>
+                        <p><strong>HTTP Method: </strong>PUT</p>
+                        <p><strong>Description: </strong>Updates an existing User object</p>
+                        <p><strong>Request Body Example:</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "New_Name",
+    "surname": "New_Surname",
+    "age": 30,
+    "username": "new_Username",
+    "email": "new_email@example.com",
+    "password": "New_Password"
+}
+                            </pre>
+                        <p><strong>Response Example:</strong></p>
+                        <pre>
+{
+    "id": 3,
+    "name": "New_Name",
+    "surname": "New_Surname",
+    "age": 30,
+    "username": "new_Username",
+    "email": "emily.b@example.com",
+    "password": "New_Password"
+}
+                            </pre>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-button"><strong>DELETE</strong> /deleteById/{userId}</button>
+                    <div class="accordion-content">
+                        <p><strong>Path: </strong>/deleteById/{userId}</p>
+                        <p><strong>HTTP Method: </strong>DELETE</p>
+                        <p><strong>Description: </strong>Deletes User object with given id</p>
+                        <p><strong>Request Path Example:</strong></p>
+                        <pre>
+http://testvps.us.to/api/users/deleteById/3
+                            </pre>
+                        <p><strong>Response Example:</strong></p>
+                        <pre>
+{
+    "message": "User successfully deleted"
+}
+                            </pre>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
-        <div id="get-user-by-id" class="api-endpoint">
-            <h3>Get User By ID</h3>
+        <div id="accounts-api" class="api-section">
 
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/getByUserId/{id}</p>
+            <h2>Accounts API</h2>
+            <p><strong>http://testvps.us.to/api/accounts/</strong></p>
+
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>PUT</strong> /addAccount</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/addAccount</p>
+                    <p><strong>HTTP Method: </strong>PUT</p>
+                    <p><strong>Description: </strong>Creates a new Account object and stores it in the database</p>
+                    <p><strong>Request Body Example:</strong></p>
+                    <pre>
+{
+    "name": "Alice Savings",
+    "balance": 1000.00,
+    "dateCreated": "2024-01-01 10:00:00",
+    "minimumBalance": 500.00,
+    "notes": "Primary savings account",
+    "userId": 1,
+    "categoryId": 1
+}
+                        </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
+{
+    "id": 1,
+    "name": "Alice Savings",
+    "balance": 1000.00,
+    "dateCreated": "2024-01-01 10:00:00",
+    "minimumBalance": 500.00,
+    "notes": "Primary savings account",
+    "userId": 1,
+    "categoryId": 1
+}
+                        </pre>
+                    <p>* id field not needed in request. If set, will be ignored</p>
+                </div>
             </div>
 
-            <div class="section">
-                <h4>Description</h4>
-                <p>Retrieve User with the given id.</p>
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>GET</strong> /allAccounts</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/allAccounts</p>
+                    <p><strong>HTTP Method: </strong>GET</p>
+                    <p><strong>Description: </strong>Returns list of all Account objects</p>
+                    <p><strong>Request Example:</strong></p>
+                    <pre>
+http://testvps.us.to/accounts/allAccounts
+                        </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
+[
+    {
+        "id": 1,
+        "name": "Alice Savings",
+        "balance": 1000.00,
+        "dateCreated": "2024-01-01 10:00:00.0",
+        "minimumBalance": 500.00,
+        "notes": "Primary savings account",
+        "userId": 1,
+        "categoryId": 1
+    },
+    {
+        "id": 2,
+        "name": "Bob Checking",
+        "balance": 1500.00,
+        "dateCreated": "2023-02-01 12:00:00.0",
+        "minimumBalance": null,
+        "notes": "Main checking account",
+        "userId": 2,
+        "categoryId": null
+    },
+    {
+        "id": 3,
+        "name": "Emily Investment",
+        "balance": 2000.00,
+        "dateCreated": "2023-03-01 14:00:00.0",
+        "minimumBalance": 1000.00,
+        "notes": "Long-term investment account",
+        "userId": 3,
+        "categoryId": 4
+    }
+]
+                        </pre>
+                </div>
             </div>
 
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>GET</p>
-            </div>
-
-            <div class="section">
-                <h4>Path Variables</h4>
-                <p><code>id</code> (User ID)</p>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>GET</strong> /getAccountById/{accountId}</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/getByAccountId/{accountId}</p>
+                    <p><strong>HTTP Method: </strong>GET</p>
+                    <p><strong>Description: </strong>Returns account with matching id</p>
+                    <p><strong>Request Path Example:</strong></p>
+                    <pre>
+http://testvps.us.to/api/accounts/getAccountById/1
+                        </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
 
 {
     "id": 1,
-    "name": "Alice",
-    "surname": "Johnson",
-    "age": 28,
-    "username": "alice.j",
-    "email": "alice.j@example.com",
-    "password": "hashed_password1"
-}
-
-                </pre>
+    "name": "Alice Savings",
+    "balance": 1000.00,
+    "dateCreated": "2024-01-01 10:00:00.0",
+    "minimumBalance": 500.00,
+    "notes": "Primary savings account",
+    "userId": 1,
+    "categoryId": 1
+}                       </pre>
+                </div>
             </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>GET</strong> /getAllByUserId/{userId}</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/getAllByUserId/{userId}</p>
+                    <p><strong>HTTP Method: </strong>GET</p>
+                    <p><strong>Description: </strong>Returns list of accounts matching User id</p>
+                    <p><strong>Request Path Example:</strong></p>
+                    <pre>
+http://testvps.us.to/api/accounts/getAllByUserId/2
+                        </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
+
+[
+    {
+        "id": 2,
+        "name": "Bob Checking",
+        "balance": 1500.00,
+        "dateCreated": "2023-02-01 12:00:00.0",
+        "minimumBalance": null,
+        "notes": "Main checking account",
+        "userId": 2,
+        "categoryId": null
+    },
+    {
+        "id": 6,
+        "name": "Bob savings",
+        "balance": 2000.00,
+        "dateCreated": "2023-02-01 12:30:00.0",
+        "minimumBalance": 100.00,
+        "notes": "Main savings account",
+        "userId": 2,
+        "categoryId": null
+    }
+]                      </pre>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>PUT</strong> /updateAccount</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/updateAccount</p>
+                    <p><strong>HTTP Method: </strong>PUT</p>
+                    <p><strong>Description: </strong>Updates an existing Account object</p>
+                    <p><strong>Request Body Example:</strong></p>
+                    <pre>
+{
+    "id": 2,
+    "name": "New Account",
+    "balance": 800.00,
+    "dateCreated": "2023-02-13 12:30:00",
+    "minimumBalance": 200,
+    "notes": "Updated account",
+    "userId": 2,
+    "categoryId": null
+}
+                        </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
+{
+    "id": 2,
+    "name": "New Account",
+    "balance": 800.00,
+    "dateCreated": "2023-02-13 12:30:00",
+    "minimumBalance": 200,
+    "notes": "Updated account",
+    "userId": 2,
+    "categoryId": null
+}
+                        </pre>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-button"><strong>DELETE</strong> /deleteById/{accountId}</button>
+                <div class="accordion-content">
+                    <p><strong>Path: </strong>/deleteById/{accountId}</p>
+                    <p><strong>HTTP Method: </strong>DELETE</p>
+                    <p><strong>Description: </strong>Deletes Account with given id</p>
+                    <p><strong>Request Path Example:</strong></p>
+                    <pre>
+http://testvps.us.to/api/account/deleteById/2                       </pre>
+                    <p><strong>Response Example:</strong></p>
+                    <pre>
+{
+    "message": Account successfully deleted
+}
+                        </pre>
+                </div>
+            </div>
+
         </div>
 
-        <div id="get-user-by-username" class="api-endpoint">
-            <h3>Get User By Username</h3>
+    </div>
+</div>
 
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/getByUsername/{username}</p>
-            </div>
+<script src="script.js"></script>
 
-            <div class="section">
-                <h4>Description</h4>
-                <p>Retrieve User with the given Username.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>GET</p>
-            </div>
-
-            <div class="section">
-                <h4>Path Variables</h4>
-                <p><code>username</code> (Username)</p>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-
-{
-    "id": 1,
-    "name": "Alice",
-    "surname": "Johnson",
-    "age": 28,
-    "username": "alice.j",
-    "email": "alice.j@example.com",
-    "password": "hashed_password1"
-}
-
-                </pre>
-            </div>
-        </div>
-
-        <div id="get-user-by-email" class="api-endpoint">
-            <h3>Get User By Email</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/getByEmail/{email}</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Retrieve User with the given Email.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>GET</p>
-            </div>
-
-            <div class="section">
-                <h4>Path Variables</h4>
-                <p><code>email</code> (Email)</p>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-
-{
-    "id": 1,
-    "name": "Alice",
-    "surname": "Johnson",
-    "age": 28,
-    "username": "alice.j",
-    "email": "alice.j@example.com",
-    "password": "hashed_password1"
-}
-
-                </pre>
-            </div>
-        </div>
-
-        <div id="validate-credentials" class="api-endpoint">
-            <h3>Validate User Email and Password</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/validateCredentials</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Validates given email and password.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>POST</p>
-            </div>
-
-            <div class="section">
-                <h4>Request Body Example</h4>
-                <pre>
-
-{
-    "email": "alice.j@example.com",
-    "password": "hashed_password1"
-}
-
-                </pre>
-            </div>
-
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-
-{
-    "id": 1,
-    "name": "Alice",
-    "surname": "Johnson",
-    "age": 28,
-    "username": "alice.j",
-    "email": "alice.j@example.com",
-    "password": "hashed_password1"
-}
-
-                </pre>
-            </div>
-        </div>
-
-        <div id="update-user" class="api-endpoint">
-            <h3>Update User</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/updateUser</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Updates the given user details.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>PUT</p>
-            </div>
-
-            <div class="section">
-                <h4>Request Body Example</h4>
-                <pre>
-{
-    "id": 2
-    "name": "Bob",
-    "surname": "newSurname",
-    "age": 44,
-    "username": "newUsername",
-    "email": "new.email@gmail.com",
-    "password": "new_password"
-}
-                    </pre>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-{
-    "id": 2
-    "name": "Bob",
-    "surname": "newSurname",
-    "age": 44,
-    "username": "newUsername",
-    "email": "new.email@gmail.com",
-    "password": "new_password"
-}
-                    </pre>
-            </div>
-        </div>
-
-        <div id="delete-user-by-id" class="api-endpoint">
-            <h3>Delete User By ID</h3>
-
-            <div class="section">
-                <h4>Path</h4>
-                <p>/users/deleteById/{id}</p>
-            </div>
-
-            <div class="section">
-                <h4>Description</h4>
-                <p>Deletes User by given id.</p>
-            </div>
-
-            <div class="section">
-                <h4>HTTP Method</h4>
-                <p>DELETE</p>
-            </div>
-
-            <div class="section">
-                <h4>Path Variables</h4>
-                <p><code>id</code> (User ID)</p>
-            </div>
-
-            <div class="section">
-                <h4>Response Example</h4>
-                <pre>
-
-"User successfully deleted"
-
-                </pre>
-            </div>
-        </div>
-
-    </section>
-</main>
 </body>
 </html>

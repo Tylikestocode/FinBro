@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +89,7 @@ public class UserController {
         userService.deleteUserByID((long) userId);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body("User successfully deleted");
+                .body(new HashMap<String, String>().put("message", "User successfully deleted"));
 
     }
 
