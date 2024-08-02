@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-07-17T13:17:30.381Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="ZSqtkxXBNIazej-ggcnd" version="21.7.5" type="device">
+<mxfile host="Electron" modified="2024-07-18T10:13:33.298Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.7.5 Chrome/114.0.5735.289 Electron/25.8.1 Safari/537.36" etag="-ssOdU34LgRYppnRA6In" version="21.7.5" type="device">
   <diagram name="Page-1" id="d2kMEzhgmwOuouo6e642">
-    <mxGraphModel dx="838" dy="965" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1304" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -25,6 +25,9 @@
         <mxCell id="BfDqHpyz541_O9lzyD4y-6" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;DATABASE&lt;/u&gt;&lt;br&gt;&lt;br&gt;MySQL" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
           <mxGeometry x="540" y="440" width="160" height="160" as="geometry" />
         </mxCell>
+        <mxCell id="-WZKNIeDrVIcQTGIgxZ0-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="BfDqHpyz541_O9lzyD4y-7" target="-WZKNIeDrVIcQTGIgxZ0-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="BfDqHpyz541_O9lzyD4y-7" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;DS / AI&lt;/u&gt;&lt;br&gt;&lt;br&gt;Python" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="800" y="240" width="200" height="120" as="geometry" />
         </mxCell>
@@ -32,7 +35,10 @@
           <mxGeometry x="520" y="40" width="200" height="120" as="geometry" />
         </mxCell>
         <mxCell id="BfDqHpyz541_O9lzyD4y-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="200" width="840" height="640" as="geometry" />
+          <mxGeometry x="180" width="1140" height="640" as="geometry" />
+        </mxCell>
+        <mxCell id="-WZKNIeDrVIcQTGIgxZ0-1" value="&lt;b&gt;&lt;u&gt;Open AI&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;Open AI API" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="240" width="200" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
