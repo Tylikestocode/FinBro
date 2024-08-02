@@ -1,14 +1,13 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.Account;
-import com.finbro.FinBroJavaSpring.exception.MissingParameterException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NegativeBalanceException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NotesTooLongException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.UnderMinimumBalanceException;
 import com.finbro.FinBroJavaSpring.exception.userexceptions.UserIDNotFoundException;
 import com.finbro.FinBroJavaSpring.repository.AccountRepository;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
-import com.finbro.FinBroJavaSpring.util.DateTimeUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

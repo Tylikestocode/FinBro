@@ -7,13 +7,13 @@ public class ErrorResponse {
     private int status;
     private String errorCode;
     private String details;
-    private LocalDateTime localDateTime;
+    private LocalDateTime timestamp;
 
-    public ErrorResponse(int status, String errorCode, String details, LocalDateTime localDateTime) {
+    public ErrorResponse(int status, String errorCode, String details, LocalDateTime timestamp) {
         this.status = status;
         this.errorCode = errorCode;
         this.details = details;
-        this.localDateTime = localDateTime;
+        this.timestamp = timestamp;
     }
 
     public int getStatus() {
@@ -40,11 +40,11 @@ public class ErrorResponse {
         this.details = details;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 }

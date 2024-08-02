@@ -1,8 +1,8 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.Account;
-import com.finbro.FinBroJavaSpring.exception.InvalidDateFormatException;
-import com.finbro.FinBroJavaSpring.exception.MissingParameterException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDateFormatException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.AccountIDNotFoundException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NegativeBalanceException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NotesTooLongException;

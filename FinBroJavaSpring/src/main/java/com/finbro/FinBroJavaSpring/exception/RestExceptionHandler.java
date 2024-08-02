@@ -4,8 +4,11 @@ import com.finbro.FinBroJavaSpring.exception.accountexceptions.AccountIDNotFound
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NegativeBalanceException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.NotesTooLongException;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.UnderMinimumBalanceException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDateFormatException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
 import com.finbro.FinBroJavaSpring.service.AccountService;
+import com.finbro.FinBroJavaSpring.util.ApiResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,19 +53,17 @@ public class RestExceptionHandler {
         }
     }
 
+
+    // GENERAL
+
     @ExceptionHandler(MissingParameterException.class)
-    public ResponseEntity<ErrorResponse> exceptionMissingParameter(MissingParameterException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionMissingParameter(MissingParameterException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.MISSING_PARAMETER.getCode(),
-                "Missing parameter: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.MISSING_PARAMETER,
+                "Missing parameter: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
 
     }
 
@@ -71,193 +72,137 @@ public class RestExceptionHandler {
     // USER SPECIFIC
 
     @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> exceptionUsernameAlreadyExists(UsernameAlreadyExistsException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionUsernameAlreadyExists(UsernameAlreadyExistsException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ErrorCode.USERNAME_ALREADY_EXISTS.getCode(),
-                "Username already exists: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.CONFLICT,
+                ErrorCode.USERNAME_ALREADY_EXISTS,
+                "Username already exists: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(UserIDNotFoundException.class)
-    public ResponseEntity<ErrorResponse> exceptionUserIDNotFound(UserIDNotFoundException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionUserIDNotFound(UserIDNotFoundException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorCode.USER_ID_NOT_FOUND.getCode(),
-                "User ID not found: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ErrorCode.USER_ID_NOT_FOUND,
+                "User ID not found: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<ErrorResponse> exceptionUsernameNotFound(UsernameNotFoundException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionUsernameNotFound(UsernameNotFoundException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorCode.USERNAME_NOT_FOUND.getCode(),
-                "Username not found: " + e.getMessage(),
-                LocalDateTime.now());
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ErrorCode.USERNAME_NOT_FOUND,
+                "Username not found: " + e.getMessage()
+        );
 
     }
 
     @ExceptionHandler(EmailNotFoundException.class)
-    public ResponseEntity<ErrorResponse> exceptionEmailNotFound(EmailNotFoundException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionEmailNotFound(EmailNotFoundException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorCode.EMAIL_NOT_FOUND.getCode(),
-                "Email not found: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ErrorCode.EMAIL_NOT_FOUND,
+                "Email not found: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> exceptionEmailAlreadyExists(EmailAlreadyExistsException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionEmailAlreadyExists(EmailAlreadyExistsException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.CONFLICT.value(),
-                ErrorCode.EMAIL_ALREADY_EXISTS.getCode(),
-                "Email already exists: " + e.getMessage(),
-                LocalDateTime.now());
-
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(errorResponse);
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.CONFLICT,
+                ErrorCode.USERNAME_ALREADY_EXISTS,
+                "Email already exists: " + e.getMessage()
+        );
 
     }
 
     @ExceptionHandler(InvalidEmailFormatException.class)
-    public ResponseEntity<ErrorResponse> exceptionInvalidEmailFormat(InvalidEmailFormatException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionInvalidEmailFormat(InvalidEmailFormatException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.INVALID_EMAIL_FORMAT.getCode(),
-                "Invalid email format: " + e.getMessage(),
-                LocalDateTime.now());
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.INVALID_EMAIL_FORMAT,
+                "Invalid email format: " + e.getMessage()
+        );
 
     }
 
     @ExceptionHandler(IncorrectPasswordException.class)
-    public ResponseEntity<ErrorResponse> exceptionIncorrectPassword(IncorrectPasswordException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionIncorrectPassword(IncorrectPasswordException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.UNAUTHORIZED.value(),
-                ErrorCode.INCORRECT_PASSWORD.getCode(),
-                "Incorrect password for Email : " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.UNAUTHORIZED,
+                ErrorCode.INCORRECT_PASSWORD,
+                "Incorrect password for Email: " + e.getMessage()
         );
 
-        return ResponseEntity
-                .status(HttpStatus.UNAUTHORIZED)
-                .body(errorResponse);
     }
 
 
     // ACCOUNT SPECIFIC
 
     @ExceptionHandler(NegativeBalanceException.class)
-    public ResponseEntity<ErrorResponse> exceptionNegativeBalance(NegativeBalanceException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionNegativeBalance(NegativeBalanceException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.BALANCE_BELOW_ZERO.getCode(),
-                "Balance cannot be below 0: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.BALANCE_BELOW_ZERO,
+                "Balance cannot be below 0: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(UnderMinimumBalanceException.class)
-    public ResponseEntity<ErrorResponse> exceptionUnderMinimumBalance(UnderMinimumBalanceException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionUnderMinimumBalance(UnderMinimumBalanceException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.BALANCE_BELOW_MINIMUM.getCode(),
-                "Balance cannot be below the minimum balance: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.BALANCE_BELOW_MINIMUM,
+                "Balance cannot be below minimum balance: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(NotesTooLongException.class)
-    public ResponseEntity<ErrorResponse> exceptionNoteTooLong(NotesTooLongException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionNoteTooLong(NotesTooLongException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.NOTES_TOO_LONG.getCode(),
-                "Notes cannot be longer than " + AccountService.MAX_NOTES_LENGTH + " characters: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.NOTES_TOO_LONG,
+                "Notes cannot be longer than " + AccountService.MAX_NOTES_LENGTH + " characters: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(AccountIDNotFoundException.class)
-    public ResponseEntity<ErrorResponse> exceptionAccountIDNotFound(AccountIDNotFoundException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionAccountIDNotFound(AccountIDNotFoundException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(),
-                ErrorCode.ACCOUNT_ID_NOT_FOUND.getCode(),
-                "Account ID was not found: " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ErrorCode.ACCOUNT_ID_NOT_FOUND,
+                "Account ID not found: " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(errorResponse);
 
     }
 
     @ExceptionHandler(InvalidDateFormatException.class)
-    public ResponseEntity<ErrorResponse> exceptionInvalidDateFormatException(InvalidDateFormatException e) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionInvalidDateFormatException(InvalidDateFormatException e) {
 
-        ErrorResponse errorResponse = new ErrorResponse(
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorCode.INVALID_DATE_FORMAT.getCode(),
-                "Invalid date format (yyyy-MM-dd HH:mm:ss): " + e.getMessage(),
-                LocalDateTime.now()
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.INVALID_DATE_FORMAT,
+                "Invalid date format (yyyy-MM-dd HH:mm:ss): " + e.getMessage()
         );
-
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(errorResponse);
 
     }
 
