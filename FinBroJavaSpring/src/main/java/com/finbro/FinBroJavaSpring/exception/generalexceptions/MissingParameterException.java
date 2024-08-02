@@ -1,4 +1,4 @@
-package com.finbro.FinBroJavaSpring.exception;
+package com.finbro.FinBroJavaSpring.exception.generalexceptions;
 
 public class MissingParameterException extends RuntimeException {
 

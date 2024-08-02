@@ -1,7 +1,7 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.MissingParameterException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
