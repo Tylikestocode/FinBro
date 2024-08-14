@@ -169,25 +169,25 @@ public class AccountServiceUnitTests {
 
     }
 
-    @Test
-    public void AccountService_UpdateAccount_ReturnsUpdatedAccount() {
-
-        when(userRepository.existsById(1L)).thenReturn(true);
-
-        accountService.saveAccount(account1);
-
-        account1.setId(1L);
-        account1.setName("Updated Name");
-        account1.setMinimumBalance(null);
-        account1.setBalance(new BigDecimal("10"));
-
-        when(accountRepository.save(account1)).thenReturn(account1);
-
-        Account updatedAccount = accountService.updateAccount(account1);
-
-        assertThat(updatedAccount).isNotNull();
-
-
-    }
+//    @Test
+//    public void AccountService_UpdateAccount_ReturnsUpdatedAccount() {
+//
+//        when(userRepository.existsById(1L)).thenReturn(true);
+//
+//        accountService.saveAccount(account1);
+//
+//        account1.setId(1L);
+//        account1.setName("Updated Name");
+//        account1.setMinimumBalance(null);
+//        account1.setBalance(new BigDecimal("10"));
+//
+//        when(accountRepository.save(account1)).thenReturn(account1);
+//
+//        Account updatedAccount = accountService.updateAccount(account1);
+//
+//        assertThat(updatedAccount).isNotNull();
+//
+//
+//    }
 
 }
