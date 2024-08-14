@@ -33,62 +33,11 @@ public class AccountService {
     }
 
 
+
     // Save Account
     public Account saveAccount(Account account) {
 
-        // ID must be null
-        if (account.getId() != null) {
-            account.setId(null);
-        }
-
-        // Account name cannot be missing
-        if (account.getName() == null || account.getName().isEmpty()) {
-            throw new MissingParameterException("name");
-        }
-
-        // User ID cannot be missing
-        if (account.getUserId() == null) {
-            throw new MissingParameterException("user id");
-        }
-
-        // User ID must exist in Users table
-        if (!userRepository.existsById(account.getUserId())) {
-            throw new UserIDNotFoundException(String.valueOf(account.getUserId()));
-        }
-
-        // Check Category id when Category is implemented
-
-        // Balance cannot be less than 0
-        if ((account.getBalance() != null) && (account.getBalance().compareTo(BigDecimal.ZERO) < 0)) {
-            throw new NegativeBalanceException(String.valueOf(account.getBalance()));
-        }
-
-        // MinimumBalance cannot be less than 0
-        if ((account.getMinimumBalance() != null) && (account.getMinimumBalance().compareTo(BigDecimal.ZERO) < 0)) {
-            throw new NegativeBalanceException(String.valueOf(account.getMinimumBalance()));
-        }
-
-        // If minimum balance is set, balance cannot be less that minimum balance
-        if ((account.getMinimumBalance() != null) && account.getBalance().compareTo(account.getMinimumBalance()) < 0) {
-            throw new UnderMinimumBalanceException(String.valueOf(account.getBalance()));
-        }
-
-        // If no date created is set, set date created to current date
-        if (account.getDateCreated() == null) {
-            account.setDateCreated(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
-        }
-        else {
-            if (!DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
-                throw new InvalidDateFormatException(account.getDateCreated());
-            }
-        }
-
-        // Notes cannot be more than 500 characters
-        if (account.getNotes() != null && account.getNotes().length() > MAX_NOTES_LENGTH) {
-            throw new NotesTooLongException(String.valueOf(account.getNotes().length()));
-        }
-
-        trimStringData(account);
+        validateAccount(account, true);
 
         return accountRepository.save(account);
 
@@ -124,54 +73,7 @@ public class AccountService {
     // Update Account
     public Account updateAccount(Account account) {
 
-        // ID must not be null
-        if (account.getId() == null) {
-            throw new MissingParameterException("id");
-        }
-
-        // Account name cannot be missing
-        if (account.getName() == null || account.getName().isEmpty()) {
-            throw new MissingParameterException("name");
-        }
-
-        // User ID cannot be missing
-        if (account.getUserId() == null) {
-            throw new MissingParameterException("user id");
-        }
-
-        // User ID must exist in Users table
-        if (!userRepository.existsById(account.getUserId())) {
-            throw new UserIDNotFoundException(String.valueOf(account.getUserId()));
-        }
-
-        // Check Category id when Category is implemented
-
-        // Balance cannot be less than 0
-        if ((account.getBalance() != null) && (account.getBalance().compareTo(BigDecimal.ZERO) < 0)) {
-            throw new NegativeBalanceException(String.valueOf(account.getBalance()));
-        }
-
-        // If minimum balance is set, balance cannot be less that minimum balance
-        if ((account.getMinimumBalance() != null) && account.getBalance().compareTo(account.getMinimumBalance()) < 0) {
-            throw new UnderMinimumBalanceException(String.valueOf(account.getBalance()));
-        }
-
-        // If no date created is set, set date created to current date
-        if (account.getDateCreated() == null) {
-            account.setDateCreated(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
-        }
-        else {
-            if (!DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
-                throw new InvalidDateFormatException(account.getDateCreated());
-            }
-        }
-
-        // Notes cannot be more than 500 characters
-        if (account.getNotes() != null && account.getNotes().length() > MAX_NOTES_LENGTH) {
-            throw new NotesTooLongException(String.valueOf(account.getNotes().length()));
-        }
-
-        trimStringData(account);
+        validateAccount(account, false);
 
         return accountRepository.save(account);
 
@@ -190,10 +92,115 @@ public class AccountService {
 
     // HELPER METHODS
 
+    // All validation happens in one function
+    private void validateAccount(Account account, boolean isNew) {
+
+        // Validation when adding a new Account
+        if (isNew) {
+
+            // ID for new Account must be null -> database auto generates new ID's
+            if (account.getId() != null) {
+                account.setId(null);
+            }
+
+        }
+        else {
+
+            // Account ID must not be null
+            if (account.getId() == null) {
+                throw new MissingParameterException("id");
+            }
+
+            // Account ID must exist in Accounts table
+            if (!accountRepository.existsById(account.getId())) {
+                throw new AccountIDNotFoundException(String.valueOf(account.getId()));
+            }
+
+        }
+
+        // Validation regardless is account is new or not
+        validateAccountName(account);
+        validateUserId(account);
+        validateBalance(account);
+        validateDate(account);
+        validateNotes(account);
+        trimStringData(account);
+
+    }
+
     private void trimStringData(Account account) {
 
         account.setName(account.getName().trim());
         account.setNotes(account.getNotes().trim());
+
+    }
+
+    private void validateAccountName(Account account) {
+
+        // Account name cannot be null
+        if (account.getName() == null || account.getName().isEmpty()) {
+            throw new MissingParameterException("name");
+        }
+
+        // Other possible checks in the future
+
+    }
+
+    private void validateUserId(Account account) {
+
+        // User ID cannot be missing
+        if (account.getUserId() == null) {
+            throw new MissingParameterException("user Id");
+        }
+
+        // User ID must exist in Users table
+        if (!userRepository.existsById(account.getUserId())) {
+            throw new UserIDNotFoundException(String.valueOf(account.getUserId()));
+        }
+
+    }
+
+    private void validateBalance(Account account) {
+
+        // Balance cannot be less than 0
+        if (account.getBalance() != null && account.getBalance().compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeBalanceException(String.valueOf(account.getBalance()));
+        }
+
+        // Minimum balance cannot be less than 0
+        if (account.getMinimumBalance() != null && account.getMinimumBalance().compareTo(BigDecimal.ZERO) < 0) {
+            throw new NegativeBalanceException(String.valueOf(account.getMinimumBalance()));
+        }
+
+        // If minimum balance is set, balance cannot be less than minimum balance
+        if (account.getMinimumBalance() != null && account.getBalance().compareTo(account.getMinimumBalance()) < 0) {
+            throw new UnderMinimumBalanceException(String.valueOf(account.getBalance()));
+        }
+
+    }
+
+    private void validateDate(Account account) {
+
+        // If not dateCreated is set, set dateCreated to current date
+        if (account.getDateCreated() == null) {
+            account.setDateCreated(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
+        }
+        else {
+            if (!DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
+                throw new InvalidDateFormatException(account.getDateCreated());
+            }
+        }
+
+    }
+
+    private void validateNotes(Account account) {
+
+        // Notes cannot be more than 500 characters
+        if (account.getNotes() != null && account.getNotes().length() > MAX_NOTES_LENGTH) {
+            throw new NotesTooLongException(String.valueOf(account.getNotes().length()));
+        }
+
+        // Other possible checks in the future
 
     }
 
