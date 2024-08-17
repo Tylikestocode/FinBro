@@ -2,9 +2,8 @@ package com.finbro.FinBroJavaSpring.service;
 
 
 import com.finbro.FinBroJavaSpring.domain.User;
-import com.finbro.FinBroJavaSpring.exception.userexceptions.EmailAlreadyExistsException;
-import com.finbro.FinBroJavaSpring.exception.userexceptions.InvalidEmailFormatException;
-import com.finbro.FinBroJavaSpring.exception.userexceptions.UsernameAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,51 +82,45 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    public void UserService_StoreUser_UserSuccessfullySaved() {
+    public void UserService_SaveUser_ReturnsSavedUser() {
 
-        // Act
         when(userRepository.save(user1)).thenReturn(user1);
         userService.saveUser(user1);
 
-        // Assert
         verify(userRepository).save(user1);
 
     }
 
     @Test
-    public void UserService_StoreUser_ReturnUserAlreadyExistsException() {
+    public void UserService_SaveUser_ReturnUserAlreadyExistsException() {
 
-        // Act
-        when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
+        String username = user1.getUsername();
+        when(userRepository.existsByUsername(username)).thenReturn(true);
 
-        // Assert
-        assertThrows(UsernameAlreadyExistsException.class, () -> userService.saveUser(user1));
-
-    }
-
-    @Test
-    public void UserService_StoreUser_ReturnsEmailAlreadyExistsException() {
-
-        // Act
-        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
-
-        // Assert
-        assertThrows(EmailAlreadyExistsException.class, () -> userService.saveUser(user1));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user1));
 
     }
 
     @Test
-    public void UserService_StoreUser_ReturnsInvalidEmailFormatException() {
+    public void UserService_SaveUser_ReturnsEmailAlreadyExistsException() {
 
-        // Arrange
+        String email = user1.getEmail();
+        when(userRepository.existsByEmail(email)).thenReturn(true);
+
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user1));
+
+    }
+
+    @Test
+    public void UserService_SaveUser_ReturnsInvalidEmailFormatException() {
+
         user1.setEmail("john.d#example.com");
         user2.setEmail("");
         user3.setEmail("emily.b.com");
 
-        // Assert
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user1));
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user2));
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user3));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user1));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user2));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user3));
 
     }
 

@@ -1,6 +1,9 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
 import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -96,7 +99,7 @@ public class UserServiceIntegrationTest {
         userService.saveUser(user1);
         User user = new User((long) 1, "newUser", "NewSurname", 23, "john.d", "newEmail@john.com", "newPass");
 
-        assertThrows(UsernameAlreadyExistsException.class, () -> userService.saveUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user));
 
     }
 
@@ -108,10 +111,10 @@ public class UserServiceIntegrationTest {
         user3.setEmail("new@");
         user4.setEmail("email$example");
 
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user1));
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user2));
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user3));
-        assertThrows(InvalidEmailFormatException.class, () -> userService.saveUser(user4));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user1));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user2));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user3));
+        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user4));
 
     }
 
@@ -121,7 +124,7 @@ public class UserServiceIntegrationTest {
         userService.saveUser(user1);
         User user = new User((long) 1, "newUser", "NewSurname", 23, "newUsername", "john.d@example.com", "newPass");
 
-        assertThrows(EmailAlreadyExistsException.class, () -> userService.saveUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user));
 
     }
 
@@ -172,7 +175,7 @@ public class UserServiceIntegrationTest {
 
         long id = 12;
 
-        assertThrows(UserIDNotFoundException.class, () -> userService.getUserByID(id));
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByID(id));
 
     }
 
@@ -193,7 +196,7 @@ public class UserServiceIntegrationTest {
 
         userService.saveUser(user1);
 
-        assertThrows(UsernameNotFoundException.class, () -> userService.getUserByUsername("tester"));
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByUsername("tester"));
 
     }
 
@@ -214,7 +217,7 @@ public class UserServiceIntegrationTest {
 
         userService.saveUser(user1);
 
-        assertThrows(EmailNotFoundException.class, () -> userService.getUserByEmail("finbro@gmail.com"));
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByEmail("finbro@gmail.com"));
 
     }
 
@@ -286,7 +289,7 @@ public class UserServiceIntegrationTest {
         user.setEmail("NewEmail@example.com");
         user.setPassword("NewPassword");
 
-        assertThrows(UserIDNotFoundException.class, () -> userService.updateUser(user));
+        assertThrows(ResourceNotFoundException.class, () -> userService.updateUser(user));
 
     }
 
@@ -300,10 +303,10 @@ public class UserServiceIntegrationTest {
         User user = userService.getUserByUsername("john.d");
 
         user.setUsername("alice.j");
-        assertThrows(UsernameAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.updateUser(user));
 
         user.setUsername("bob.s");
-        assertThrows(UsernameAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.updateUser(user));
 
     }
 
@@ -317,10 +320,10 @@ public class UserServiceIntegrationTest {
         User user = userService.getUserByUsername("john.d");
 
         user.setEmail("alice.j@example.com");
-        assertThrows(EmailAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.updateUser(user));
 
         user.setEmail("bob.s@example.com");
-        assertThrows(EmailAlreadyExistsException.class, () -> userService.updateUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.updateUser(user));
 
     }
 
@@ -334,7 +337,7 @@ public class UserServiceIntegrationTest {
         long id = userService.getUserByUsername("alice.j").getId();
         userService.deleteUserByID(id);      // Deleting user2
 
-        assertThrows(UserIDNotFoundException.class, () -> userService.deleteUserByID((long) 6));
+        assertThrows(ResourceNotFoundException.class, () -> userService.deleteUserByID((long) 6));
 
     }
 
