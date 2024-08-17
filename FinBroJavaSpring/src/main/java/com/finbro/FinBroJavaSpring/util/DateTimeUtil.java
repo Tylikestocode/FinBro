@@ -12,7 +12,8 @@ public class DateTimeUtil {
     private static final Pattern pattern = Pattern.compile(DATE_TIME_PATTERN);
 
     // DateTimeFormatter for parsing and formatting the date-time string
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_FORMAT);
 
     // Checks if the given String is in the format "yyyy-MM-dd HH:mm:ss"
     public static boolean isValidDateTimeFormat(String dateTimeString) {

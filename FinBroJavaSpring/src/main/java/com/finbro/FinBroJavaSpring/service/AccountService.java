@@ -1,13 +1,11 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.Account;
-import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDateFormatException;
+import com.finbro.FinBroJavaSpring.domain.User;
+import com.finbro.FinBroJavaSpring.exception.accountexceptions.*;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
-import com.finbro.FinBroJavaSpring.exception.accountexceptions.AccountIDNotFoundException;
-import com.finbro.FinBroJavaSpring.exception.accountexceptions.NegativeBalanceException;
-import com.finbro.FinBroJavaSpring.exception.accountexceptions.NotesTooLongException;
-import com.finbro.FinBroJavaSpring.exception.accountexceptions.UnderMinimumBalanceException;
-import com.finbro.FinBroJavaSpring.exception.userexceptions.UserIDNotFoundException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
 import com.finbro.FinBroJavaSpring.repository.AccountRepository;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import com.finbro.FinBroJavaSpring.util.DateTimeUtil;
@@ -52,7 +50,7 @@ public class AccountService {
     public Account findByAccountID(Long accountId) {
 
         if (!accountRepository.existsById(accountId)) {
-            throw new AccountIDNotFoundException(String.valueOf(accountId));
+            throw new ResourceNotFoundException(Account.class, "id", String.valueOf(accountId));
         }
 
         return accountRepository.findById(accountId).orElse(null);
@@ -63,7 +61,7 @@ public class AccountService {
     public List<Account> findAllByUserId(Long userId) {
 
         if (!userRepository.existsById(userId)) {
-            throw new  UserIDNotFoundException(String.valueOf(userId));
+            throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
         }
 
         return accountRepository.findAllByUserId(userId);
@@ -83,7 +81,7 @@ public class AccountService {
     public void deleteAccountById(Long id) {
 
         if (!accountRepository.existsById(id)) {
-            throw new AccountIDNotFoundException(String.valueOf(id));
+            throw new ResourceNotFoundException(Account.class, "id", String.valueOf(id));
         }
 
         accountRepository.deleteById(id);
@@ -113,7 +111,7 @@ public class AccountService {
 
             // Account ID must exist in Accounts table
             if (!accountRepository.existsById(account.getId())) {
-                throw new AccountIDNotFoundException(String.valueOf(account.getId()));
+                throw new ResourceNotFoundException(Account.class, "id", String.valueOf(account.getId()));
             }
 
         }
@@ -155,7 +153,7 @@ public class AccountService {
 
         // User ID must exist in Users table
         if (!userRepository.existsById(account.getUserId())) {
-            throw new UserIDNotFoundException(String.valueOf(account.getUserId()));
+            throw new ResourceNotFoundException(Account.class, "UserId", String.valueOf(account.getUserId()));
         }
 
     }
@@ -187,7 +185,7 @@ public class AccountService {
         }
         else {
             if (!DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
-                throw new InvalidDateFormatException(account.getDateCreated());
+                throw new InvalidDataFormatException("dateCreated", account.getDateCreated(), DateTimeUtil.DATE_TIME_FORMAT);
             }
         }
 

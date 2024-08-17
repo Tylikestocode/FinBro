@@ -1,6 +1,9 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.User;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.userexceptions.*;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
@@ -29,7 +32,7 @@ public class UserService {
 
        validateUser(user, true);
 
-        return userRepository.save(user);
+       return userRepository.save(user);
 
     }
 
@@ -40,7 +43,7 @@ public class UserService {
     public User getUserByID(Long userId) {
 
         if (!userRepository.existsById(userId)) {
-            throw new UserIDNotFoundException(String.valueOf(userId));
+            throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
         }
 
         return userRepository.findById(userId).orElse(null);
@@ -49,7 +52,7 @@ public class UserService {
     public User getUserByUsername(String username) {
 
         if (!userRepository.existsByUsername(username)) {
-            throw new UsernameNotFoundException(username);
+            throw new ResourceNotFoundException(User.class, "username", username);
         }
 
         return userRepository.findByUsername(username);
@@ -58,7 +61,7 @@ public class UserService {
     public User getUserByEmail(String email) {
 
         if (!userRepository.existsByEmail(email)) {
-            throw new EmailNotFoundException(email);
+            throw new ResourceNotFoundException(User.class, "email", email);
         }
 
         return userRepository.findByEmail(email);
@@ -73,7 +76,7 @@ public class UserService {
         String password = loginRequest.get("password");
 
         if (!userRepository.existsByEmail(email)) {
-            throw new EmailNotFoundException(email);
+            throw new ResourceNotFoundException(User.class, "email", email);
         }
 
         User user = userRepository.findByEmail(email);
@@ -97,7 +100,7 @@ public class UserService {
     public void deleteUserByID(Long id) {
 
         if (!userRepository.existsById(id)) {
-            throw new UserIDNotFoundException(String.valueOf(id));
+            throw new ResourceNotFoundException(User.class, "id", String.valueOf(id));
         }
 
         userRepository.deleteById(id);
@@ -131,7 +134,7 @@ public class UserService {
         else {
 
             if (!userRepository.existsById(user.getId())) {
-                throw new UserIDNotFoundException(String.valueOf(user.getId()));
+                throw new ResourceNotFoundException(User.class, "id", String.valueOf(user.getId()));
             }
 
             User existingUser = getUserByID(user.getId());
@@ -165,7 +168,7 @@ public class UserService {
     private void validateUsername(String username) {
 
         if (userRepository.existsByUsername(username)) {
-            throw new UsernameAlreadyExistsException(username);
+            throw new ResourceAlreadyExistsException(User.class, "username", username);
         }
 
         // Other possible checks in the future
@@ -175,14 +178,14 @@ public class UserService {
     private void validateEmail(String email) {
 
         if (userRepository.existsByEmail(email)) {
-            throw new EmailAlreadyExistsException(email);
+            throw new ResourceAlreadyExistsException(User.class, "email", email);
         }
 
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         Pattern pattern = Pattern.compile(emailRegex);
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
-            throw new InvalidEmailFormatException(email);
+            throw new InvalidDataFormatException("email", email, "name@example.com (must contain '@' and a domain)");
         }
 
     }
