@@ -11,25 +11,29 @@ public class Account {
     @Id
     private Long id;
     private String name;
+    private boolean allowNegativeBalance;
+    private BigDecimal minimumBalance;
     private BigDecimal balance;
     private String dateCreated;
-    private BigDecimal minimumBalance;
     private String notes;
     private Long userId;
     private Long categoryId;
 
-    public Account(Long id, String name, BigDecimal balance, String dateCreated, BigDecimal minimumBalance, String notes, Long userId, Long categoryId) {
+    public Account() {
+
+    }
+
+    public Account(Long id, String name, boolean allowNegativeBalance, BigDecimal minimumBalance, BigDecimal balance, String dateCreated, String notes, Long userId, Long categoryId) {
         this.id = id;
         this.name = name;
+        this.allowNegativeBalance = allowNegativeBalance;
+        this.minimumBalance = minimumBalance;
         this.balance = balance;
         this.dateCreated = dateCreated;
-        this.minimumBalance = minimumBalance;
         this.notes = notes;
         this.userId = userId;
         this.categoryId = categoryId;
     }
-
-    public Account() {};
 
     public Long getId() {
         return id;
@@ -47,6 +51,22 @@ public class Account {
         this.name = name;
     }
 
+    public boolean isAllowNegativeBalance() {
+        return allowNegativeBalance;
+    }
+
+    public void setAllowNegativeBalance(boolean allowNegativeBalance) {
+        this.allowNegativeBalance = allowNegativeBalance;
+    }
+
+    public BigDecimal getMinimumBalance() {
+        return minimumBalance;
+    }
+
+    public void setMinimumBalance(BigDecimal minimumBalance) {
+        this.minimumBalance = minimumBalance;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }
@@ -61,14 +81,6 @@ public class Account {
 
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public BigDecimal getMinimumBalance() {
-        return minimumBalance;
-    }
-
-    public void setMinimumBalance(BigDecimal minimumBalance) {
-        this.minimumBalance = minimumBalance;
     }
 
     public String getNotes() {
@@ -100,9 +112,10 @@ public class Account {
         return "Account{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", balance=" + balance +
-                ", dateCreated=" + dateCreated +
+                ", allowNegativeBalance=" + allowNegativeBalance +
                 ", minimumBalance=" + minimumBalance +
+                ", balance=" + balance +
+                ", dateCreated='" + dateCreated + '\'' +
                 ", notes='" + notes + '\'' +
                 ", userId=" + userId +
                 ", categoryId=" + categoryId +

@@ -20,7 +20,7 @@ public class DateTimeUtil {
         if (dateTimeString == null) {
             return false;
         }
-        return pattern.matcher(dateTimeString).matches();
+        return !pattern.matcher(dateTimeString).matches();
     }
 
     // Converts a String in the format "yyyy-MM-dd HH:mm:ss" to a LocalDateTime object
@@ -42,6 +42,14 @@ public class DateTimeUtil {
             return null;
         }
         return dateTime.format(DATE_TIME_FORMATTER);
+    }
+
+    // TODO: Find a better approach when fixing time handling
+    // Converts database time format to application format
+    public static String convertDBTimeToString(String date) {
+
+        return date.replaceAll("\\.0$", "");
+
     }
 
 }
