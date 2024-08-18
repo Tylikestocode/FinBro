@@ -32,7 +32,6 @@ public class AccountService {
 
 
 
-    // Save Account
     public Account saveAccount(Account account) {
 
         validateAccount(account, true);
@@ -41,12 +40,10 @@ public class AccountService {
 
     }
 
-    // Get all Accounts
     public List<Account> findAllAccounts() {
         return (List<Account>) accountRepository.findAll();
     }
 
-    // Get Accounts by User ID
     public Account findByAccountID(Long accountId) {
 
         if (!accountRepository.existsById(accountId)) {
@@ -57,7 +54,6 @@ public class AccountService {
 
     }
 
-    // Get all Accounts by User ID
     public List<Account> findAllByUserId(Long userId) {
 
         if (!userRepository.existsById(userId)) {
@@ -68,7 +64,6 @@ public class AccountService {
 
     }
 
-    // Update Account
     public Account updateAccount(Account account) {
 
         validateAccount(account, false);
@@ -77,7 +72,6 @@ public class AccountService {
 
     }
 
-    // Delete Account
     public void deleteAccountById(Long id) {
 
         if (!accountRepository.existsById(id)) {
@@ -116,7 +110,7 @@ public class AccountService {
 
         }
 
-        // Validation regardless is account is new or not
+        // Validation regardless if account is new or not
         validateAccountName(account);
         validateUserId(account);
         validateBalance(account);
@@ -179,7 +173,7 @@ public class AccountService {
 
     private void validateDate(Account account) {
 
-        // If not dateCreated is set, set dateCreated to current date
+        // If no dateCreated is set, set dateCreated to current date
         if (account.getDateCreated() == null) {
             account.setDateCreated(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
         }
@@ -193,12 +187,17 @@ public class AccountService {
 
     private void validateNotes(Account account) {
 
-        // Notes cannot be more than 500 characters
         if (account.getNotes() != null && account.getNotes().length() > MAX_NOTES_LENGTH) {
             throw new NotesTooLongException(String.valueOf(account.getNotes().length()));
         }
 
         // Other possible checks in the future
+
+    }
+
+    private void validateCategory(Account account) {
+
+        // TODO: Add validation logic after implementing Categories
 
     }
 

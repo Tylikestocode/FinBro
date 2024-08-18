@@ -29,14 +29,20 @@ CREATE TABLE CATEGORIES (
 CREATE TABLE ACCOUNTS (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    allow_negative_balance BOOLEAN NOT NULL DEFAULT FALSE,
+    minimum_balance DECIMAL(10, 2),
     balance DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    minimum_balance DECIMAL(10, 2),
     notes TEXT,
     user_id INT NOT NULL,
     category_id INT,
     FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES CATEGORIES(id)
+    FOREIGN KEY (category_id) REFERENCES CATEGORIES(id),
+    CONSTRAINT chk_min_balance CHECK (
+        (allow_negative_balance = TRUE) OR
+        (allow_negative_balance = FALSE AND minimum_balance >= 0)
+    ),
+    CHECK (balance >= minimum_balance)
 );
 
 CREATE TABLE TRANSACTIONS (
@@ -69,12 +75,12 @@ VALUES ('Savings Account', 'User savings account category', 'account', 0, NULL),
        ('Alice Custom Category', 'Custom category created by Alice', 'transaction', 1, 1),
        ('Bob Customer Category', 'Custom category created by Bob', 'account', 1, 2);
 
-INSERT INTO ACCOUNTS (name, balance, date_created, minimum_balance, notes, user_id, category_id)
-VALUES ('Alice Savings', 1000.00, '2024-01-01 10:00:00', 500.00, 'Primary savings account', 1, 1),
-	   ('Bob Checking', 1500.00, '2023-02-01 12:00:00', NULL, 'Main checking account', 2, NULL),
-       ('Emily Investment', 2000.00, '2023-03-01 14:00:00', 1000.00, 'Long-term investment account', 3, 4),
-       ('David Savings', 2500.00, '2023-04-01 16:00:00', 100.00, 'Secondary savings account', 4, 1),
-       ('Grace Budget Account', 300.00, '2023-05-01 18:00:00', NULL, 'Budget management account', 5, 3);
+INSERT INTO ACCOUNTS (name, allow_negative_balance, minimum_balance, balance, date_created, notes, user_id, category_id)
+VALUES ('Alice Savings', TRUE, 500.00, 1000.00, '2024-01-01 10:00:00', 'Primary savings account', 1, 1),
+       ('Bob Checking', FALSE, NULL, 1500.00, '2023-02-01 12:00:00', 'Main checking account', 2, NULL),
+       ('Emily Investment', TRUE, 1000.00, 2000.00, '2023-03-01 14:00:00', 'Long-term investment account', 3, 4),
+       ('David Savings', FALSE, 100.00, 2500.00, '2023-04-01 16:00:00', 'Secondary savings account', 4, 1),
+       ('Grace Budget Account', FALSE, NULL, 300.00, '2023-05-01 18:00:00', 'Budget management account', 5, 3);
 
 INSERT INTO TRANSACTIONS (amount, description, date, notes, user_id, account_id, category_id)
 VALUES (50.00, 'Grocery shopping', '2023-06-01 10:30:00', 'Bought groceries at SuperMart', 1, 1, 2),
@@ -82,4 +88,3 @@ VALUES (50.00, 'Grocery shopping', '2023-06-01 10:30:00', 'Bought groceries at S
        (100.00, 'Investment deposit', '2023-06-03 12:30:00', 'Monthly investment', 3, 3, 4),
        (30.00, 'Savings deposit', '2023-06-04 14:00:00', 'Added to savings', 4, 4, 1),
        (25.00, 'Dining out', '2023-06-05 15:30:00', 'Dinner at a restaurant', 5, 5, 5);
-

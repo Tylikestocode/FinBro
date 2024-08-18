@@ -42,6 +42,7 @@ public class RestExceptionHandler {
     }
 
 
+
     // GENERAL
 
     @ExceptionHandler(MissingParameterException.class)
@@ -77,6 +78,19 @@ public class RestExceptionHandler {
 
     }
 
+    @ExceptionHandler(InvalidDataFormatException.class)
+    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionInvalidDataFormat(InvalidDataFormatException e) {
+
+        return ApiResponseUtil.createErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ErrorCode.INVALID_DATA_FORMAT,
+                e.getMessage()
+        );
+
+    }
+
+
+
     // USER SPECIFIC
 
     @ExceptionHandler(IncorrectPasswordException.class)
@@ -89,6 +103,7 @@ public class RestExceptionHandler {
         );
 
     }
+
 
 
     // ACCOUNT SPECIFIC
@@ -126,15 +141,5 @@ public class RestExceptionHandler {
 
     }
 
-    @ExceptionHandler(InvalidDataFormatException.class)
-    public ResponseEntity<ApiResponse<ErrorResponse>> exceptionInvalidDataFormat(InvalidDataFormatException e) {
-
-        return ApiResponseUtil.createErrorResponse(
-                HttpStatus.BAD_REQUEST,
-                ErrorCode.INVALID_DATA_FORMAT,
-                e.getMessage()
-        );
-
-    }
 
 }
