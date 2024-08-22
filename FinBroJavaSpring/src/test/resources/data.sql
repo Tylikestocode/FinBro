@@ -5,14 +5,13 @@ VALUES ('Alice', 'Johnson', 28, 'alice.j', 'alice.j@example.com', 'hashed_passwo
 	   ('David', 'White', 30, 'david.w', 'david.w@example.com', 'hashed_password4'),
        ('Grace', 'Black', 22, 'grace.b', 'grace.b@example.com', 'hashed_password5');
 
-INSERT INTO Categories (name, description, type, is_user_defined, user_id)
-VALUES ('Savings Account', 'User savings account category', 'account', 0, NULL),
-	   ('Groceries', 'Category for grocery expenses', 'transaction', 0, NULL),
-       ('Monthly Budget', 'Predefined monthly budget', 'budget', 0, NULL),
-       ('Investments', 'Category for investment accounts', 'account', 0, NULL),
-       ('Entertainment', 'Category for entertainment expenses', 'transaction', 0, NULL),
-       ('Alice Custom Category', 'Custom category created by Alice', 'transaction', 1, 1),
-       ('Bob Customer Category', 'Custom category created by Bob', 'account', 1, 2);
+INSERT INTO Categories (name, type, description, is_user_defined, user_id)
+VALUES ('Savings Account', 'ACCOUNT', 'User savings account category', 0, NULL),
+	   ('Groceries', 'TRANSACTION', 'Category for grocery expenses', 0, NULL),
+       ('Investments', 'ACCOUNT', 'Category for investment accounts', 0, NULL),
+       ('Entertainment', 'TRANSACTION', 'Category for entertainment expenses', 0, NULL),
+       ('Alice Custom Category', 'TRANSACTION', 'Custom category created by Alice', 1, 1),
+       ('Bob Customer Category', 'BUDGET', 'Custom category created by Bob', 1, 2);
 
 INSERT INTO Accounts (name, balance, date_created, minimum_balance, notes, user_id, category_id)
 VALUES ('Alice Savings', 1000.00, '2024-01-01 10:00:00', 500.00, 'Primary savings account', 1, 1),

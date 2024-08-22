@@ -1,12 +1,14 @@
 package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.Account;
+import com.finbro.FinBroJavaSpring.domain.Transaction;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.accountexceptions.*;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.MissingParameterException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
 import com.finbro.FinBroJavaSpring.repository.AccountRepository;
+import com.finbro.FinBroJavaSpring.repository.CategoryRepository;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import com.finbro.FinBroJavaSpring.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,18 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     public final static int MAX_NOTES_LENGTH = 500;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, UserRepository userRepository) {
+    public AccountService(
+            AccountRepository accountRepository,
+            UserRepository userRepository,
+            CategoryRepository categoryRepository) {
         this.accountRepository = accountRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -116,6 +123,7 @@ public class AccountService {
         validateBalance(account);
         validateDate(account);
         validateNotes(account);
+        validateCategory(account);
         trimStringData(account);
 
     }
@@ -197,7 +205,9 @@ public class AccountService {
 
     private void validateCategory(Account account) {
 
-        // TODO: Add validation logic after implementing Categories
+        if (!categoryRepository.existsById(account.getCategoryId())) {
+            throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(account.getCategoryId()));
+        }
 
     }
 

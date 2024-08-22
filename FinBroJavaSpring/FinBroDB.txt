@@ -18,12 +18,11 @@ CREATE TABLE USERS (
 CREATE TABLE CATEGORIES (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    type ENUM('ACCOUNT', 'TRANSACTION', 'BUDGET') NOT NULL,
     description TEXT,
-    type ENUM('account', 'transaction', 'budget') NOT NULL,
     is_user_defined BOOLEAN NOT NULL,
     user_id INT,
-    FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE,
-    CHECK ((is_user_defined = 1 AND user_id IS NOT NULL) OR (is_user_defined = 0 AND user_id IS NULL))
+    FOREIGN KEY (user_id) REFERENCES USERS(id) ON DELETE CASCADE
 );
 
 CREATE TABLE ACCOUNTS (
@@ -66,14 +65,13 @@ VALUES ('Alice', 'Johnson', 28, 'alice.j', 'alice.j@example.com', 'hashed_passwo
 	   ('David', 'White', 30, 'david.w', 'david.w@example.com', 'hashed_password4'),
        ('Grace', 'Black', 22, 'grace.b', 'grace.b@example.com', 'hashed_password5');
 
-INSERT INTO CATEGORIES (name, description, type, is_user_defined, user_id)
-VALUES ('Savings Account', 'User savings account category', 'account', 0, NULL),
-	   ('Groceries', 'Category for grocery expenses', 'transaction', 0, NULL),
-       ('Monthly Budget', 'Predefined monthly budget', 'budget', 0, NULL),
-       ('Investments', 'Category for investment accounts', 'account', 0, NULL),
-       ('Entertainment', 'Category for entertainment expenses', 'transaction', 0, NULL),
-       ('Alice Custom Category', 'Custom category created by Alice', 'transaction', 1, 1),
-       ('Bob Customer Category', 'Custom category created by Bob', 'account', 1, 2);
+INSERT INTO CATEGORIES (name, type, description, is_user_defined, user_id)
+VALUES ('Savings Account', 'ACCOUNT', 'User savings account category', 0, NULL),
+	   ('Groceries', 'TRANSACTION', 'Category for grocery expenses', 0, NULL),
+       ('Investments', 'ACCOUNT', 'Category for investment accounts', 0, NULL),
+       ('Entertainment', 'TRANSACTION', 'Category for entertainment expenses', 0, NULL),
+       ('Alice Custom Category', 'TRANSACTION', 'Custom category created by Alice', 1, 1),
+       ('Bob Customer Category', 'BUDGET', 'Custom category created by Bob', 1, 2);
 
 INSERT INTO ACCOUNTS (name, allow_negative_balance, minimum_balance, balance, date_created, notes, user_id, category_id)
 VALUES ('Alice Savings', TRUE, 500.00, 1000.00, '2024-01-01 10:00:00', 'Primary savings account', 1, 1),
