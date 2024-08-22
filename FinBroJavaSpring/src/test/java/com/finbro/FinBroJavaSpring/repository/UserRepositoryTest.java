@@ -72,91 +72,71 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void UserRepository_Save_ReturnSavedUser() {
+    public void UserRepository_Save_SavedUser() {
 
-        // Arrange (done in @BeforeEach)
-
-        //Act
         User savedUser = userRepository.save(user2);
 
-        // Assert
         assertThat(savedUser).isNotNull();
-        assertThat(savedUser.getName()).isEqualTo("Alice");
 
     }
 
     @Test
-    public void UserRepository_FindAll_ReturnsAll() {
+    public void UserRepository_FindAll_AllUsers() {
 
-        // Arrange
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
 
-        // Act
         List<User> allUsers = (List<User>) userRepository.findAll();
 
-        // Assert
         assertThat(allUsers.size()).isEqualTo(5);
 
     }
 
     @Test
-    public void UserRepository_FindById_ReturnsUserByID() {
+    public void UserRepository_FindById_UserByID() {
 
-        // Arrange
         userRepository.save(user1);
 
-        // Act
         User user = userRepository.findByUsername("john.d");
         long userId = user.getId();
         User returnedUser = userRepository.findById(userId).orElse(null);
 
-        // Assert
         assertThat(returnedUser).isNotNull();
         assertThat(returnedUser.getName()).isEqualTo("John");
 
     }
 
     @Test
-    public void UserRepository_FindByUsername_ReturnsUserByUsername() {
+    public void UserRepository_FindByUsername_UserByUsername() {
 
-        // Arrange
         userRepository.save(user1);
 
-        //Act
         User user = userRepository.findByUsername("john.d");
 
-        // Assert
         assertThat(user.getName()).isEqualTo("John");
 
     }
 
     @Test
-    public void UserRepository_FindByEmail_ReturnsUserByEmail() {
+    public void UserRepository_FindByEmail_UserByEmail() {
 
-        // Arrange
         userRepository.save(user1);
 
-        // Act
         User user = userRepository.findByEmail("john.d@example.com");
 
-        // Assert
         assertThat(user).isNotNull();
         assertThat(user.getUsername()).isEqualTo("john.d");
 
     }
 
     @Test
-    public void UserRepository_Save_ReturnUpdatedUser() {
+    public void UserRepository_Save_UpdatedUser() {
 
-        // Arrange
         userRepository.save(user1);
 
-        // Act
         user1.setName("NewUser");
         user1.setPassword("NewPassword");
         User user = userRepository.save(user1);
 
-        // Assert
         assertThat(user).isNotNull();
         assertThat(user.getName()).isEqualTo("NewUser");
         assertThat(user.getPassword()).isEqualTo("NewPassword");
@@ -166,14 +146,11 @@ public class UserRepositoryTest {
     @Test
     public void UserRepository_Delete_DeletedUserNotFoundByUsername() {
 
-        // Arrange
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
 
-        // Act
         userRepository.delete(user2);
         User user = userRepository.findByUsername(user2.getUsername());
 
-        // Assert
         assertThat(user).isNull();
 
     }

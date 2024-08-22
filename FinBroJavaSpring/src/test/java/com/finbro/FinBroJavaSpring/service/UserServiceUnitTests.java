@@ -4,6 +4,8 @@ package com.finbro.FinBroJavaSpring.service;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
+import com.finbro.FinBroJavaSpring.exception.userexceptions.IncorrectPasswordException;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -81,18 +86,21 @@ public class UserServiceUnitTests {
 
     }
 
+
     @Test
-    public void UserService_SaveUser_ReturnsSavedUser() {
+    public void UserService_SaveUser_SavedUser() {
 
         when(userRepository.save(user1)).thenReturn(user1);
-        userService.saveUser(user1);
+
+        User savedUser = userService.saveUser(user1);
 
         verify(userRepository).save(user1);
+        assertThat(savedUser).isNotNull();
 
     }
 
     @Test
-    public void UserService_SaveUser_ReturnUserAlreadyExistsException() {
+    public void UserService_SaveUser_UserAlreadyExistsException() {
 
         String username = user1.getUsername();
         when(userRepository.existsByUsername(username)).thenReturn(true);
@@ -102,7 +110,7 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    public void UserService_SaveUser_ReturnsEmailAlreadyExistsException() {
+    public void UserService_SaveUser_EmailAlreadyExistsException() {
 
         String email = user1.getEmail();
         when(userRepository.existsByEmail(email)).thenReturn(true);
@@ -112,7 +120,7 @@ public class UserServiceUnitTests {
     }
 
     @Test
-    public void UserService_SaveUser_ReturnsInvalidEmailFormatException() {
+    public void UserService_SaveUser_InvalidEmailFormatException() {
 
         user1.setEmail("john.d#example.com");
         user2.setEmail("");
@@ -124,8 +132,9 @@ public class UserServiceUnitTests {
 
     }
 
+
     @Test
-    public void UserService_FindAllUsers_ReturnsAllUsers() {
+    public void UserService_FindAllUsers_AllUsers() {
 
         when(userRepository.findAll()).thenReturn(List.of(user1, user2, user3, user4, user5));
 
@@ -133,6 +142,142 @@ public class UserServiceUnitTests {
 
         assertThat(allUsers).isNotNull();
         assertThat(allUsers.size()).isEqualTo(5);
+
+    }
+
+
+    @Test
+    public void UserService_GetUserById_UserById() {
+
+        when(userRepository.existsById(user1.getId())).thenReturn(true);
+        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
+
+        User user = userService.getUserByID(user1.getId());
+
+        assertThat(user.getName()).isEqualTo(user1.getName());
+
+    }
+
+    @Test
+    public void UserService_GetUserById_ResourceNotFoundException() {
+
+        when(userRepository.existsById(user1.getId())).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByID(user1.getId()));
+
+    }
+
+    @Test
+    public void UserService_GetUserByUsername_UserByUsername() {
+
+        when(userRepository.existsByUsername(user1.getUsername())).thenReturn(true);
+        when(userRepository.findByUsername(user1.getUsername())).thenReturn(user1);
+
+        User user = userService.getUserByUsername(user1.getUsername());
+
+        assertThat(user.getName()).isEqualTo(user1.getName());
+
+    }
+
+    @Test
+    public void UserService_GetUserByUsername_ResourceNotFoundException() {
+
+        when(userRepository.existsByUsername(user1.getUsername())).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByUsername(user1.getUsername()));
+
+    }
+
+    @Test
+    public void UserService_GetUserByEmail_UserByEmail() {
+
+        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
+        when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
+
+        User user = userService.getUserByEmail(user1.getEmail());
+
+        assertThat(user.getName()).isEqualTo(user1.getName());
+
+    }
+
+    @Test
+    public void UserService_getUserByEmail_ResourceNotFoundException() {
+
+        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByEmail(user1.getEmail()));
+
+    }
+
+    @Test
+    public void UserService_ValidateCredentials_ValidUser() {
+
+        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
+        when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
+
+        Map<String, String> credentialMap = new HashMap<>();
+        credentialMap.put("email", user1.getEmail());
+        credentialMap.put("password", user1.getPassword());
+
+        User user = userService.validateCredentials(credentialMap);
+
+        assertThat(user.getUsername()).isEqualTo(user1.getUsername());
+
+    }
+
+    @Test
+    public void UserService_ValidateCredentials_ResourceNotFoundException() {
+
+        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(false);
+
+        Map<String, String> credentialMap = new HashMap<>();
+        credentialMap.put("email", user1.getEmail());
+        credentialMap.put("password", user1.getPassword());
+
+        assertThrows(ResourceNotFoundException.class, () -> userService.validateCredentials(credentialMap));
+
+
+    }
+
+    @Test
+    public void UserService_ValidateCredentials_IncorrectPasswordException() {
+
+        when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
+        when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
+
+        Map<String, String> credentialMap = new HashMap<>();
+        credentialMap.put("email", user1.getEmail());
+        credentialMap.put("password", "Incorrect Password");
+
+        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(credentialMap));
+
+    }
+
+    @Test
+    public void UserService_UpdateUser_UpdatedUser() {
+
+        when(userRepository.existsById(user1.getId())).thenReturn(true);
+        when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
+        when(userRepository.save(user1)).thenReturn(user1);
+
+        user1.setUsername("newUsername");
+        user1.setPassword("newPassword");
+        user1.setEmail("newEmail");
+
+        User user = userService.updateUser(user1);
+
+        assertThat(user.getUsername()).isEqualTo(user1.getUsername());
+        assertThat(user.getEmail()).isEqualTo(user1.getEmail());
+        assertThat(user.getPassword()).isEqualTo(user1.getPassword());
+
+    }
+
+    @Test
+    public void UserService_UpdateUser_ResourceNotFoundException() {
+
+        when(userRepository.existsById(user1.getId())).thenReturn(false);
+
+        assertThrows(ResourceNotFoundException.class,() -> userService.updateUser(user1));
 
     }
 

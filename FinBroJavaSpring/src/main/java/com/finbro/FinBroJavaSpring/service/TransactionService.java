@@ -12,6 +12,7 @@ import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundE
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ServerErrorException;
 import com.finbro.FinBroJavaSpring.exception.transactionexceptions.DescTooLongException;
 import com.finbro.FinBroJavaSpring.repository.AccountRepository;
+import com.finbro.FinBroJavaSpring.repository.CategoryRepository;
 import com.finbro.FinBroJavaSpring.repository.TransactionRepository;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import com.finbro.FinBroJavaSpring.util.DateTimeUtil;
@@ -31,17 +32,21 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
     private final AccountRepository accountRepository;
+    private final CategoryRepository categoryRepository;
 
     public final static int MAX_NOTES_LENGTH = 500;
     public final static int MAX_DESC_LENGTH = 500;
 
-    Logger logger = LoggerFactory.getLogger(TransactionService.class);
-
     @Autowired
-    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository, AccountRepository accountRepository) {
+    public TransactionService(
+            TransactionRepository transactionRepository,
+            UserRepository userRepository,
+            AccountRepository accountRepository,
+            CategoryRepository categoryRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -201,7 +206,7 @@ public class TransactionService {
 
     private void validateDescription(Transaction transaction) {
 
-        if (transaction.getNotes() != null && transaction.getNotes().length() > MAX_NOTES_LENGTH) {
+        if (transaction.getNotes() != null && transaction.getNotes().length() > MAX_DESC_LENGTH) {
             throw new DescTooLongException(String.valueOf(transaction.getDescription().length()));
         }
 
@@ -253,7 +258,9 @@ public class TransactionService {
 
     private void validateCategoryId(Transaction transaction) {
 
-        // TODO: Add validation logic after implementing Categories
+        if (!categoryRepository.existsById(transaction.getCategoryId())) {
+            throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(transaction.getCategoryId()));
+        }
 
     }
 
