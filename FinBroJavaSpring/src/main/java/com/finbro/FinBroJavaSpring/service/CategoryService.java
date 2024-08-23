@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -31,7 +30,7 @@ public class CategoryService {
 
 
 
-    public Category saveCategory(Category category) {
+    public Category createCategory(Category category) {
 
         validateCategory(category, true);
 
@@ -39,40 +38,40 @@ public class CategoryService {
 
     }
 
-    public List<Category> findAllCategories() {
+    public List<Category> getAllCategories() {
 
         return (List<Category>) categoryRepository.findAll();
 
     }
 
-    public List<Category> findAllUserDefinedCategories() {
-
-        return categoryRepository.findAllByUserDefined(true);
-
-    }
-
-    public List<Category> findAllByType(String type) {
-
-        return categoryRepository.findAllByType(type.toUpperCase());
-
-    }
-
-    public List<Category> findAllByUserId(Long userId) {
-
-        List<Category> userCategories = categoryRepository.findAllByUserId(userId);
-        userCategories.addAll(categoryRepository.findAllByUserDefined(false));
-
-        return userCategories;
-
-    }
-
-    public Category findByCategoryId(Long categoryId) {
+    public Category getCategoryById(Long categoryId) {
 
         if (!categoryRepository.existsById(categoryId)) {
             throw new ResourceNotFoundException(Category.class, "id", String.valueOf(categoryId));
         }
 
         return categoryRepository.findById(categoryId).orElse(null);
+
+    }
+
+    public List<Category> getAllUserDefinedCategories() {
+
+        return categoryRepository.findAllByUserDefined(true);
+
+    }
+
+    public List<Category> getAllByType(String type) {
+
+        return categoryRepository.findAllByType(type.toUpperCase());
+
+    }
+
+    public List<Category> getAllByUserId(Long userId) {
+
+        List<Category> userCategories = categoryRepository.findAllByUserId(userId);
+        userCategories.addAll(categoryRepository.findAllByUserDefined(false));
+
+        return userCategories;
 
     }
 

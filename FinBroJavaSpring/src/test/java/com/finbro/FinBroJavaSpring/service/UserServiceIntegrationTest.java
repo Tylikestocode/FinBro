@@ -86,7 +86,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_SaveUser_ReturnsUserSaved() {
 
-        userService.saveUser(user4);
+        userService.createUser(user4);
         User user = userService.getUserByUsername(user4.getUsername());
 
         Assertions.assertThat(user.getEmail()).isEqualTo("emily.b@example.com");
@@ -96,10 +96,10 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_SaveUser_ReturnsUserAlreadyExistsException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
         User user = new User((long) 1, "newUser", "NewSurname", 23, "john.d", "newEmail@john.com", "newPass");
 
-        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.createUser(user));
 
     }
 
@@ -111,27 +111,27 @@ public class UserServiceIntegrationTest {
         user3.setEmail("new@");
         user4.setEmail("email$example");
 
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user1));
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user2));
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user3));
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user4));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user1));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user2));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user3));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user4));
 
     }
 
     @Test
     public void UserService_SaveUser_ReturnsEmailAlreadyExistsException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
         User user = new User((long) 1, "newUser", "NewSurname", 23, "newUsername", "john.d@example.com", "newPass");
 
-        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.createUser(user));
 
     }
 
     @Test
     public void UserService_FindAllUsers_ReturnsEmptyList() {
 
-        List<User> allUsers = userService.findAllUsers();
+        List<User> allUsers = userService.getAllUsers();
 
         assertThat(allUsers).isNotNull();
         assertThat(allUsers.size()).isEqualTo(0);
@@ -141,13 +141,13 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_FindAllUsers_ReturnsAllUsers() {
 
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);
-        userService.saveUser(user4);
-        userService.saveUser(user5);
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
+        userService.createUser(user4);
+        userService.createUser(user5);
 
-        List<User> allUsers = userService.findAllUsers();
+        List<User> allUsers = userService.getAllUsers();
 
         assertThat(allUsers).isNotNull();
         assertThat(allUsers.size()).isEqualTo(5);
@@ -157,11 +157,11 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_GetUserByID_ReturnsUser() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
 
         long id = userService.getUserByUsername("john.d").getId(); // 5 Users were already added in data.sql
-        User user = userService.getUserByID(id);
+        User user = userService.getUserById(id);
 
         assertThat(user).isNotNull();
         assertThat(user.getName()).isEqualTo("John");
@@ -171,18 +171,18 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_GetUserByID_ReturnsUserIDNotFoundException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         long id = 12;
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByID(id));
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(id));
 
     }
 
     @Test
     public void UserService_GetUserByUsername_ReturnsUser() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         User user = userService.getUserByUsername("john.d");
 
@@ -194,7 +194,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_GetUserByUsername_ReturnsUsernameNotFoundException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         assertThrows(ResourceNotFoundException.class, () -> userService.getUserByUsername("tester"));
 
@@ -203,7 +203,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_GetUserByEmail_ReturnsUser() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         User user = userService.getUserByEmail("john.d@example.com");
 
@@ -215,7 +215,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_GetUserByEmail_ReturnsEmailNotFoundException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         assertThrows(ResourceNotFoundException.class, () -> userService.getUserByEmail("finbro@gmail.com"));
 
@@ -224,7 +224,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_ValidateCredentials_ReturnsUser() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         Map<String, String> userCredentials = new HashMap<>();
         userCredentials.put("email", "john.d@example.com");
@@ -240,7 +240,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_ValidateCredentials_ReturnsInvalidLoginException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         Map<String, String> userCredentials = new HashMap<>();
         userCredentials.put("email", "john.d@example.com");
@@ -253,7 +253,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_UpdateUser_ReturnsUpdatedUser() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         User user = userService.getUserByUsername("john.d");
 
@@ -278,7 +278,7 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_UpdateUser_ReturnsUserIdNotFoundException() {
 
-        userService.saveUser(user1);
+        userService.createUser(user1);
 
         User user = userService.getUserByUsername("john.d");
         user.setId((long) 45);
@@ -296,9 +296,9 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_UpdateUser_UserAlreadyExistsException() {
 
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
 
         User user = userService.getUserByUsername("john.d");
 
@@ -313,9 +313,9 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_UpdateUser_ReturnsEmailAlreadyExistsException() {
 
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
 
         User user = userService.getUserByUsername("john.d");
 
@@ -330,9 +330,9 @@ public class UserServiceIntegrationTest {
     @Test
     public void UserService_UpdateUser_DeletesUser() {
 
-        userService.saveUser(user1);
-        userService.saveUser(user2);
-        userService.saveUser(user3);
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
 
         long id = userService.getUserByUsername("alice.j").getId();
         userService.deleteUserByID(id);      // Deleting user2

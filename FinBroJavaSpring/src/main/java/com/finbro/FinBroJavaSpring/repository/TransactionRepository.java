@@ -11,9 +11,9 @@ import java.util.List;
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
 
     @Query("SELECT * FROM TRANSACTIONS WHERE user_id = :user_id")
-    List<Transaction> findAllTransactionsByUserId(Long userId);
+    List<Transaction> findAllByUserId(Long userId);
 
     @Query("SELECT * FROM TRANSACTIONS WHERE account_id = :account_id")
-    List<Transaction> findAllTransactionsByAccountId(Long accountId);
+    List<Transaction> findAllByAccountId(Long accountId);
 
 }

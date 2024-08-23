@@ -1,5 +1,6 @@
 package com.finbro.FinBroJavaSpring.controller;
 
+import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.ApiResponse;
 import com.finbro.FinBroJavaSpring.service.UserService;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,10 +25,10 @@ public class UserController {
 
 
 
-    @PostMapping("/addUser")
-    public ResponseEntity<ApiResponse<User>> addUser(@RequestBody User user) {
+    @PostMapping()
+    public ResponseEntity<ApiResponse<User>> createUser(@RequestBody User user) {
 
-        User savedUser = userService.saveUser(user);
+        User savedUser = userService.createUser(user);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/allUsers")
     public ResponseEntity<ApiResponse<List<User>>> getUsers() {
 
-        List<User> allUsers =  userService.findAllUsers();
+        List<User> allUsers =  userService.getAllUsers();
 
         ApiResponse<List<User>> apiResponse = new ApiResponse<>(true, allUsers);
 
@@ -49,10 +49,10 @@ public class UserController {
 
     }
 
-    @GetMapping("/getByUserId/{userId}")
-    public ResponseEntity<ApiResponse<User>> getUserByID(@PathVariable int userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<User>> getByUserId(@PathVariable int userId) {
 
-        User user = userService.getUserByID((long) userId);
+        User user = userService.getUserById((long) userId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -60,7 +60,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/getByUsername/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<ApiResponse<User>> getUserByUsername(@PathVariable String username) {
 
         User user = userService.getUserByUsername(username);
@@ -71,8 +71,8 @@ public class UserController {
 
     }
 
-    @GetMapping("/getByEmail/{email}")
-    public ResponseEntity<ApiResponse<User>> getUserByEmail(@PathVariable String email) {
+    @GetMapping("/email/{email}")
+    public ResponseEntity<ApiResponse<User>> getByEmail(@PathVariable String email) {
 
         User user = userService.getUserByEmail(email);
 
@@ -82,8 +82,8 @@ public class UserController {
 
     }
 
-    @PostMapping("/validateCredentials")
-    public ResponseEntity<ApiResponse<User>> validateCredentials(@RequestBody Map<String, String> loginRequest) {
+    @PostMapping("/validate")
+    public ResponseEntity<ApiResponse<User>> validateCredentials(@RequestBody LoginRequest loginRequest) {
 
         User user = userService.validateCredentials(loginRequest);
 
@@ -93,7 +93,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/updateUser")
+    @PutMapping()
     public ResponseEntity<ApiResponse<User>> updateUser(@RequestBody User user) {
 
         User updatedUser = userService.updateUser(user);
@@ -104,8 +104,8 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/deleteById/{userId}")
-    public ResponseEntity<ApiResponse<?>> deleteUserById(@PathVariable int userId) {
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<ApiResponse<?>> deleteById(@PathVariable int userId) {
 
         userService.deleteUserByID((long) userId);
 

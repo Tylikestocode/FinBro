@@ -22,10 +22,12 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @PostMapping("/addTransaction")
-    public ResponseEntity<ApiResponse<Transaction>> addTransaction(@RequestBody Transaction transaction) {
 
-        Transaction savedTransaction = transactionService.saveTransaction(transaction);
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<Transaction>> createTransaction(@RequestBody Transaction transaction) {
+
+        Transaction savedTransaction = transactionService.createTransaction(transaction);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -33,10 +35,10 @@ public class TransactionController {
 
     }
 
-    @GetMapping("/allTransactions")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<Transaction>>> getTransactions() {
 
-        List<Transaction> allTransactions = transactionService.findAllTransactions();
+        List<Transaction> allTransactions = transactionService.getAllTransactions();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -44,10 +46,10 @@ public class TransactionController {
 
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<ApiResponse<Transaction>> getTransactionById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<Transaction>> getByTransactionId(@PathVariable Long id) {
 
-        Transaction transaction = transactionService.findByTransactionId(id);
+        Transaction transaction = transactionService.getTransactionById(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -55,10 +57,10 @@ public class TransactionController {
 
     }
 
-    @GetMapping("/findAllByUserId/{id}")
-    public ResponseEntity<ApiResponse<List<Transaction>>> findAllByUserId(@PathVariable Long id) {
+    @GetMapping("/userId/{id}")
+    public ResponseEntity<ApiResponse<List<Transaction>>> getAllByUserId(@PathVariable Long id) {
 
-        List<Transaction> userTransactions = transactionService.findAllByUserId(id);
+        List<Transaction> userTransactions = transactionService.getAllByUserId(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -66,10 +68,10 @@ public class TransactionController {
 
     }
 
-    @GetMapping("/findAllByAccountId/{id}")
-    public ResponseEntity<ApiResponse<List<Transaction>>> findAllByAccountId(@PathVariable Long id) {
+    @GetMapping("/accountId/{id}")
+    public ResponseEntity<ApiResponse<List<Transaction>>> getAllByAccountId(@PathVariable Long id) {
 
-        List<Transaction> accountTransactions = transactionService.findAllByAccountId(id);
+        List<Transaction> accountTransactions = transactionService.getAllByAccountId(id);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -77,7 +79,7 @@ public class TransactionController {
 
     }
 
-    @PutMapping("/updateAccount")
+    @PutMapping()
     public ResponseEntity<ApiResponse<Transaction>> updateTransaction(@RequestBody Transaction transaction) {
 
         Transaction updatedTransaction = transactionService.updateTransaction(transaction);
@@ -88,8 +90,8 @@ public class TransactionController {
 
     }
 
-    @DeleteMapping("/deleteById/{id}")
-    public ResponseEntity<ApiResponse<?>> deleteTransaction(@PathVariable Long transactionId) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<?>> deleteById(@PathVariable Long transactionId) {
 
         transactionService.deleteByTransactionId(transactionId);
 

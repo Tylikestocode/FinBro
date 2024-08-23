@@ -16,8 +16,6 @@ import com.finbro.FinBroJavaSpring.repository.CategoryRepository;
 import com.finbro.FinBroJavaSpring.repository.TransactionRepository;
 import com.finbro.FinBroJavaSpring.repository.UserRepository;
 import com.finbro.FinBroJavaSpring.util.DateTimeUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,7 +48,7 @@ public class TransactionService {
     }
 
 
-    public Transaction saveTransaction(Transaction transaction) {
+    public Transaction createTransaction(Transaction transaction) {
 
         validateTransaction(transaction, true);
 
@@ -63,7 +61,7 @@ public class TransactionService {
 
     }
 
-    public List<Transaction> findAllTransactions() {
+    public List<Transaction> getAllTransactions() {
 
         List<Transaction> allTransactions = (List<Transaction>) transactionRepository.findAll();
 
@@ -74,7 +72,7 @@ public class TransactionService {
         return allTransactions;
     }
 
-    public Transaction findByTransactionId(Long transactionId) {
+    public Transaction getTransactionById(Long transactionId) {
 
         if (!transactionRepository.existsById(transactionId)) {
             throw new ResourceNotFoundException(Transaction.class, "id", String.valueOf(transactionId));
@@ -84,23 +82,23 @@ public class TransactionService {
 
     }
 
-    public List<Transaction> findAllByUserId(Long userId) {
+    public List<Transaction> getAllByUserId(Long userId) {
 
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
         }
 
-        return transactionRepository.findAllTransactionsByUserId(userId);
+        return transactionRepository.findAllByUserId(userId);
 
     }
 
-    public List<Transaction> findAllByAccountId(Long accountId) {
+    public List<Transaction> getAllByAccountId(Long accountId) {
 
         if (!accountRepository.existsById(accountId)) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(accountId));
         }
 
-        return transactionRepository.findAllTransactionsByAccountId(accountId);
+        return transactionRepository.findAllByAccountId(accountId);
 
     }
 
