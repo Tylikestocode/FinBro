@@ -2,6 +2,7 @@ package com.finbro.FinBroJavaSpring.service;
 
 import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
+import com.finbro.FinBroJavaSpring.domain.UserDTO;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceNotFoundException;
@@ -20,12 +21,19 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AccountService accountService;
+    private final TransactionService transactionService;
+    private final CategoryService categoryService;
+    private final RegularPaymentService regularPaymentService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AccountService accountService, TransactionService transactionService, CategoryService categoryService, RegularPaymentService regularPaymentService) {
         this.userRepository = userRepository;
+        this.accountService = accountService;
+        this.transactionService = transactionService;
+        this.categoryService = categoryService;
+        this.regularPaymentService = regularPaymentService;
     }
-
 
 
     public User createUser(User user) {
@@ -47,6 +55,20 @@ public class UserService {
         }
 
         return userRepository.findById(userId).orElse(null);
+    }
+
+    public UserDTO getUserWithDetails (Long userId) {
+
+        UserDTO userDTO = new UserDTO();
+
+        userDTO.setUser(this.getUserById(userId));
+        userDTO.setAccounts(accountService.getAllByUserId(userId));
+        userDTO.setTransactions(transactionService.getAllByUserId(userId));
+        userDTO.setCategories(categoryService.getAllByUserId(userId));
+        userDTO.setRegularPayments(regularPaymentService.getAllByUserId(userId));
+
+        return userDTO;
+
     }
 
     public User getUserByUsername(String username) {

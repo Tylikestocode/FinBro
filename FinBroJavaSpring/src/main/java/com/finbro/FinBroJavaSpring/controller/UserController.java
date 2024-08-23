@@ -2,6 +2,7 @@ package com.finbro.FinBroJavaSpring.controller;
 
 import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
+import com.finbro.FinBroJavaSpring.domain.UserDTO;
 import com.finbro.FinBroJavaSpring.exception.ApiResponse;
 import com.finbro.FinBroJavaSpring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +51,24 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<ApiResponse<User>> getByUserId(@PathVariable int userId) {
+    public ResponseEntity<ApiResponse<User>> getByUserId(@PathVariable Long userId) {
 
         User user = userService.getUserById((long) userId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, user));
+
+    }
+
+    @GetMapping("/getUserWithDetails/{userId}")
+    public ResponseEntity<ApiResponse<UserDTO>> getUserWithDetails(@PathVariable Long userId) {
+
+        UserDTO userDTO = userService.getUserWithDetails(userId);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, userDTO));
 
     }
 
@@ -83,13 +95,14 @@ public class UserController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<ApiResponse<User>> validateCredentials(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<ApiResponse<UserDTO>> validateCredentials(@RequestBody LoginRequest loginRequest) {
 
         User user = userService.validateCredentials(loginRequest);
+        UserDTO userDTO = userService.getUserWithDetails(user.getId());
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, user));
+                .body(new ApiResponse<>(true, userDTO));
 
     }
 
