@@ -36,7 +36,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/allUsers")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<User>>> getUsers() {
 
         List<User> allUsers =  userService.getAllUsers();

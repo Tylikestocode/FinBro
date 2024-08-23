@@ -26,3 +26,10 @@ VALUES (50.00, 'Grocery shopping', '2023-06-01 10:30:00', 'Bought groceries at S
        (100.00, 'Investment deposit', '2023-06-03 12:30:00', 'Monthly investment', 3, 3, 4),
        (30.00, 'Savings deposit', '2023-06-04 14:00:00', 'Added to savings', 4, 4, 1),
        (25.00, 'Dining out', '2023-06-05 15:30:00', 'Dinner at a restaurant', 5, 5, 5);
+
+INSERT INTO REGULAR_PAYMENTS (name, amount, frequency, next_date, end_date, notes, account_id, category_id, user_id)
+VALUES ('Monthly Rent', 1200.00, 'MONTHLY', '2024-09-01 00:00:00', '2025-09-01 00:00:00', 'Regular Monthly Rent', 1, 2, 1),
+       ('Gym Membership', 50.00, 'MONTHLY', '2024-08-23 00:00:00', '2025-08-25 00:00:00', 'Pay Gym Membership', 2, 5, 2),
+       ('Annual Insurance', 500.00, 'YEARLY', '2024-12-01 00:00:00', '2025-12-01 00:00:00', 'Annual Insurance Payments', 3, 1, 3),
+       ('Internet Bill', 75.00, 'MONTHLY', '2024-08-30 00:00:00', NULL, 'Wiifiiiii', 4, 4, 4),
+       ('Subscription Service', 15.00, 'MONTHLY', '2024-08-20 00:00:00', NULL, 'Netflix', 5, 5, 5);

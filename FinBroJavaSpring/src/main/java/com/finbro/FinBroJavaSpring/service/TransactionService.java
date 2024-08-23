@@ -216,7 +216,7 @@ public class TransactionService {
             transaction.setDate(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
         }
         else {
-            if (!DateTimeUtil.isValidDateTimeFormat(transaction.getDate())) {
+            if (DateTimeUtil.isValidDateTimeFormat(transaction.getDate())) {
                 throw new InvalidDataFormatException("date", transaction.getDate(), DateTimeUtil.DATE_TIME_FORMAT);
             }
         }

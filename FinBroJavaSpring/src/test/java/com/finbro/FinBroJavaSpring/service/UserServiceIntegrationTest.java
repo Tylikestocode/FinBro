@@ -1,5 +1,6 @@
 package com.finbro.FinBroJavaSpring.service;
 
+import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
@@ -226,11 +227,11 @@ public class UserServiceIntegrationTest {
 
         userService.createUser(user1);
 
-        Map<String, String> userCredentials = new HashMap<>();
-        userCredentials.put("email", "john.d@example.com");
-        userCredentials.put("password", "password1");
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail("john.d@example.com");
+        loginRequest.setPassword("password1");
 
-        User user = userService.validateCredentials(userCredentials);
+        User user = userService.validateCredentials(loginRequest);
 
         assertThat(user).isNotNull();
         assertThat(user.getName()).isEqualTo("John");
@@ -242,11 +243,11 @@ public class UserServiceIntegrationTest {
 
         userService.createUser(user1);
 
-        Map<String, String> userCredentials = new HashMap<>();
-        userCredentials.put("email", "john.d@example.com");
-        userCredentials.put("password", "wrongPassword");
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail("john.d@example.com");
+        loginRequest.setPassword("wrongPassword");
 
-        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(userCredentials));
+        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(loginRequest));
 
     }
 
