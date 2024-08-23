@@ -39,7 +39,7 @@ public class AccountService {
 
 
 
-    public Account saveAccount(Account account) {
+    public Account createAccount(Account account) {
 
         validateAccount(account, true);
 
@@ -47,11 +47,11 @@ public class AccountService {
 
     }
 
-    public List<Account> findAllAccounts() {
+    public List<Account> getAllAccounts() {
         return (List<Account>) accountRepository.findAll();
     }
 
-    public Account findByAccountID(Long accountId) {
+    public Account getAccountById(Long accountId) {
 
         if (!accountRepository.existsById(accountId)) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(accountId));
@@ -61,7 +61,7 @@ public class AccountService {
 
     }
 
-    public List<Account> findAllByUserId(Long userId) {
+    public List<Account> getAllByUserId(Long userId) {
 
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));

@@ -53,9 +53,9 @@ public class UserControllerUnitTests {
     }
 
     @Test
-    public void testAddUser() throws Exception {
+    public void testCreateUser() throws Exception {
 
-        Mockito.when(userService.saveUser(Mockito.any(User.class))).thenReturn(user1);
+        Mockito.when(userService.createUser(Mockito.any(User.class))).thenReturn(user1);
 
         String json = mapper.writeValueAsString(user1);
 
@@ -71,7 +71,7 @@ public class UserControllerUnitTests {
     @Test
     public void testGetUsers() throws Exception {
 
-        Mockito.when(userService.findAllUsers()).thenReturn(Arrays.asList(user1, user2));
+        Mockito.when(userService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
 
         mockMvc.perform(get("/api/users/allUsers"))
                 .andExpect(status().isOk())
@@ -85,9 +85,9 @@ public class UserControllerUnitTests {
     }
 
     @Test
-    public void testGetUserByID() throws Exception {
+    public void testGetByUserId() throws Exception {
 
-        Mockito.when(userService.getUserByID((long) 1)).thenReturn(user1);
+        Mockito.when(userService.getUserById((long) 1)).thenReturn(user1);
 
         mockMvc.perform(get("/api/users/getByUserId/1"))
                 .andExpect(status().isOk())
@@ -109,7 +109,7 @@ public class UserControllerUnitTests {
     }
 
     @Test
-    public void testGetUserByEmail() throws Exception {
+    public void testGetByEmail() throws Exception {
 
         Mockito.when(userService.getUserByEmail("test1@example.com")).thenReturn(user1);
 
@@ -157,7 +157,7 @@ public class UserControllerUnitTests {
     }
 
     @Test
-    public void testDeleteUserById() throws Exception {
+    public void testDeleteById() throws Exception {
         Mockito.doNothing().when(userService).deleteUserByID((long) 1);
 
         mockMvc.perform(delete("/api/users/deleteById/1"))

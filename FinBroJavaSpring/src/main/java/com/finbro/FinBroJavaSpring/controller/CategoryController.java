@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
+@CrossOrigin(origins = "http://localhost")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -21,10 +22,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @PostMapping("/addCategory")
-    public ResponseEntity<ApiResponse<Category>> addCategory (@RequestBody Category category) {
 
-        Category savedCategory = categoryService.saveCategory(category);
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<Category>> createCategory(@RequestBody Category category) {
+
+        Category savedCategory = categoryService.createCategory(category);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -32,10 +35,10 @@ public class CategoryController {
 
     }
 
-    @GetMapping("/allCategories")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<Category>>> getCategories() {
 
-        List<Category> allCategories = categoryService.findAllCategories();
+        List<Category> allCategories = categoryService.getAllCategories();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -43,32 +46,10 @@ public class CategoryController {
 
     }
 
-    @GetMapping("/allUserDefined")
-    public ResponseEntity<ApiResponse<List<Category>>> getAllUserDefinedCategories() {
-
-        List<Category> allUserDefinedCategories = categoryService.findAllUserDefinedCategories();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allUserDefinedCategories));
-
-    }
-
-    @GetMapping("/allByType/{type}")
-    public ResponseEntity<ApiResponse<List<Category>>> getAllCategoriesByType(@PathVariable String type) {
-
-        List<Category> allCategoriesByType = categoryService.findAllByType(type);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allCategoriesByType));
-
-    }
-
-    @GetMapping("/getById/{categoryId}")
+    @GetMapping("/{categoryId}")
     public ResponseEntity<ApiResponse<Category>> getByCategoryId(@PathVariable Long categoryId) {
 
-        Category category = categoryService.findByCategoryId(categoryId);
+        Category category = categoryService.getCategoryById(categoryId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -76,10 +57,32 @@ public class CategoryController {
 
     }
 
-    @GetMapping("/getAllByUserId/{userId}")
+    @GetMapping("/userDefined")
+    public ResponseEntity<ApiResponse<List<Category>>> getAllUserDefinedCategories() {
+
+        List<Category> allUserDefinedCategories = categoryService.getAllUserDefinedCategories();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, allUserDefinedCategories));
+
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<ApiResponse<List<Category>>> getAllCategoriesByType(@PathVariable String type) {
+
+        List<Category> allCategoriesByType = categoryService.getAllByType(type);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, allCategoriesByType));
+
+    }
+
+    @GetMapping("/userId/{userId}")
     public ResponseEntity<ApiResponse<List<Category>>> getAllByUserId(@PathVariable Long userId) {
 
-        List<Category> userCategories = categoryService.findAllByUserId(userId);
+        List<Category> userCategories = categoryService.getAllByUserId(userId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -87,7 +90,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping("/updateCategory")
+    @PutMapping()
     public ResponseEntity<ApiResponse<Category>> updateCategory(@RequestBody Category category) {
 
         Category updatedCategory = categoryService.updateCategory(category);
@@ -98,8 +101,8 @@ public class CategoryController {
 
     }
 
-    @DeleteMapping("/deleteById/{categoryId}")
-    public ResponseEntity<ApiResponse<?>> deleteCategory(@PathVariable Long categoryId) {
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<ApiResponse<?>> deleteById(@PathVariable Long categoryId) {
 
         categoryService.deleteCategoryById(categoryId);
 

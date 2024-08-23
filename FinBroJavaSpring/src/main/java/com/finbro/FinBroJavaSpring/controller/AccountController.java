@@ -1,7 +1,6 @@
 package com.finbro.FinBroJavaSpring.controller;
 
 import com.finbro.FinBroJavaSpring.domain.Account;
-import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.ApiResponse;
 import com.finbro.FinBroJavaSpring.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -24,10 +22,12 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/addAccount")
-    public ResponseEntity<ApiResponse<Account>> addAccount(@RequestBody Account account) {
 
-        Account savedAccount = accountService.saveAccount(account);
+
+    @PostMapping()
+    public ResponseEntity<ApiResponse<Account>> createAccount(@RequestBody Account account) {
+
+        Account savedAccount = accountService.createAccount(account);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -35,10 +35,10 @@ public class AccountController {
 
     }
 
-    @GetMapping("/allAccounts")
+    @GetMapping()
     public ResponseEntity<ApiResponse<List<Account>>> getAccounts() {
 
-        List<Account> allAccounts = accountService.findAllAccounts();
+        List<Account> allAccounts = accountService.getAllAccounts();
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -46,10 +46,10 @@ public class AccountController {
 
     }
 
-    @GetMapping("/getById/{accountId}")
+    @GetMapping("/{accountId}")
     public ResponseEntity<ApiResponse<Account>> getByAccountID(@PathVariable Long accountId) {
 
-        Account account = accountService.findByAccountID(accountId);
+        Account account = accountService.getAccountById(accountId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -57,10 +57,10 @@ public class AccountController {
 
     }
 
-    @GetMapping("/getAllByUserId/{userId}")
-    public ResponseEntity<ApiResponse<List<Account>>> findAllByUserId(@PathVariable Long userId) {
+    @GetMapping("/userId/{userId}")
+    public ResponseEntity<ApiResponse<List<Account>>> getAllByUserId(@PathVariable Long userId) {
 
-        List<Account> userAccounts =  accountService.findAllByUserId(userId);
+        List<Account> userAccounts =  accountService.getAllByUserId(userId);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -68,7 +68,7 @@ public class AccountController {
 
     }
 
-    @PutMapping("/updateAccount")
+    @PutMapping()
     public ResponseEntity<ApiResponse<Account>> updateAccount(@RequestBody Account account) {
 
         Account updatedAccount = accountService.updateAccount(account);
@@ -79,8 +79,8 @@ public class AccountController {
 
     }
 
-    @DeleteMapping("/deleteById/{accountId}")
-    public ResponseEntity<ApiResponse<?>> deleteAccount(@PathVariable Long accountId) {
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<ApiResponse<?>> deleteById(@PathVariable Long accountId) {
 
         accountService.deleteAccountById(accountId);
 

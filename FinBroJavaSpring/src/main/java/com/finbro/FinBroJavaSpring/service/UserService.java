@@ -1,5 +1,6 @@
 package com.finbro.FinBroJavaSpring.service;
 
+import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +28,7 @@ public class UserService {
 
 
 
-    public User saveUser(User user) {
+    public User createUser(User user) {
 
        validateUser(user, true);
 
@@ -36,11 +36,11 @@ public class UserService {
 
     }
 
-    public List<User> findAllUsers() {
+    public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
     }
 
-    public User getUserByID(Long userId) {
+    public User getUserById(Long userId) {
 
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
@@ -68,21 +68,23 @@ public class UserService {
 
     }
 
-    public User validateCredentials(@RequestBody Map<String, String> loginRequest) {
+    public User validateCredentials(@RequestBody LoginRequest loginRequest) {
 
-        validateUsernamePassword(loginRequest);
-
-        String email = loginRequest.get("email");
-        String password = loginRequest.get("password");
-
-        if (!userRepository.existsByEmail(email)) {
-            throw new ResourceNotFoundException(User.class, "email", email);
+        if (loginRequest.getEmail() == null) {
+            throw new MissingParameterException("email");
+        }
+        if (loginRequest.getPassword() == null) {
+            throw new MissingParameterException("password");
         }
 
-        User user = userRepository.findByEmail(email);
+        if (!userRepository.existsByEmail(loginRequest.getEmail())) {
+            throw new ResourceNotFoundException(User.class, "email", loginRequest.getEmail());
+        }
 
-        if (!password.equals(user.getPassword())) {
-            throw new IncorrectPasswordException(loginRequest.get("email"));
+        User user = userRepository.findByEmail(loginRequest.getEmail());
+
+        if (!loginRequest.getPassword().equals(user.getPassword())) {
+            throw new IncorrectPasswordException(loginRequest.getEmail());
         }
 
         return user;
@@ -137,7 +139,7 @@ public class UserService {
                 throw new ResourceNotFoundException(User.class, "id", String.valueOf(user.getId()));
             }
 
-            User existingUser = getUserByID(user.getId());
+            User existingUser = getUserById(user.getId());
 
             // If username is changing, first check if username already exists
             if (!existingUser.getUsername().equals(user.getUsername())) {
@@ -186,17 +188,6 @@ public class UserService {
         Matcher matcher = pattern.matcher(email);
         if (!matcher.matches()) {
             throw new InvalidDataFormatException("email", email, "name@example.com (must contain '@' and a domain)");
-        }
-
-    }
-
-    private void validateUsernamePassword(Map<String, String> loginRequest) {
-
-        if (!loginRequest.containsKey("email")) {
-            throw new MissingParameterException("email");
-        }
-        if ((!loginRequest.containsKey("password"))) {
-            throw new MissingParameterException("password");
         }
 
     }

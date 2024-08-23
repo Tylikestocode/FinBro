@@ -92,7 +92,7 @@ public class UserServiceUnitTests {
 
         when(userRepository.save(user1)).thenReturn(user1);
 
-        User savedUser = userService.saveUser(user1);
+        User savedUser = userService.createUser(user1);
 
         verify(userRepository).save(user1);
         assertThat(savedUser).isNotNull();
@@ -105,7 +105,7 @@ public class UserServiceUnitTests {
         String username = user1.getUsername();
         when(userRepository.existsByUsername(username)).thenReturn(true);
 
-        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user1));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.createUser(user1));
 
     }
 
@@ -115,7 +115,7 @@ public class UserServiceUnitTests {
         String email = user1.getEmail();
         when(userRepository.existsByEmail(email)).thenReturn(true);
 
-        assertThrows(ResourceAlreadyExistsException.class, () -> userService.saveUser(user1));
+        assertThrows(ResourceAlreadyExistsException.class, () -> userService.createUser(user1));
 
     }
 
@@ -126,9 +126,9 @@ public class UserServiceUnitTests {
         user2.setEmail("");
         user3.setEmail("emily.b.com");
 
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user1));
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user2));
-        assertThrows(InvalidDataFormatException.class, () -> userService.saveUser(user3));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user1));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user2));
+        assertThrows(InvalidDataFormatException.class, () -> userService.createUser(user3));
 
     }
 
@@ -138,7 +138,7 @@ public class UserServiceUnitTests {
 
         when(userRepository.findAll()).thenReturn(List.of(user1, user2, user3, user4, user5));
 
-        List<User> allUsers = userService.findAllUsers();
+        List<User> allUsers = userService.getAllUsers();
 
         assertThat(allUsers).isNotNull();
         assertThat(allUsers.size()).isEqualTo(5);
@@ -152,7 +152,7 @@ public class UserServiceUnitTests {
         when(userRepository.existsById(user1.getId())).thenReturn(true);
         when(userRepository.findById(user1.getId())).thenReturn(Optional.ofNullable(user1));
 
-        User user = userService.getUserByID(user1.getId());
+        User user = userService.getUserById(user1.getId());
 
         assertThat(user.getName()).isEqualTo(user1.getName());
 
@@ -163,7 +163,7 @@ public class UserServiceUnitTests {
 
         when(userRepository.existsById(user1.getId())).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.getUserByID(user1.getId()));
+        assertThrows(ResourceNotFoundException.class, () -> userService.getUserById(user1.getId()));
 
     }
 
