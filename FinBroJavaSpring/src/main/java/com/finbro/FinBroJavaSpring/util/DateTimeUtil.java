@@ -1,5 +1,7 @@
 package com.finbro.FinBroJavaSpring.util;
 
+import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -20,7 +22,14 @@ public class DateTimeUtil {
         if (dateTimeString == null) {
             return false;
         }
-        return !pattern.matcher(dateTimeString).matches();
+
+        if (pattern.matcher(dateTimeString).matches()) {
+            return pattern.matcher(dateTimeString).matches();
+        }
+        else {
+            return false;
+        }
+
     }
 
     // Converts a String in the format "yyyy-MM-dd HH:mm:ss" to a LocalDateTime object

@@ -109,7 +109,7 @@ public class CategoryService {
 
             validateUserId(category);
 
-            // Stream to extract all names into a list
+            // Stream to extract all category names into a list
             List<String> allUserCateNames = categoryRepository.findAllByUserId(category.getUserId()).stream()
                     .map(Category::getName)
                     .toList();
@@ -127,7 +127,7 @@ public class CategoryService {
                 throw new MissingParameterException("id");
             }
 
-            // Account ID must exist in Categories table
+            // Category ID must exist in Categories table
             if (!categoryRepository.existsById(category.getId())) {
                 throw new ResourceNotFoundException(Category.class, "id", String.valueOf(category.getId()));
             }
@@ -139,6 +139,7 @@ public class CategoryService {
         // Validation regardless if category is new or not
         validateType(category);
         validateDescription(category);
+        trimStringData(category);
 
     }
 
@@ -180,6 +181,13 @@ public class CategoryService {
         if (category.getDescription() != null && category.getDescription().length() > MAX_DESC_LENGTH) {
             throw new DescTooLongException(String.valueOf(category.getDescription().length()));
         }
+
+    }
+
+    private void trimStringData(Category category) {
+
+        category.setName(category.getName().trim());
+        category.setDescription(category.getDescription().trim());
 
     }
 

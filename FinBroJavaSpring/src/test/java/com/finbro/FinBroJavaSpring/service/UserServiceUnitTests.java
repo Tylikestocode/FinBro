@@ -1,6 +1,7 @@
 package com.finbro.FinBroJavaSpring.service;
 
 
+import com.finbro.FinBroJavaSpring.domain.LoginRequest;
 import com.finbro.FinBroJavaSpring.domain.User;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.InvalidDataFormatException;
 import com.finbro.FinBroJavaSpring.exception.generalexceptions.ResourceAlreadyExistsException;
@@ -215,11 +216,11 @@ public class UserServiceUnitTests {
         when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
         when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
 
-        Map<String, String> credentialMap = new HashMap<>();
-        credentialMap.put("email", user1.getEmail());
-        credentialMap.put("password", user1.getPassword());
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail(user1.getEmail());
+        loginRequest.setPassword(user1.getPassword());
 
-        User user = userService.validateCredentials(credentialMap);
+        User user = userService.validateCredentials(loginRequest);
 
         assertThat(user.getUsername()).isEqualTo(user1.getUsername());
 
@@ -230,12 +231,11 @@ public class UserServiceUnitTests {
 
         when(userRepository.existsByEmail(user1.getEmail())).thenReturn(false);
 
-        Map<String, String> credentialMap = new HashMap<>();
-        credentialMap.put("email", user1.getEmail());
-        credentialMap.put("password", user1.getPassword());
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail(user1.getEmail());
+        loginRequest.setPassword(user1.getPassword());
 
-        assertThrows(ResourceNotFoundException.class, () -> userService.validateCredentials(credentialMap));
-
+        assertThrows(ResourceNotFoundException.class, () -> userService.validateCredentials(loginRequest));
 
     }
 
@@ -245,11 +245,11 @@ public class UserServiceUnitTests {
         when(userRepository.existsByEmail(user1.getEmail())).thenReturn(true);
         when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
 
-        Map<String, String> credentialMap = new HashMap<>();
-        credentialMap.put("email", user1.getEmail());
-        credentialMap.put("password", "Incorrect Password");
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail(user1.getEmail());
+        loginRequest.setPassword("Incorrect Password");
 
-        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(credentialMap));
+        assertThrows(IncorrectPasswordException.class, () -> userService.validateCredentials(loginRequest));
 
     }
 

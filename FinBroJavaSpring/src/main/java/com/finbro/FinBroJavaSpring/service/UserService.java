@@ -87,6 +87,8 @@ public class UserService {
             throw new IncorrectPasswordException(loginRequest.getEmail());
         }
 
+        System.out.println(user);
+
         return user;
 
     }

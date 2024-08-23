@@ -186,7 +186,7 @@ public class AccountService {
             account.setDateCreated(DateTimeUtil.convertDateTimeToString(LocalDateTime.now()));
         }
         else {
-            if (!DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
+            if (DateTimeUtil.isValidDateTimeFormat(account.getDateCreated())) {
                 throw new InvalidDataFormatException("dateCreated", account.getDateCreated(), DateTimeUtil.DATE_TIME_FORMAT);
             }
         }
