@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_fonts: ^6.2.1
+  flutter_svg: ^2.0.3
+
+
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +21,9 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\finbro\assets\mesh_background.png
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\finbro\assets\address-book-solid.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\finbro\assets\eye-slash-solid.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\finbro\assets\eye-solid.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\finbro\assets\lock-solid.svg
