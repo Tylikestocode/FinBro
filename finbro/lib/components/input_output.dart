@@ -1,4 +1,8 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:finbro/design/ui_colors.dart';
+import 'package:finbro/pages/register_page.dart';
+import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,14 +44,14 @@ class _emailTextField extends State<emailTextField> {
                 style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.04),
+                    fontSize: widget.screenWidth * 0.035),
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Email',
                     hintStyle: GoogleFonts.poppins(
                         color: textFieldTextColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: widget.screenWidth * 0.04))))
+                        fontSize: widget.screenWidth * 0.035))))
       ]),
     );
   }
@@ -95,7 +99,7 @@ class _passwordTextField extends State<passwordTextField> {
                 style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.04),
+                    fontSize: widget.screenWidth * 0.035),
                 obscureText: widget.eyeState ? false : true,
                 decoration: InputDecoration(
                     border: InputBorder.none,
@@ -103,7 +107,7 @@ class _passwordTextField extends State<passwordTextField> {
                     hintStyle: GoogleFonts.poppins(
                         color: textFieldTextColor,
                         fontWeight: FontWeight.bold,
-                        fontSize: widget.screenWidth * 0.04)))),
+                        fontSize: widget.screenWidth * 0.035)))),
         GestureDetector(
           onTap: () {
             setState(() {
@@ -147,17 +151,56 @@ class LoginButton extends StatefulWidget {
 class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.screenWidth * 0.8,
-      height: widget.screenHeight * 0.07,
-      decoration: BoxDecoration(
-          color: primary, borderRadius: BorderRadius.circular(15)),
-      child: Center(
-          child: Text('Login',
-              style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: widget.screenWidth * 0.05))),
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: widget.screenWidth * 0.8,
+        height: widget.screenHeight * 0.07,
+        decoration: BoxDecoration(
+            color: primary, borderRadius: BorderRadius.circular(15)),
+        child: Center(
+            child: Text('Login',
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.04))),
+      ),
+    );
+  }
+}
+
+class ContinueButton extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const ContinueButton(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<ContinueButton> createState() => _ContinueButton();
+}
+
+class _ContinueButton extends State<ContinueButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignUpPageTwo()));
+      },
+      child: Container(
+        width: widget.screenWidth * 0.8,
+        height: widget.screenHeight * 0.07,
+        decoration: BoxDecoration(
+            color: primary, borderRadius: BorderRadius.circular(15)),
+        child: Center(
+            child: Text('Continue',
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.04))),
+      ),
     );
   }
 }

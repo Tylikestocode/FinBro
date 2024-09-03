@@ -2,26 +2,24 @@
 
 import "package:finbro/components/input_output.dart";
 import "package:finbro/design/ui_colors.dart";
-import "package:finbro/pages/register_page.dart";
+import "package:finbro/pages/login_page.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPage();
+  State<SignUpPage> createState() => _SignUpPage();
 }
 
-class _LoginPage extends State<LoginPage> {
+class _SignUpPage extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         // FinBro Logo
         Padding(
@@ -31,57 +29,58 @@ class _LoginPage extends State<LoginPage> {
               height: screenHeight * 0.3,
               decoration: BoxDecoration(color: Colors.grey)),
         ),
-        // Login Text
+        // Sign Up Text
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.05,
               bottom: screenWidth * 0.05,
               top: screenWidth * 0.05),
-          child: Text('Login',
+          child: Text('Sign Up',
               style: GoogleFonts.poppins(
                   textStyle: TextStyle(
                       color: primary,
                       fontWeight: FontWeight.bold,
                       fontSize: screenWidth * 0.11))),
         ),
-        // Email TextField
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.05, bottom: screenWidth * 0.1),
           child: emailTextField(
               screenWidth: screenWidth, screenHeight: screenHeight),
         ),
-        // Password TextField
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.05, bottom: screenWidth * 0.1),
           child: passwordTextField(
               screenWidth: screenWidth, screenHeight: screenHeight),
         ),
-        // Login Button
-        Align(
-            alignment: Alignment.center,
+        Padding(
+          padding: EdgeInsets.only(
+              left: screenWidth * 0.05, bottom: screenWidth * 0.1),
+          child: passwordTextField(
+              screenWidth: screenWidth, screenHeight: screenHeight),
+        ),
+        Center(
             child: Padding(
-              padding: EdgeInsets.only(bottom: screenWidth * 0.32),
-              child: LoginButton(
-                  screenWidth: screenWidth, screenHeight: screenHeight),
-            )),
-        // No Account? Sign Up
+          padding: EdgeInsets.only(bottom: screenWidth * 0.1),
+          child: ContinueButton(
+              screenWidth: screenWidth, screenHeight: screenHeight),
+        )),
         TextButton(
             onPressed: () {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
+                  MaterialPageRoute(builder: (context) => LoginPage()));
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: screenWidth * 0.01),
-                child: Text('No Account?',
+                child: Text('Got an Account?',
                     style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: screenWidth * 0.035)),
               ),
-              Text('Sign Up',
+              Text('Login',
                   style: GoogleFonts.poppins(
                       color: primary,
                       fontWeight: FontWeight.bold,
