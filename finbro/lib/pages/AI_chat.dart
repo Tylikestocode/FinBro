@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import "package:finbro/components/chat_components.dart";
 import "package:finbro/components/input_output.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
@@ -18,6 +19,7 @@ class _AiChatState extends State<AiChat> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color.fromRGBO(0, 12, 42, 1),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,13 +57,22 @@ class _AiChatState extends State<AiChat> {
             ),
           ),
           // Chat Area
-
+          Padding(
+            padding: EdgeInsets.only(top: screenWidth * 0.04),
+            child: AiChatBubble(
+                screenWidth: screenWidth, screenHeight: screenHeight),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: screenWidth * 0.04),
+            child: UserChatBubble(
+                screenWidth: screenWidth, screenHeight: screenHeight),
+          ),
           // Prompt Box
           Padding(
-            padding: EdgeInsets.only(top: 740.0),
+            padding: EdgeInsets.only(top: 50.0),
             child: AiChatPromptTextField(
                 screenWidth: screenWidth, screenHeight: screenHeight),
-          )
+          ),
         ],
       ),
     );

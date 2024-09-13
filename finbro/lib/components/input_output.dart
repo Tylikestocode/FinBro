@@ -599,6 +599,10 @@ class _AiChatPromptTextFieldState extends State<AiChatPromptTextField> {
                   left: widget.screenWidth * 0.04,
                   top: widget.screenWidth * 0.02),
               child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.normal,
+                    fontSize: widget.screenWidth * 0.04),
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Please Insert Your Prompt...',
