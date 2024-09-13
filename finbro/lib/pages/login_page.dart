@@ -2,7 +2,6 @@
 
 import "package:finbro/components/input_output.dart";
 import "package:finbro/design/ui_colors.dart";
-import "package:finbro/pages/register_page.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 

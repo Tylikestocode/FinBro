@@ -563,3 +563,68 @@ class _SignUpButton extends State<SignUpButton> {
     );
   }
 }
+
+class AiChatPromptTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const AiChatPromptTextField({
+    Key? key,
+    required this.screenWidth,
+    required this.screenHeight,
+  }) : super(key: key);
+
+  @override
+  State<AiChatPromptTextField> createState() => _AiChatPromptTextFieldState();
+}
+
+class _AiChatPromptTextFieldState extends State<AiChatPromptTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // TextField
+        Padding(
+          padding: EdgeInsets.only(
+              left: widget.screenWidth * 0.06,
+              right: widget.screenWidth * 0.05),
+          child: Container(
+            width: widget.screenWidth * 0.7,
+            height: widget.screenHeight * 0.07,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(9, 23, 56, 1),
+                borderRadius: BorderRadius.circular(30)),
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: widget.screenWidth * 0.04,
+                  top: widget.screenWidth * 0.02),
+              child: TextField(
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Please Insert Your Prompt...',
+                    hintStyle: GoogleFonts.poppins(
+                        color: Color.fromRGBO(88, 97, 108, 1),
+                        fontWeight: FontWeight.normal,
+                        fontSize: widget.screenWidth * 0.04)),
+              ),
+            ),
+          ),
+        ),
+        Container(
+          width: widget.screenWidth * 0.15,
+          height: widget.screenHeight * 0.07,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              color: Color.fromRGBO(9, 23, 56, 1)),
+          child: Center(
+              child: SvgPicture.asset(
+            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\paper-plane-solid.svg', // Path to your SVG file
+            width: 24,
+            height: 24,
+          )),
+        )
+        // Send Button
+      ],
+    );
+  }
+}
