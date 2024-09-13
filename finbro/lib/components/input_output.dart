@@ -136,6 +136,85 @@ class _passwordTextField extends State<passwordTextField> {
   }
 }
 
+class ConfirmPasswordTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  bool eyeState;
+
+  ConfirmPasswordTextField(
+      {Key? key,
+      required this.screenWidth,
+      required this.screenHeight,
+      this.eyeState = false})
+      : super(key: key);
+
+  @override
+  State<ConfirmPasswordTextField> createState() => _ConfirmPasswordTextField();
+}
+
+class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: widget.screenWidth * 0.05,
+              vertical: widget.screenWidth * 0.02),
+          child: SvgPicture.asset(
+            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\lock-solid.svg',
+            width: 24,
+            height: 24,
+          ),
+        ),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                obscureText: widget.eyeState ? false : true,
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Confirm Password',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035)))),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              widget.eyeState = !widget.eyeState;
+            });
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: widget.eyeState
+                ? SvgPicture.asset(
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-solid.svg',
+                    width: 24,
+                    height: 24,
+                  )
+                : SvgPicture.asset(
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
+                    width: 24,
+                    height: 24,
+                  ),
+          ),
+        )
+      ]),
+    );
+  }
+}
+
 class LoginButton extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
@@ -185,10 +264,7 @@ class _ContinueButton extends State<ContinueButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPageTwo()));
-      },
+      onTap: () {},
       child: Container(
         width: widget.screenWidth * 0.8,
         height: widget.screenHeight * 0.07,
@@ -196,6 +272,289 @@ class _ContinueButton extends State<ContinueButton> {
             color: primary, borderRadius: BorderRadius.circular(15)),
         child: Center(
             child: Text('Continue',
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.04))),
+      ),
+    );
+  }
+}
+
+class FirstNameTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const FirstNameTextField(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<FirstNameTextField> createState() => _FirstNameTextField();
+}
+
+class _FirstNameTextField extends State<FirstNameTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              width: 24,
+              height: 24,
+            )),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'First Name',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035))))
+      ]),
+    );
+  }
+}
+
+class SurnameTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const SurnameTextField(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<SurnameTextField> createState() => _SurnameTextField();
+}
+
+class _SurnameTextField extends State<SurnameTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              width: 24,
+              height: 24,
+            )),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Surname',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035))))
+      ]),
+    );
+  }
+}
+
+class ProfessionTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const ProfessionTextField(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<ProfessionTextField> createState() => _ProfessionTextField();
+}
+
+class _ProfessionTextField extends State<ProfessionTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              width: 24,
+              height: 24,
+            )),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Profession',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035))))
+      ]),
+    );
+  }
+}
+
+class AgeTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const AgeTextField(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<AgeTextField> createState() => _AgeTextField();
+}
+
+class _AgeTextField extends State<AgeTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              width: 24,
+              height: 24,
+            )),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Age',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035))))
+      ]),
+    );
+  }
+}
+
+class GenderTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const GenderTextField(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<GenderTextField> createState() => _GenderTextField();
+}
+
+class _GenderTextField extends State<GenderTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widget.screenWidth * 0.9,
+      height: widget.screenHeight * 0.07,
+      decoration: BoxDecoration(
+          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+      child: Row(children: [
+        // Icon
+        Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: widget.screenWidth * 0.05,
+                vertical: widget.screenWidth * 0.02),
+            child: SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              width: 24,
+              height: 24,
+            )),
+        // TextField
+        Expanded(
+            child: TextField(
+                style: GoogleFonts.poppins(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.035),
+                decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Gender',
+                    hintStyle: GoogleFonts.poppins(
+                        color: textFieldTextColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.035))))
+      ]),
+    );
+  }
+}
+
+class SignUpButton extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const SignUpButton(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<SignUpButton> createState() => _SignUpButton();
+}
+
+class _SignUpButton extends State<SignUpButton> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: widget.screenWidth * 0.8,
+        height: widget.screenHeight * 0.07,
+        decoration: BoxDecoration(
+            color: primary, borderRadius: BorderRadius.circular(15)),
+        child: Center(
+            child: Text('Sign Up',
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

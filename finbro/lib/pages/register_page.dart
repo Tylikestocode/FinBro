@@ -57,7 +57,7 @@ class _SignUpPage extends State<SignUpPage> {
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.05, bottom: screenWidth * 0.1),
-          child: passwordTextField(
+          child: ConfirmPasswordTextField(
               screenWidth: screenWidth, screenHeight: screenHeight),
         ),
         Center(
@@ -67,10 +67,7 @@ class _SignUpPage extends State<SignUpPage> {
               screenWidth: screenWidth, screenHeight: screenHeight),
         )),
         TextButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
-            },
+            onPressed: () {},
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: screenWidth * 0.01),

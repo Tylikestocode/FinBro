@@ -68,10 +68,7 @@ class _LoginPage extends State<LoginPage> {
             )),
         // No Account? Sign Up
         TextButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-            },
+            onPressed: () {},
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: screenWidth * 0.01),
