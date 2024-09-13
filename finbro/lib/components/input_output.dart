@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:finbro/design/ui_colors.dart';
-import 'package:finbro/pages/register_page.dart';
-import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
