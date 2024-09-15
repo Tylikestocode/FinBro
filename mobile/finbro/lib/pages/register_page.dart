@@ -2,6 +2,8 @@
 
 import "package:finbro/components/input_output.dart";
 import "package:finbro/design/ui_colors.dart";
+import "package:finbro/pages/login_page.dart";
+import "package:finbro/pages/register_page_two.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 
@@ -39,7 +41,7 @@ class _SignUpPage extends State<SignUpPage> {
                   textStyle: TextStyle(
                       color: primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.11))),
+                      fontSize: screenWidth * 0.1))),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -61,12 +63,15 @@ class _SignUpPage extends State<SignUpPage> {
         ),
         Center(
             child: Padding(
-          padding: EdgeInsets.only(bottom: screenWidth * 0.1),
+          padding: EdgeInsets.only(bottom: screenWidth * 0.11),
           child: ContinueButton(
               screenWidth: screenWidth, screenHeight: screenHeight),
         )),
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: screenWidth * 0.01),

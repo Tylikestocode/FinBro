@@ -30,17 +30,17 @@ class _AiChatBubbleState extends State<AiChatBubble> {
           // AI Icon
           Padding(
             padding: EdgeInsets.only(
-                left: widget.screenWidth * 0.02,
+                left: widget.screenWidth * 0.04,
                 top: widget.screenWidth * 0.02),
             child: Container(
-              width: widget.screenWidth * 0.13,
-              height: widget.screenHeight * 0.06,
+              width: widget.screenWidth * 0.115,
+              height: widget.screenHeight * 0.05,
               decoration: BoxDecoration(
                   color: Color.fromRGBO(62, 90, 162, 1),
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                 child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\robot-solid.svg',
+                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\robot-solid.svg',
                   width: 20,
                   height: 20,
                 ),
@@ -51,12 +51,16 @@ class _AiChatBubbleState extends State<AiChatBubble> {
             padding: EdgeInsets.only(
                 left: widget.screenWidth * 0.05,
                 top: widget.screenHeight * 0.01),
-            child: Text(
-                'Hi, I’m FinBro your AI assistant here to help you navigate the complexities of personal finance how can I help?',
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                    fontSize: widget.screenWidth * 0.04)),
+            child: Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: widget.screenWidth * 0.01),
+              child: Text(
+                  'Hi, I’m FinBro your AI assistant here to help you navigate the complexities of personal finance how can I help?',
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                      fontSize: widget.screenWidth * 0.035)),
+            ),
           )
         ]),
       ),
@@ -90,17 +94,17 @@ class _UserChatBubble extends State<UserChatBubble> {
           // AI Icon
           Padding(
             padding: EdgeInsets.only(
-                left: widget.screenWidth * 0.02,
+                left: widget.screenWidth * 0.04,
                 top: widget.screenWidth * 0.02),
             child: Container(
-              width: widget.screenWidth * 0.13,
-              height: widget.screenHeight * 0.06,
+              width: widget.screenWidth * 0.115,
+              height: widget.screenHeight * 0.05,
               decoration: BoxDecoration(
                   color: Color.fromRGBO(27, 48, 100, 1),
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                 child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\person-solid.svg',
+                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\person-solid.svg',
                   width: 20,
                   height: 20,
                 ),
@@ -111,12 +115,16 @@ class _UserChatBubble extends State<UserChatBubble> {
             padding: EdgeInsets.only(
                 left: widget.screenWidth * 0.05,
                 top: widget.screenHeight * 0.01),
-            child: Text(
-                'How can I extend my money to the end of the month with my current financial situation? ',
-                style: GoogleFonts.poppins(
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal,
-                    fontSize: widget.screenWidth * 0.04)),
+            child: Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: widget.screenWidth * 0.01),
+              child: Text(
+                  'How can I extend my money to the end of the month with my current financial situation? ',
+                  style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal,
+                      fontSize: widget.screenWidth * 0.035)),
+            ),
           )
         ]),
       ),

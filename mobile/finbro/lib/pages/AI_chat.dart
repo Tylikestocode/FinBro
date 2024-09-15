@@ -36,7 +36,7 @@ class _AiChatState extends State<AiChat> {
                 Padding(
                   padding: EdgeInsets.only(left: screenWidth * 0.05),
                   child: SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\arrow-left-solid.svg', // Path to your SVG file
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\arrow-left-solid.svg', // Path to your SVG file
                     width: 24,
                     height: 24,
                   ),

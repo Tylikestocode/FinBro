@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:finbro/design/ui_colors.dart';
+import 'package:finbro/pages/AI_chat.dart';
+import 'package:finbro/pages/home_page.dart';
+import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,7 +35,7 @@ class _emailTextField extends State<emailTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg',
               width: 24,
               height: 24,
             )),
@@ -86,7 +89,7 @@ class _passwordTextField extends State<passwordTextField> {
               horizontal: widget.screenWidth * 0.05,
               vertical: widget.screenWidth * 0.02),
           child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\lock-solid.svg',
+            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\lock-solid.svg',
             width: 24,
             height: 24,
           ),
@@ -118,12 +121,12 @@ class _passwordTextField extends State<passwordTextField> {
                 vertical: widget.screenWidth * 0.02),
             child: widget.eyeState
                 ? SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-solid.svg',
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-solid.svg',
                     width: 24,
                     height: 24,
                   )
                 : SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
                     width: 24,
                     height: 24,
                   ),
@@ -165,7 +168,7 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
               horizontal: widget.screenWidth * 0.05,
               vertical: widget.screenWidth * 0.02),
           child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\lock-solid.svg',
+            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\lock-solid.svg',
             width: 24,
             height: 24,
           ),
@@ -197,12 +200,12 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
                 vertical: widget.screenWidth * 0.02),
             child: widget.eyeState
                 ? SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-solid.svg',
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-solid.svg',
                     width: 24,
                     height: 24,
                   )
                 : SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
                     width: 24,
                     height: 24,
                   ),
@@ -229,10 +232,13 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      },
       child: Container(
-        width: widget.screenWidth * 0.8,
-        height: widget.screenHeight * 0.07,
+        width: widget.screenWidth * 0.6,
+        height: widget.screenHeight * 0.065,
         decoration: BoxDecoration(
             color: primary, borderRadius: BorderRadius.circular(15)),
         child: Center(
@@ -240,7 +246,7 @@ class _LoginButton extends State<LoginButton> {
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.04))),
+                    fontSize: widget.screenWidth * 0.035))),
       ),
     );
   }
@@ -262,10 +268,13 @@ class _ContinueButton extends State<ContinueButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SignUpPageTwo()));
+      },
       child: Container(
-        width: widget.screenWidth * 0.8,
-        height: widget.screenHeight * 0.07,
+        width: widget.screenWidth * 0.6,
+        height: widget.screenHeight * 0.065,
         decoration: BoxDecoration(
             color: primary, borderRadius: BorderRadius.circular(15)),
         child: Center(
@@ -273,7 +282,7 @@ class _ContinueButton extends State<ContinueButton> {
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.04))),
+                    fontSize: widget.screenWidth * 0.035))),
       ),
     );
   }
@@ -306,7 +315,7 @@ class _FirstNameTextField extends State<FirstNameTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -356,7 +365,7 @@ class _SurnameTextField extends State<SurnameTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -406,7 +415,7 @@ class _ProfessionTextField extends State<ProfessionTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -456,7 +465,7 @@ class _AgeTextField extends State<AgeTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -506,7 +515,7 @@ class _GenderTextField extends State<GenderTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -547,8 +556,8 @@ class _SignUpButton extends State<SignUpButton> {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: widget.screenWidth * 0.8,
-        height: widget.screenHeight * 0.07,
+        width: widget.screenWidth * 0.6,
+        height: widget.screenHeight * 0.065,
         decoration: BoxDecoration(
             color: primary, borderRadius: BorderRadius.circular(15)),
         child: Center(
@@ -556,7 +565,7 @@ class _SignUpButton extends State<SignUpButton> {
                 style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.04))),
+                    fontSize: widget.screenWidth * 0.035))),
       ),
     );
   }
@@ -607,22 +616,22 @@ class _AiChatPromptTextFieldState extends State<AiChatPromptTextField> {
                     hintStyle: GoogleFonts.poppins(
                         color: Color.fromRGBO(88, 97, 108, 1),
                         fontWeight: FontWeight.normal,
-                        fontSize: widget.screenWidth * 0.04)),
+                        fontSize: widget.screenWidth * 0.035)),
               ),
             ),
           ),
         ),
         Container(
-          width: widget.screenWidth * 0.15,
-          height: widget.screenHeight * 0.07,
+          width: widget.screenWidth * 0.14,
+          height: widget.screenHeight * 0.065,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: Color.fromRGBO(9, 23, 56, 1)),
           child: Center(
               child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\finbro\\assets\\paper-plane-solid.svg', // Path to your SVG file
-            width: 24,
-            height: 24,
+            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\paper-plane-solid.svg', // Path to your SVG file
+            width: 20,
+            height: 20,
           )),
         )
         // Send Button

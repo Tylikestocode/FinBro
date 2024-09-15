@@ -31,7 +31,7 @@ class _SignUpPageTwo extends State<SignUpPageTwo> {
                     textStyle: TextStyle(
                         color: primary,
                         fontWeight: FontWeight.bold,
-                        fontSize: screenWidth * 0.11))),
+                        fontSize: screenWidth * 0.1))),
           ),
           Padding(
             padding: EdgeInsets.only(

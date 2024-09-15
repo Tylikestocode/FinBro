@@ -2,6 +2,7 @@
 
 import "package:finbro/components/input_output.dart";
 import "package:finbro/design/ui_colors.dart";
+import "package:finbro/pages/register_page.dart";
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 
@@ -41,7 +42,7 @@ class _LoginPage extends State<LoginPage> {
                   textStyle: TextStyle(
                       color: primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.11))),
+                      fontSize: screenWidth * 0.1))),
         ),
         // Email TextField
         Padding(
@@ -61,13 +62,16 @@ class _LoginPage extends State<LoginPage> {
         Align(
             alignment: Alignment.center,
             child: Padding(
-              padding: EdgeInsets.only(bottom: screenWidth * 0.32),
+              padding: EdgeInsets.only(bottom: screenWidth * 0.35),
               child: LoginButton(
                   screenWidth: screenWidth, screenHeight: screenHeight),
             )),
         // No Account? Sign Up
         TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()));
+            },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(right: screenWidth * 0.01),
