@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:finbro/design/ui_colors.dart';
-import 'package:finbro/pages/AI_chat.dart';
 import 'package:finbro/pages/home_page.dart';
 import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,3 @@
-import 'package:finbro/pages/AI_chat.dart';
-import 'package:finbro/pages/home_page.dart';
 import 'package:finbro/pages/login_page.dart';
 import 'package:flutter/material.dart';
 

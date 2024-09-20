@@ -29,11 +29,13 @@ flutter:
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\lock-solid.svg
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\mesh_background.png
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\paper-plane-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\robot-solid.svg
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\house-solid-inactive.svg
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\house-solid-active.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-simple-solid-inactive.svg
     - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-simple-solid-active.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\person-solid-inactive.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\person-solid-active.svg
-  
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-simple-solid-inactive.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\user-solid-active.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\user-solid-inactive.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\square-plus-solid.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\robot-solid-feature-button.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-pie-solid-feature-button.svg
+    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\brain-solid.svg

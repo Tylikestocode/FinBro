@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
-
 import 'package:finbro/design/ui_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -30,7 +29,7 @@ class _FinBroNavigationBar extends State<FinBroNavigationBar> {
   Widget build(BuildContext context) {
     return Container(
         width: widget.screenWidth,
-        height: widget.screenHeight * 0.07,
+        height: widget.screenHeight * 0.08,
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
@@ -41,97 +40,135 @@ class _FinBroNavigationBar extends State<FinBroNavigationBar> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Home Icon
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.homeActive = !widget.homeActive;
-                  widget.budgetActive = false;
-                  widget.profileActive = false;
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.only(right: widget.screenWidth * 0.25),
-                child: Container(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                            widget.homeActive
-                                ? 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\house-solid-active.svg'
-                                : 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\house-solid-inactive.svg',
-                            width: 30,
-                            height: 30),
-                        Text('Home',
-                            style: GoogleFonts.poppins(
-                                color: widget.homeActive
-                                    ? primary
-                                    : Color.fromRGBO(210, 215, 226, 1),
-                                fontWeight: FontWeight.bold,
-                                fontSize: widget.screenWidth * 0.025))
-                      ]),
-                ),
-              ),
-            ),
+            HomeActiveIconNavBar(
+                screenWidth: widget.screenWidth,
+                screenHeight: widget.screenHeight),
             // Budget Icon
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.budgetActive = !widget.budgetActive;
-                  widget.homeActive = false;
-                  widget.profileActive = false;
-                });
-              },
-              child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                          widget.budgetActive
-                              ? 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\chart-simple-solid-active.svg'
-                              : 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\chart-simple-solid-inactive.svg',
-                          width: 30,
-                          height: 30),
-                      Text('Budget',
-                          style: GoogleFonts.poppins(
-                              color: widget.budgetActive
-                                  ? primary
-                                  : Color.fromRGBO(210, 215, 226, 1),
-                              fontWeight: FontWeight.bold,
-                              fontSize: widget.screenWidth * 0.025))
-                    ]),
-              ),
-            ),
+            InActiveBudgetNavBar(
+                screenWidth: widget.screenWidth,
+                screenHeight: widget.screenHeight),
             // Profile Icon
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.profileActive = !widget.profileActive;
-                  widget.homeActive = false;
-                  widget.budgetActive = false;
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.only(left: widget.screenWidth * 0.25),
-                child: Container(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                            widget.profileActive
-                                ? 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\person-solid-active.svg'
-                                : 'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\person-solid-inactive.svg',
-                            width: 30,
-                            height: 30),
-                        Text('Profile',
-                            style: GoogleFonts.poppins(
-                                color: Color.fromRGBO(210, 215, 226, 1),
-                                fontWeight: FontWeight.bold,
-                                fontSize: widget.screenWidth * 0.025))
-                      ]),
-                ),
-              ),
-            ),
+            InActiveProfileNavBar(
+                screenWidth: widget.screenWidth,
+                screenHeight: widget.screenHeight)
           ],
         ));
+  }
+}
+
+class HomeActiveIconNavBar extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const HomeActiveIconNavBar(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<HomeActiveIconNavBar> createState() => _HomeActiveIconNavBar();
+}
+
+class _HomeActiveIconNavBar extends State<HomeActiveIconNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          top: widget.screenWidth * 0.01,
+          bottom: widget.screenWidth * 0.01,
+          right: widget.screenWidth * 0.2),
+      child: Container(
+          width: widget.screenWidth * 0.15,
+          height: widget.screenHeight * 0.065,
+          decoration: BoxDecoration(
+              color: primary, borderRadius: BorderRadius.circular(16)),
+          child: Column(children: [
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(vertical: widget.screenWidth * 0.015),
+              child: SvgPicture.asset(
+                'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\house-solid-active.svg',
+                width: 20,
+                height: 20,
+              ),
+            ),
+            Text('Home',
+                style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: widget.screenWidth * 0.025))
+          ])),
+    );
+  }
+}
+
+class InActiveBudgetNavBar extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const InActiveBudgetNavBar(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<InActiveBudgetNavBar> createState() => _InActiveBudgetNavBar();
+}
+
+class _InActiveBudgetNavBar extends State<InActiveBudgetNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: widget.screenWidth * 0.01,
+        bottom: widget.screenWidth * 0.01,
+      ),
+      child: Container(
+          width: widget.screenWidth * 0.15,
+          height: widget.screenHeight * 0.065,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\chart-simple-solid-inactive.svg',
+              width: 36,
+              height: 36,
+            ),
+          ])),
+    );
+  }
+}
+
+class InActiveProfileNavBar extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+
+  const InActiveProfileNavBar(
+      {Key? key, required this.screenWidth, required this.screenHeight})
+      : super(key: key);
+
+  @override
+  State<InActiveProfileNavBar> createState() => _InActiveProfileNavBar();
+}
+
+class _InActiveProfileNavBar extends State<InActiveProfileNavBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          top: widget.screenWidth * 0.01,
+          bottom: widget.screenWidth * 0.01,
+          left: widget.screenWidth * 0.2),
+      child: Container(
+          width: widget.screenWidth * 0.15,
+          height: widget.screenHeight * 0.065,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            SvgPicture.asset(
+              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\user-solid-inactive.svg',
+              width: 36,
+              height: 36,
+            ),
+          ])),
+    );
   }
 }
