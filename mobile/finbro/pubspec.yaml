@@ -10,7 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
-  flutter_svg: ^2.0.3
+  flutter_svg: ^0.22.0
+  google_nav_bar: ^5.0.6
+  flutter_unicons: ^0.0.6
+  line_icons: ^2.0.3
+
 
 
 

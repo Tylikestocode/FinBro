@@ -3,9 +3,13 @@
 import 'package:finbro/components/data_components.dart';
 import 'package:finbro/components/navigation_components.dart';
 import 'package:finbro/design/ui_colors.dart';
+import 'package:finbro/pages/AI_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_unicons/flutter_unicons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,8 +24,55 @@ class _HomePage extends State<HomePage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        bottomNavigationBar: FinBroNavigationBar(
-            screenWidth: screenWidth, screenHeight: screenHeight),
+        backgroundColor: Colors.white,
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: screenWidth,
+            decoration: BoxDecoration(
+                border: Border.all(
+                    color: Color.fromRGBO(213, 231, 243, 1), width: 2),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30)),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: GNav(
+                padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                tabBackgroundColor: primary,
+                tabActiveBorder:
+                    Border.all(color: Color.fromRGBO(213, 231, 243, 1)),
+                backgroundColor: Colors.white,
+                tabBorderRadius: 30,
+                color: Color.fromRGBO(213, 231, 243, 1),
+                iconSize: 24,
+                activeColor: Colors.white,
+                tabs: [
+                  GButton(
+                    icon: LineIcons.home,
+                    text: 'Home',
+                    textStyle: GoogleFonts.poppins(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                    gap: 6,
+                  ),
+                  GButton(
+                    icon: LineIcons.lineChart,
+                    text: 'Budget',
+                    textStyle: GoogleFonts.poppins(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                    gap: 6,
+                  ),
+                  GButton(
+                    icon: LineIcons.user,
+                    text: 'Profile',
+                    textStyle: GoogleFonts.poppins(
+                        color: Colors.white, fontWeight: FontWeight.normal),
+                    gap: 6,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         body: Container(
             width: screenWidth,
             height: screenHeight,
@@ -48,13 +99,16 @@ class _HomePage extends State<HomePage> {
                         Padding(
                           padding: EdgeInsets.only(
                               right: screenWidth * 0.15,
-                              top: screenWidth * 0.08),
+                              top: screenWidth * 0.08,
+                              bottom: screenWidth * 0.08),
                           child: NewTransactionButton(
                               screenWidth: screenWidth,
                               screenHeight: screenHeight),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: screenWidth * 0.08),
+                          padding: EdgeInsets.only(
+                              top: screenWidth * 0.08,
+                              bottom: screenWidth * 0.08),
                           child: FinBroButton(
                               screenWidth: screenWidth,
                               screenHeight: screenHeight),
@@ -62,14 +116,19 @@ class _HomePage extends State<HomePage> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: screenWidth * 0.15,
-                              top: screenWidth * 0.08),
+                              top: screenWidth * 0.08,
+                              bottom: screenWidth * 0.08),
                           child: BudgetBroButton(
                               screenWidth: screenWidth,
                               screenHeight: screenHeight),
                         ),
                       ]),
                 ),
-                // Listview of transactions
+                // Recent Transactions FinBro
+                Expanded(
+                  child: RecentTransactionsListView(
+                      screenWidth: screenWidth, screenHeight: screenHeight),
+                ),
               ],
             )));
   }
@@ -165,30 +224,36 @@ class FinBroButton extends StatefulWidget {
 class _FinBroButton extends State<FinBroButton> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: widget.screenWidth * 0.15,
-          height: widget.screenWidth * 0.15,
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(148, 171, 229, 1),
-              borderRadius: BorderRadius.circular(15)),
-          child: Center(
-              child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\brain-solid.svg',
-                  width: 32,
-                  height: 32)),
-        ),
-        Padding(
-          padding: EdgeInsets.only(top: widget.screenWidth * 0.03),
-          child: Center(
-              child: Text('Ask FinBro',
-                  style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: widget.screenWidth * 0.025))),
-        )
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AiChat()));
+      },
+      child: Column(
+        children: [
+          Container(
+            width: widget.screenWidth * 0.15,
+            height: widget.screenWidth * 0.15,
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(148, 171, 229, 1),
+                borderRadius: BorderRadius.circular(15)),
+            child: Center(
+                child: SvgPicture.asset(
+                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\brain-solid.svg',
+                    width: 32,
+                    height: 32)),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: widget.screenWidth * 0.03),
+            child: Center(
+                child: Text('Ask FinBro',
+                    style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.screenWidth * 0.025))),
+          )
+        ],
+      ),
     );
   }
 }
