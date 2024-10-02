@@ -5,12 +5,10 @@ import com.yazeedmo.finbro.domain.RegularPayment;
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.exception.account.NotesTooLongException;
 import com.yazeedmo.finbro.exception.general.*;
-import com.yazeedmo.finbro.repository.AccountRepository;
-import com.yazeedmo.finbro.repository.CategoryRepository;
 import com.yazeedmo.finbro.repository.RegularPaymentRepository;
-import com.yazeedmo.finbro.repository.UserRepository;
 import com.yazeedmo.finbro.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,27 +20,29 @@ import java.util.Objects;
 @Service
 public class RegularPaymentService {
 
-    private final TransactionService transactionService;
     private final RegularPaymentRepository regularPaymentRepository;
-    private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
-    private final CategoryRepository categoryRepository;
+
+    private final TransactionService transactionService;
+    private final UserService userService;
+    private final AccountService accountService;
+    private final CategoryService categoryService;
+
 
     public final static int MAX_NOTES_LENGTH = 500;
 
     @Autowired
     public RegularPaymentService(
-            TransactionService transactionService,
             RegularPaymentRepository regularPaymentRepository,
-            UserRepository userRepository,
-            AccountRepository accountRepository,
-            CategoryRepository categoryRepository
+            TransactionService transactionService,
+            UserService userService,
+            AccountService accountService,
+            CategoryService categoryService
     ) {
         this.transactionService = transactionService;
         this.regularPaymentRepository = regularPaymentRepository;
-        this.userRepository = userRepository;
-        this.accountRepository = accountRepository;
-        this.categoryRepository = categoryRepository;
+        this.userService = userService;
+        this.accountService = accountService;
+        this.categoryService = categoryService;
     }
 
 
@@ -219,7 +219,7 @@ public class RegularPaymentService {
             throw new MissingParameterException("UserId");
         }
 
-        if (!userRepository.existsById(regularPayment.getUserId())) {
+        if (!userService.existsById(regularPayment.getUserId())) {
             throw new ResourceNotFoundException(RegularPayment.class, "userId", String.valueOf(regularPayment.getUserId()));
         }
 
@@ -231,7 +231,7 @@ public class RegularPaymentService {
             throw new MissingParameterException("AccountId");
         }
 
-        if(!accountRepository.existsById(regularPayment.getAccountId())) {
+        if(!accountService.existsById(regularPayment.getAccountId())) {
             throw new ResourceNotFoundException(RegularPayment.class, "accountId", String.valueOf(regularPayment.getAccountId()));
         }
 
@@ -246,7 +246,7 @@ public class RegularPaymentService {
 
         System.out.println(regularPayment.getCategoryId());
 
-        if (!categoryRepository.existsById(regularPayment.getCategoryId())) {
+        if (!categoryService.existsById(regularPayment.getCategoryId())) {
             throw new ResourceNotFoundException(Category.class, "CategoryId", String.valueOf(regularPayment.getCategoryId()));
         }
 

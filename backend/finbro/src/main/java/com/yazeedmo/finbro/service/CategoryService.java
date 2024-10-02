@@ -8,24 +8,25 @@ import com.yazeedmo.finbro.exception.general.ResourceAlreadyExistsException;
 import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.exception.transaction.DescTooLongException;
 import com.yazeedmo.finbro.repository.CategoryRepository;
-import com.yazeedmo.finbro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final UserRepository userRepository;
+
+    private final UserService userService;
 
     public final static int MAX_DESC_LENGTH = 500;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, UserRepository userRepository) {
+    public CategoryService(CategoryRepository categoryRepository, UserService userService) {
         this.categoryRepository = categoryRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
     }
 
 
@@ -52,6 +53,10 @@ public class CategoryService {
 
         return categoryRepository.findById(categoryId).orElse(null);
 
+    }
+
+    public boolean existsById(Long categoryId) {
+        return categoryRepository.existsById(categoryId);
     }
 
     public List<Category> getAllUserDefinedCategories() {
@@ -160,7 +165,7 @@ public class CategoryService {
             throw new MissingParameterException("userId");
         }
 
-        if (!userRepository.existsById(category.getUserId())) {
+        if (!userService.existsById(category.getUserId())) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(category.getUserId()));
         }
 
