@@ -10,6 +10,7 @@ import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.exception.user.IncorrectPasswordException;
 import com.yazeedmo.finbro.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,17 +18,29 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+
+    @Lazy
     private final AccountService accountService;
+    @Lazy
     private final TransactionService transactionService;
+    @Lazy
     private final CategoryService categoryService;
+    @Lazy
     private final RegularPaymentService regularPaymentService;
 
     @Autowired
-    public UserService(UserRepository userRepository, AccountService accountService, TransactionService transactionService, CategoryService categoryService, RegularPaymentService regularPaymentService) {
+    public UserService(
+            UserRepository userRepository,
+            @Lazy AccountService accountService,
+            @Lazy TransactionService transactionService,
+            @Lazy CategoryService categoryService,
+            @Lazy RegularPaymentService regularPaymentService
+    ) {
         this.userRepository = userRepository;
         this.accountService = accountService;
         this.transactionService = transactionService;
@@ -55,6 +68,10 @@ public class UserService {
         }
 
         return userRepository.findById(userId).orElse(null);
+    }
+
+    public boolean existsById(Long userId) {
+        return userRepository.existsById(userId);
     }
 
     public UserDTO getUserWithDetails (Long userId) {

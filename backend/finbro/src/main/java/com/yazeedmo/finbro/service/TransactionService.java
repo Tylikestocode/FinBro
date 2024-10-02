@@ -11,12 +11,11 @@ import com.yazeedmo.finbro.exception.general.MissingParameterException;
 import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.exception.general.ServerErrorException;
 import com.yazeedmo.finbro.exception.transaction.DescTooLongException;
-import com.yazeedmo.finbro.repository.AccountRepository;
-import com.yazeedmo.finbro.repository.CategoryRepository;
+
 import com.yazeedmo.finbro.repository.TransactionRepository;
-import com.yazeedmo.finbro.repository.UserRepository;
 import com.yazeedmo.finbro.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +27,10 @@ import java.util.List;
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
-    private final UserRepository userRepository;
-    private final AccountRepository accountRepository;
-    private final CategoryRepository categoryRepository;
+
+    private final UserService userService;
+    private final AccountService accountService;
+    private final CategoryService categoryService;
 
     public final static int MAX_NOTES_LENGTH = 500;
     public final static int MAX_DESC_LENGTH = 500;
@@ -38,13 +38,15 @@ public class TransactionService {
     @Autowired
     public TransactionService(
             TransactionRepository transactionRepository,
-            UserRepository userRepository,
-            AccountRepository accountRepository,
-            CategoryRepository categoryRepository) {
+            UserService userService,
+            AccountService accountService,
+            CategoryService categoryService
+    ) {
         this.transactionRepository = transactionRepository;
-        this.userRepository = userRepository;
-        this.accountRepository = accountRepository;
-        this.categoryRepository = categoryRepository;
+        this.userService = userService;
+        this.accountService = accountService;
+        this.categoryService = categoryService;
+
     }
 
 
@@ -84,7 +86,7 @@ public class TransactionService {
 
     public List<Transaction> getAllByUserId(Long userId) {
 
-        if (!userRepository.existsById(userId)) {
+        if (!userService.existsById(userId)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
         }
 
@@ -94,7 +96,7 @@ public class TransactionService {
 
     public List<Transaction> getAllByAccountId(Long accountId) {
 
-        if (!accountRepository.existsById(accountId)) {
+        if (!accountService.existsById(accountId)) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(accountId));
         }
 
@@ -174,7 +176,7 @@ public class TransactionService {
     private boolean validAmount(Transaction transaction) {
 
         BigDecimal transactionAmount = transaction.getAmount();
-        Account account = accountRepository.findById(transaction.getAccountId()).orElse(null);
+        Account account = accountService.getAccountById(transaction.getAccountId());
         BigDecimal currentAccountAmount;
         BigDecimal minimumBalance;
         boolean allowNegativeBalance;
@@ -237,7 +239,7 @@ public class TransactionService {
             throw new MissingParameterException("UserId");
         }
 
-        if (!userRepository.existsById(transaction.getUserId())) {
+        if (!userService.existsById(transaction.getUserId())) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(transaction.getUserId()));
         }
 
@@ -248,7 +250,7 @@ public class TransactionService {
         if (transaction.getAccountId() == null) {
             throw new MissingParameterException("AccountId");
         }
-        if (!accountRepository.existsById(transaction.getAccountId())) {
+        if (!accountService.existsById(transaction.getAccountId())) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(transaction.getAccountId()));
         }
 
@@ -256,7 +258,7 @@ public class TransactionService {
 
     private void validateCategoryId(Transaction transaction) {
 
-        if (!categoryRepository.existsById(transaction.getCategoryId())) {
+        if (!categoryService.existsById(transaction.getCategoryId())) {
             throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(transaction.getCategoryId()));
         }
 
@@ -266,7 +268,7 @@ public class TransactionService {
     private Transaction performTransaction(Transaction transaction) {
 
         BigDecimal transactionAmount = transaction.getAmount();
-        Account account = accountRepository.findById(transaction.getAccountId()).orElse(null);
+        Account account = accountService.getAccountById(transaction.getAccountId());
 
         boolean allowNegativeBalance;
         BigDecimal minimumBalance = null;
@@ -298,7 +300,7 @@ public class TransactionService {
         // Everything is valid -> Save new Transaction and update relevant tables
         Transaction savedTransaction = transactionRepository.save(transaction);
         account.setBalance(finalAmount);
-        accountRepository.save(account);
+        accountService.createAccount(account);
 
         savedTransaction.setDate(DateTimeUtil.convertDBTimeToString(savedTransaction.getDate()));
 

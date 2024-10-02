@@ -8,33 +8,36 @@ import com.yazeedmo.finbro.exception.general.InvalidDataFormatException;
 import com.yazeedmo.finbro.exception.general.MissingParameterException;
 import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.repository.AccountRepository;
-import com.yazeedmo.finbro.repository.CategoryRepository;
-import com.yazeedmo.finbro.repository.UserRepository;
+
 import com.yazeedmo.finbro.util.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 @Service
 public class AccountService {
 
     private final AccountRepository accountRepository;
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
+
+    private final UserService userService;
+    private final CategoryService categoryService;
 
     public final static int MAX_NOTES_LENGTH = 500;
 
     @Autowired
     public AccountService(
             AccountRepository accountRepository,
-            UserRepository userRepository,
-            CategoryRepository categoryRepository) {
+            UserService userService,
+            CategoryService categoryService
+    ) {
         this.accountRepository = accountRepository;
-        this.userRepository = userRepository;
-        this.categoryRepository = categoryRepository;
+        this.userService = userService;
+        this.categoryService = categoryService;
     }
 
 
@@ -61,9 +64,13 @@ public class AccountService {
 
     }
 
+    public boolean existsById(Long accountId) {
+        return accountRepository.existsById(accountId);
+    }
+
     public List<Account> getAllByUserId(Long userId) {
 
-        if (!userRepository.existsById(userId)) {
+        if (!userService.existsById(userId)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(userId));
         }
 
@@ -154,7 +161,7 @@ public class AccountService {
         }
 
         // User ID must exist in Users table
-        if (!userRepository.existsById(account.getUserId())) {
+        if (!userService.existsById(account.getUserId())) {
             throw new ResourceNotFoundException(Account.class, "UserId", String.valueOf(account.getUserId()));
         }
 
@@ -205,7 +212,7 @@ public class AccountService {
 
     private void validateCategory(Account account) {
 
-        if (!categoryRepository.existsById(account.getCategoryId())) {
+        if (!categoryService.existsById(account.getCategoryId())) {
             throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(account.getCategoryId()));
         }
 
