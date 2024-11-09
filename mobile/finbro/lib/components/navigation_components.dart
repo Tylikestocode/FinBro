@@ -86,7 +86,7 @@ class _HomeActiveIconNavBar extends State<HomeActiveIconNavBar> {
               padding:
                   EdgeInsets.symmetric(vertical: widget.screenWidth * 0.015),
               child: SvgPicture.asset(
-                'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\house-solid-active.svg',
+                'assets/house-solid-active.svg',
                 width: 20,
                 height: 20,
               ),
@@ -128,7 +128,7 @@ class _InActiveBudgetNavBar extends State<InActiveBudgetNavBar> {
               color: Colors.white, borderRadius: BorderRadius.circular(16)),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\chart-simple-solid-inactive.svg',
+              'assets/chart-simple-solid-inactive.svg',
               width: 36,
               height: 36,
             ),
@@ -164,7 +164,7 @@ class _InActiveProfileNavBar extends State<InActiveProfileNavBar> {
               color: Colors.white, borderRadius: BorderRadius.circular(16)),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\user-solid-inactive.svg',
+              'assets/user-solid-inactive.svg',
               width: 36,
               height: 36,
             ),

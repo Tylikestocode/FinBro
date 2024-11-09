@@ -1,25 +1,32 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:finbro/design/ui_colors.dart';
-import 'package:finbro/pages/home_page.dart';
 import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class emailTextField extends StatefulWidget {
+class EmailTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
+  final TextEditingController emailController;
+  final FocusNode emailFocusNode;
+  final FocusNode passwordFocusNode;
 
-  const emailTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+  const EmailTextField(
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.emailController,
+      required this.emailFocusNode,
+      required this.passwordFocusNode});
 
   @override
-  State<emailTextField> createState() => _emailTextField();
+  State<EmailTextField> createState() => _EmailTextField();
 }
 
-class _emailTextField extends State<emailTextField> {
+class _EmailTextField extends State<EmailTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,13 +41,19 @@ class _emailTextField extends State<emailTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg',
+              'assets/address-book-solid.svg',
               width: 24,
               height: 24,
             )),
         // TextField
         Expanded(
             child: TextField(
+                controller: widget.emailController,
+                focusNode: widget.emailFocusNode,
+                textInputAction: TextInputAction.next,
+                onSubmitted: (_) {
+                  FocusScope.of(context).requestFocus(widget.passwordFocusNode);
+                },
                 style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -57,23 +70,26 @@ class _emailTextField extends State<emailTextField> {
   }
 }
 
-class passwordTextField extends StatefulWidget {
+class PasswordTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
-  bool eyeState;
+  final TextEditingController passwordController;
+  final FocusNode passwordFocusNode;
 
-  passwordTextField(
-      {Key? key,
+  const PasswordTextField(
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
-      this.eyeState = false})
-      : super(key: key);
+      required this.passwordController,
+      required this.passwordFocusNode});
 
   @override
-  State<passwordTextField> createState() => _passwordTextField();
+  State<PasswordTextField> createState() => _PasswordTextField();
 }
 
-class _passwordTextField extends State<passwordTextField> {
+class _PasswordTextField extends State<PasswordTextField> {
+  bool eyeState = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -88,7 +104,7 @@ class _passwordTextField extends State<passwordTextField> {
               horizontal: widget.screenWidth * 0.05,
               vertical: widget.screenWidth * 0.02),
           child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\lock-solid.svg',
+            'assets/lock-solid.svg',
             width: 24,
             height: 24,
           ),
@@ -96,11 +112,17 @@ class _passwordTextField extends State<passwordTextField> {
         // TextField
         Expanded(
             child: TextField(
+              controller: widget.passwordController,
+                focusNode: widget.passwordFocusNode,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                FocusScope.of(context).unfocus();
+                },
                 style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: widget.screenWidth * 0.035),
-                obscureText: widget.eyeState ? false : true,
+                obscureText: eyeState ? false : true,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Password',
@@ -111,21 +133,21 @@ class _passwordTextField extends State<passwordTextField> {
         GestureDetector(
           onTap: () {
             setState(() {
-              widget.eyeState = !widget.eyeState;
+              eyeState = !eyeState;
             });
           },
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
-            child: widget.eyeState
+            child: eyeState
                 ? SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-solid.svg',
+                    'assets/eye-solid.svg',
                     width: 24,
                     height: 24,
                   )
                 : SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
+                    'assets/eye-slash-solid.svg', // Path to your SVG file
                     width: 24,
                     height: 24,
                   ),
@@ -139,20 +161,17 @@ class _passwordTextField extends State<passwordTextField> {
 class ConfirmPasswordTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
-  bool eyeState;
 
-  ConfirmPasswordTextField(
-      {Key? key,
-      required this.screenWidth,
-      required this.screenHeight,
-      this.eyeState = false})
-      : super(key: key);
+  const ConfirmPasswordTextField(
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<ConfirmPasswordTextField> createState() => _ConfirmPasswordTextField();
 }
 
 class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
+  bool eyeState = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -167,7 +186,7 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
               horizontal: widget.screenWidth * 0.05,
               vertical: widget.screenWidth * 0.02),
           child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\lock-solid.svg',
+            'assets/lock-solid.svg',
             width: 24,
             height: 24,
           ),
@@ -179,7 +198,7 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                     fontSize: widget.screenWidth * 0.035),
-                obscureText: widget.eyeState ? false : true,
+                obscureText: eyeState ? false : true,
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Confirm Password',
@@ -190,21 +209,21 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
         GestureDetector(
           onTap: () {
             setState(() {
-              widget.eyeState = !widget.eyeState;
+              eyeState = !eyeState;
             });
           },
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
-            child: widget.eyeState
+            child: eyeState
                 ? SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-solid.svg',
+                    'assets/eye-solid.svg',
                     width: 24,
                     height: 24,
                   )
                 : SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\eye-slash-solid.svg', // Path to your SVG file
+                    'assets/eye-slash-solid.svg', // Path to your SVG file
                     width: 24,
                     height: 24,
                   ),
@@ -218,10 +237,13 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
 class LoginButton extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
+  final VoidCallback onTap;
 
   const LoginButton(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.onTap});
 
   @override
   State<LoginButton> createState() => _LoginButton();
@@ -231,10 +253,7 @@ class _LoginButton extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
-      },
+      onTap: widget.onTap,
       child: Container(
         width: widget.screenWidth * 0.6,
         height: widget.screenHeight * 0.065,
@@ -256,8 +275,7 @@ class ContinueButton extends StatefulWidget {
   final double screenHeight;
 
   const ContinueButton(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<ContinueButton> createState() => _ContinueButton();
@@ -292,8 +310,7 @@ class FirstNameTextField extends StatefulWidget {
   final double screenHeight;
 
   const FirstNameTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<FirstNameTextField> createState() => _FirstNameTextField();
@@ -314,7 +331,7 @@ class _FirstNameTextField extends State<FirstNameTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -342,8 +359,7 @@ class SurnameTextField extends StatefulWidget {
   final double screenHeight;
 
   const SurnameTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<SurnameTextField> createState() => _SurnameTextField();
@@ -364,7 +380,7 @@ class _SurnameTextField extends State<SurnameTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -392,8 +408,7 @@ class ProfessionTextField extends StatefulWidget {
   final double screenHeight;
 
   const ProfessionTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<ProfessionTextField> createState() => _ProfessionTextField();
@@ -414,7 +429,7 @@ class _ProfessionTextField extends State<ProfessionTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -442,8 +457,7 @@ class AgeTextField extends StatefulWidget {
   final double screenHeight;
 
   const AgeTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<AgeTextField> createState() => _AgeTextField();
@@ -464,7 +478,7 @@ class _AgeTextField extends State<AgeTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -492,8 +506,7 @@ class GenderTextField extends StatefulWidget {
   final double screenHeight;
 
   const GenderTextField(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<GenderTextField> createState() => _GenderTextField();
@@ -514,7 +527,7 @@ class _GenderTextField extends State<GenderTextField> {
                 horizontal: widget.screenWidth * 0.05,
                 vertical: widget.screenWidth * 0.02),
             child: SvgPicture.asset(
-              'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Path to your SVG file
               width: 24,
               height: 24,
             )),
@@ -542,8 +555,7 @@ class SignUpButton extends StatefulWidget {
   final double screenHeight;
 
   const SignUpButton(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<SignUpButton> createState() => _SignUpButton();
@@ -575,10 +587,10 @@ class AiChatPromptTextField extends StatefulWidget {
   final double screenHeight;
 
   const AiChatPromptTextField({
-    Key? key,
+    super.key,
     required this.screenWidth,
     required this.screenHeight,
-  }) : super(key: key);
+  });
 
   @override
   State<AiChatPromptTextField> createState() => _AiChatPromptTextFieldState();
@@ -628,7 +640,7 @@ class _AiChatPromptTextFieldState extends State<AiChatPromptTextField> {
               color: Color.fromRGBO(9, 23, 56, 1)),
           child: Center(
               child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\paper-plane-solid.svg', // Path to your SVG file
+            'assets/paper-plane-solid.svg', // Path to your SVG file
             width: 20,
             height: 20,
           )),

@@ -40,7 +40,7 @@ class _AiChatBubbleState extends State<AiChatBubble> {
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                 child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\robot-solid.svg',
+                  'assets/robot-solid.svg',
                   width: 20,
                   height: 20,
                 ),
@@ -104,7 +104,7 @@ class _UserChatBubble extends State<UserChatBubble> {
                   borderRadius: BorderRadius.circular(30)),
               child: Center(
                 child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\person-solid.svg',
+                  'assets/person-solid.svg',
                   width: 20,
                   height: 20,
                 ),

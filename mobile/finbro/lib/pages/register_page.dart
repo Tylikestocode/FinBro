@@ -15,6 +15,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPage extends State<SignUpPage> {
+
+  final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -43,18 +46,18 @@ class _SignUpPage extends State<SignUpPage> {
                       fontWeight: FontWeight.bold,
                       fontSize: screenWidth * 0.1))),
         ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: screenWidth * 0.05, bottom: screenWidth * 0.1),
-          child: emailTextField(
-              screenWidth: screenWidth, screenHeight: screenHeight),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: screenWidth * 0.05, bottom: screenWidth * 0.1),
-          child: passwordTextField(
-              screenWidth: screenWidth, screenHeight: screenHeight),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.only(
+        //       left: screenWidth * 0.05, bottom: screenWidth * 0.1),
+        //   child: EmailTextField(
+        //       screenWidth: screenWidth, screenHeight: screenHeight, emailController: emailController,),
+        // ),
+        // Padding(
+        //   padding: EdgeInsets.only(
+        //       left: screenWidth * 0.05, bottom: screenWidth * 0.1),
+        //   child: PasswordTextField(
+        //       screenWidth: screenWidth, screenHeight: screenHeight),
+        // ),
         Padding(
           padding: EdgeInsets.only(
               left: screenWidth * 0.05, bottom: screenWidth * 0.1),
@@ -69,8 +72,7 @@ class _SignUpPage extends State<SignUpPage> {
         )),
         TextButton(
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.pop(context);
             },
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
