@@ -14,6 +14,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   flutter_unicons: ^0.0.6
   line_icons: ^2.0.3
+  http: ^1.2.2
 
 
 
@@ -26,20 +27,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\address-book-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\arrow-left-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\eye-slash-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\eye-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\lock-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\mesh_background.png
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\paper-plane-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\house-solid-inactive.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\house-solid-active.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-simple-solid-active.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-simple-solid-inactive.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\user-solid-active.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\user-solid-inactive.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\square-plus-solid.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\robot-solid-feature-button.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\chart-pie-solid-feature-button.svg
-    - C:\Users\Tyron\OneDrive\Desktop\FinBro\FinBro\mobile\finbro\assets\brain-solid.svg
+    - assets/

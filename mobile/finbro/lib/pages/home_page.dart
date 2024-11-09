@@ -191,7 +191,7 @@ class _NewTransactionButton extends State<NewTransactionButton> {
               borderRadius: BorderRadius.circular(15)),
           child: Center(
               child: SvgPicture.asset(
-                  'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\square-plus-solid.svg',
+                  'assets/square-plus-solid.svg',
                   width: 36,
                   height: 36)),
         ),
@@ -239,7 +239,7 @@ class _FinBroButton extends State<FinBroButton> {
                 borderRadius: BorderRadius.circular(15)),
             child: Center(
                 child: SvgPicture.asset(
-                    'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\brain-solid.svg',
+                    'assets/brain-solid.svg',
                     width: 32,
                     height: 32)),
           ),
@@ -283,7 +283,7 @@ class _BudgetBroButton extends State<BudgetBroButton> {
               borderRadius: BorderRadius.circular(15)),
           child: Center(
               child: SvgPicture.asset(
-            'C:\\Users\\Tyron\\OneDrive\\Desktop\\FinBro\\FinBro\\mobile\\finbro\\assets\\chart-pie-solid-feature-button.svg',
+            'assets/chart-pie-solid-feature-button.svg',
             width: 32,
             height: 32,
           )),
