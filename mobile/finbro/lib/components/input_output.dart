@@ -7,6 +7,59 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+class UsernameTextField extends StatefulWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final TextEditingController usernameController;
+
+  const UsernameTextField(
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.usernameController});
+
+  @override
+  State<UsernameTextField> createState() => _UsernameTextField();
+}
+
+class _UsernameTextField extends State<UsernameTextField> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: widget.screenWidth * 0.9,
+        height: widget.screenHeight * 0.07,
+        decoration: BoxDecoration(
+            color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+        child: Row(children: [
+          // Icon
+          Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: widget.screenWidth * 0.05,
+                  vertical: widget.screenWidth * 0.02),
+              child: SvgPicture.asset(
+                'assets/address-book-solid.svg', // Path to your SVG file
+                width: 24,
+                height: 24,
+              )),
+          // TextField
+          Expanded(
+              child: TextField(
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: widget.screenWidth * 0.035),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'First Name (Optional)', // Modified hintText
+                      hintStyle: GoogleFonts.poppins(
+                          color: textFieldTextColor
+                              .withOpacity(0.6), // Optional hint text color
+                          fontWeight: FontWeight.bold,
+                          fontSize: widget.screenWidth * 0.035)))),
+        ]));
+  }
+}
+
 class EmailTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
@@ -75,13 +128,15 @@ class PasswordTextField extends StatefulWidget {
   final double screenHeight;
   final TextEditingController passwordController;
   final FocusNode passwordFocusNode;
+  final FocusNode? confirmPasswordFocusNode;
 
   const PasswordTextField(
       {super.key,
       required this.screenWidth,
       required this.screenHeight,
       required this.passwordController,
-      required this.passwordFocusNode});
+      required this.passwordFocusNode,
+      this.confirmPasswordFocusNode});
 
   @override
   State<PasswordTextField> createState() => _PasswordTextField();
@@ -112,11 +167,21 @@ class _PasswordTextField extends State<PasswordTextField> {
         // TextField
         Expanded(
             child: TextField(
-              controller: widget.passwordController,
+                controller: widget.passwordController,
                 focusNode: widget.passwordFocusNode,
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) {
-                FocusScope.of(context).unfocus();
+                  if (widget.confirmPasswordFocusNode != null) {
+                    print(
+                        "++++++++++++++++++++++++++++++++++++++++++++NO NULL");
+                    FocusScope.of(context)
+                        .requestFocus(widget.confirmPasswordFocusNode);
+                  } else {
+                    print(
+                        "++++++++++++++++++++++++++++++++++++++++++++NULLLLLL");
+
+                    FocusScope.of(context).unfocus();
+                  }
                 },
                 style: GoogleFonts.poppins(
                     color: Colors.black,
@@ -161,9 +226,15 @@ class _PasswordTextField extends State<PasswordTextField> {
 class ConfirmPasswordTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
+  final TextEditingController confirmPasswordController;
+  final FocusNode? confirmPasswordFocusNode;
 
   const ConfirmPasswordTextField(
-      {super.key, required this.screenWidth, required this.screenHeight});
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.confirmPasswordFocusNode,
+      required this.confirmPasswordController});
 
   @override
   State<ConfirmPasswordTextField> createState() => _ConfirmPasswordTextField();
@@ -194,6 +265,12 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
         // TextField
         Expanded(
             child: TextField(
+                controller: widget.confirmPasswordController,
+                focusNode: widget.confirmPasswordFocusNode,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (_) {
+                  FocusScope.of(context).unfocus();
+                },
                 style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -273,9 +350,13 @@ class _LoginButton extends State<LoginButton> {
 class ContinueButton extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
+  final VoidCallback onTap;
 
   const ContinueButton(
-      {super.key, required this.screenWidth, required this.screenHeight});
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.onTap});
 
   @override
   State<ContinueButton> createState() => _ContinueButton();
@@ -285,10 +366,7 @@ class _ContinueButton extends State<ContinueButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SignUpPageTwo()));
-      },
+      onTap: widget.onTap,
       child: Container(
         width: widget.screenWidth * 0.6,
         height: widget.screenHeight * 0.065,
@@ -300,6 +378,41 @@ class _ContinueButton extends State<ContinueButton> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: widget.screenWidth * 0.035))),
+      ),
+    );
+  }
+}
+
+class LoadingButton extends StatelessWidget {
+  final double screenWidth;
+  final double screenHeight;
+  final bool isLoading; // Determines if the loading spinner should be shown
+
+  const LoadingButton({
+    super.key,
+    required this.screenWidth,
+    required this.screenHeight,
+    this.isLoading = false, // Defaults to not loading
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: screenWidth * 0.6,
+      height: screenHeight * 0.065,
+      decoration: BoxDecoration(
+        color: primary, // Replace `primary` with your desired color
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Center(
+        child: SizedBox(
+          width: 20.0, // Set the width to your desired size
+          height: 20.0, // Set the height to your desired size
+          child: const CircularProgressIndicator(
+            color: Colors.white,
+            strokeWidth: 2.0,
+          ),
+        ),
       ),
     );
   }
@@ -320,37 +433,37 @@ class _FirstNameTextField extends State<FirstNameTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: widget.screenWidth * 0.9,
-      height: widget.screenHeight * 0.07,
-      decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
-      child: Row(children: [
-        // Icon
-        Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: widget.screenWidth * 0.05,
-                vertical: widget.screenWidth * 0.02),
-            child: SvgPicture.asset(
-              'assets/address-book-solid.svg', // Path to your SVG file
-              width: 24,
-              height: 24,
-            )),
-        // TextField
-        Expanded(
-            child: TextField(
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.035),
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'First Name',
-                    hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: widget.screenWidth * 0.035))))
-      ]),
-    );
+        width: widget.screenWidth * 0.9,
+        height: widget.screenHeight * 0.07,
+        decoration: BoxDecoration(
+            color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+        child: Row(children: [
+          // Icon
+          Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: widget.screenWidth * 0.05,
+                  vertical: widget.screenWidth * 0.02),
+              child: SvgPicture.asset(
+                'assets/address-book-solid.svg', // Path to your SVG file
+                width: 24,
+                height: 24,
+              )),
+          // TextField
+          Expanded(
+              child: TextField(
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: widget.screenWidth * 0.035),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'First Name (Optional)', // Modified hintText
+                      hintStyle: GoogleFonts.poppins(
+                          color: textFieldTextColor
+                              .withOpacity(0.6), // Optional hint text color
+                          fontWeight: FontWeight.bold,
+                          fontSize: widget.screenWidth * 0.035)))),
+        ]));
   }
 }
 
@@ -393,56 +506,7 @@ class _SurnameTextField extends State<SurnameTextField> {
                     fontSize: widget.screenWidth * 0.035),
                 decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'Surname',
-                    hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: widget.screenWidth * 0.035))))
-      ]),
-    );
-  }
-}
-
-class ProfessionTextField extends StatefulWidget {
-  final double screenWidth;
-  final double screenHeight;
-
-  const ProfessionTextField(
-      {super.key, required this.screenWidth, required this.screenHeight});
-
-  @override
-  State<ProfessionTextField> createState() => _ProfessionTextField();
-}
-
-class _ProfessionTextField extends State<ProfessionTextField> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: widget.screenWidth * 0.9,
-      height: widget.screenHeight * 0.07,
-      decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
-      child: Row(children: [
-        // Icon
-        Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: widget.screenWidth * 0.05,
-                vertical: widget.screenWidth * 0.02),
-            child: SvgPicture.asset(
-              'assets/address-book-solid.svg', // Path to your SVG file
-              width: 24,
-              height: 24,
-            )),
-        // TextField
-        Expanded(
-            child: TextField(
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.035),
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Profession',
+                    hintText: 'Last Name (Optional)',
                     hintStyle: GoogleFonts.poppins(
                         color: textFieldTextColor,
                         fontWeight: FontWeight.bold,
@@ -455,48 +519,92 @@ class _ProfessionTextField extends State<ProfessionTextField> {
 class AgeTextField extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
+  final TextEditingController ageController;
+  final FocusNode ageFocusNode;
 
   const AgeTextField(
-      {super.key, required this.screenWidth, required this.screenHeight});
+      {super.key,
+      required this.screenWidth,
+      required this.screenHeight,
+      required this.ageController,
+      required this.ageFocusNode});
 
   @override
   State<AgeTextField> createState() => _AgeTextField();
 }
 
 class _AgeTextField extends State<AgeTextField> {
+  final TextEditingController ageController = TextEditingController();
+  String _ageErrorText = '';
+
+  void _validateAge(String value) {
+    setState(() {
+      _ageErrorText = ''; // Reset error text
+    });
+
+    int? age = int.tryParse(value);
+    if (age == null) {
+      setState(() {
+        _ageErrorText = 'Please enter a valid number';
+      });
+    } else if (age < 18 || age > 100) {
+      setState(() {
+        _ageErrorText = 'Age must be between 18 and 100';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
-      child: Row(children: [
-        // Icon
-        Padding(
+        color: textFieldBack,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          // Icon (optional: you can replace this with an age-related icon)
+          Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: widget.screenWidth * 0.05,
-                vertical: widget.screenWidth * 0.02),
+              horizontal: widget.screenWidth * 0.05,
+              vertical: widget.screenWidth * 0.02,
+            ),
             child: SvgPicture.asset(
-              'assets/address-book-solid.svg', // Path to your SVG file
+              'assets/address-book-solid.svg', // Add the path to your age-related SVG icon
               width: 24,
               height: 24,
-            )),
-        // TextField
-        Expanded(
+            ),
+          ),
+          // TextField
+          Expanded(
             child: TextField(
-                style: GoogleFonts.poppins(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: widget.screenWidth * 0.035),
-                decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Age',
-                    hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: widget.screenWidth * 0.035))))
-      ]),
+              controller: widget.ageController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly, // Only digits allowed
+              ],
+              onChanged: _validateAge,
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: widget.screenWidth * 0.035,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Age (Optional)',
+                hintStyle: GoogleFonts.poppins(
+                  color: textFieldTextColor.withOpacity(0.6),
+                  fontWeight: FontWeight.bold,
+                  fontSize: widget.screenWidth * 0.035,
+                ),
+                errorText: _ageErrorText.isEmpty ? null : _ageErrorText,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

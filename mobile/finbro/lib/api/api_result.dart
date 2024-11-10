@@ -1,4 +1,4 @@
-import 'package:finbro/domain/User.dart';
+import 'package:finbro/domain/user.dart';
 
 class ApiResult {
 

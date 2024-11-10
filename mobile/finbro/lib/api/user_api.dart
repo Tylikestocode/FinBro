@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:finbro/domain/User.dart';
+import 'package:finbro/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository {
@@ -19,8 +19,7 @@ class UserRepository {
     if (response.statusCode == 201) {
       return jsonDecode(response.body);
     } else if (response.statusCode == 400 || response.statusCode == 409) {
-      Map<String, dynamic> errorResponse = jsonDecode(response.body);
-      return errorResponse;
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to create User. Unknown error');
     }
@@ -53,16 +52,15 @@ class UserRepository {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else if (response.statusCode == 400 || response.statusCode == 409) {
-      Map<String, dynamic> errorResponse = jsonDecode(response.body);
-      return errorResponse;
+      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to update User. Unknown error');
     }
   }
 
   // Function to get user by email and password
-  Future<Map<String, dynamic>> validateUserCredentials(String email, String password) async {
-
+  Future<Map<String, dynamic>> validateUserCredentials(
+      String email, String password) async {
     final response = await http.post(
       Uri.parse('$apiUrl/validate'),
       headers: <String, String>{
@@ -73,12 +71,11 @@ class UserRepository {
 
     if (response.statusCode == 200 || response.statusCode == 400) {
       return jsonDecode(response.body);
-    }
-    else if (response.statusCode == 401) {
-      return {'success' : false};
-    }
-    else {
-      throw Exception('Failed to validate credentials. Unknown error: ${response.statusCode}');
+    } else if (response.statusCode == 401) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception(
+          'Failed to validate credentials. Unknown error: ${response.statusCode}');
     }
   }
 

@@ -1,17 +1,17 @@
 class User {
-  final int id;
-  final String name;
-  final String surname;
-  final int age;
+  final int? id;
+  final String? name;
+  final String? surname;
+  final int? age;
   final String username;
   final String email;
   final String password;
 
   User(
-      {required this.id,
-      required this.name,
-      required this.surname,
-      required this.age,
+      {this.id,
+      this.name,
+      this.surname,
+      this.age,
       required this.username,
       required this.email,
       required this.password});
