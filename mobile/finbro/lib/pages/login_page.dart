@@ -3,6 +3,7 @@
 import "package:finbro/api/api_result.dart";
 import "package:finbro/components/input_output.dart";
 import "package:finbro/components/static_widgets.dart";
+import "package:finbro/controller/login_page_controller.dart";
 import "package:finbro/design/ui_colors.dart";
 import "package:finbro/pages/home_page.dart";
 import "package:finbro/pages/register_page.dart";
@@ -19,30 +20,28 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   UserService userService = UserService();
-
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  LoginPageController loginPageController = LoginPageController();
 
   bool _isSnackBarVisible = false;
-  bool isLoading = false;
-
-  final FocusNode emailFocusNode = FocusNode();
-  final FocusNode passwordFocusNode = FocusNode();
+  bool _isLoading = false;
 
   void _handleLogin() async {
+
+    String? message = loginPageController.validateFields();
+
+    if (message != null) {
+      _showSnackBar(message);
+      return;
+    }
+
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
 
-    String email = emailController.text;
-    String password = passwordController.text;
-
-    ApiResult result = await userService.validateUserCredentials(email, password);
-
-    print(result.success);
+    ApiResult result = await loginPageController.handleLogin();
 
     setState(() {
-      isLoading = false;
+      _isLoading = false;
     });
 
     _handleLoginResult(result);
@@ -53,15 +52,15 @@ class _LoginPage extends State<LoginPage> {
 
     if (!_isSnackBarVisible) {
       if (!result.success) {
-        showSnackBar('User does not exist');
+        _showSnackBar(result.errorMessage!);
       } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     }
   }
 
-  void showSnackBar(String message) {
+  void _showSnackBar(String message) {
     if (!_isSnackBarVisible) {
       _isSnackBarVisible = true;
       ScaffoldMessenger.of(context)
@@ -93,7 +92,8 @@ class _LoginPage extends State<LoginPage> {
               // Logo
               Padding(
                 padding: EdgeInsets.all(screenWidth * 0.05),
-                child: LogoWidget(width: screenWidth * 0.9, height: screenHeight * 0.3),
+                child: LogoWidget(
+                    width: screenWidth * 0.9, height: screenHeight * 0.3),
               ),
               // Login Label
               Padding(
@@ -118,9 +118,9 @@ class _LoginPage extends State<LoginPage> {
                 child: EmailTextField(
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
-                  emailController: emailController,
-                  emailFocusNode: emailFocusNode,
-                  passwordFocusNode: passwordFocusNode,
+                  emailController: loginPageController.emailController,
+                  emailFocusNode: loginPageController.emailFocusNode,
+                  passwordFocusNode: loginPageController.passwordFocusNode,
                 ),
               ),
               // Password Text Field
@@ -132,15 +132,16 @@ class _LoginPage extends State<LoginPage> {
                 child: PasswordTextField(
                   screenWidth: screenWidth,
                   screenHeight: screenHeight,
-                  passwordController: passwordController,
-                  passwordFocusNode: passwordFocusNode,
+                  passwordController: loginPageController.passwordController,
+                  passwordFocusNode: loginPageController.passwordFocusNode,
                 ),
               ),
               // Login Button
               Align(
                 alignment: Alignment.center,
-                child: isLoading
-                    ? CircularProgressIndicator()
+                child: _isLoading
+                    ? LoadingButton(
+                        screenWidth: screenWidth, screenHeight: screenHeight)
                     : LoginButton(
                         screenWidth: screenWidth,
                         screenHeight: screenHeight,

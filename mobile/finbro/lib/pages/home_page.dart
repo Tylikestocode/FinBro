@@ -4,6 +4,7 @@ import 'package:finbro/components/data_components.dart';
 import 'package:finbro/components/navigation_components.dart';
 import 'package:finbro/design/ui_colors.dart';
 import 'package:finbro/pages/AI_chat.dart';
+import 'package:finbro/util/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_unicons/flutter_unicons.dart';
@@ -19,8 +20,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
+    print('===================================================================${Session.getInstance().currentUser}');
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(

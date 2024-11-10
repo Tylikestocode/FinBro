@@ -1,4 +1,5 @@
 import 'package:finbro/pages/login_page.dart';
+import 'package:finbro/pages/register_page_two.dart';
 import 'package:flutter/material.dart';
 
 void main() {
