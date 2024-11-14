@@ -1,4 +1,4 @@
-package com.yazeedmo.finbro.controller;
+package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.Account;
 import com.yazeedmo.finbro.exception.ApiResponse;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/mobile/accounts")
 @CrossOrigin(origins = "http://localhost")
-public class AccountController {
+public class MobileAccountController {
 
     private final AccountService accountService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public MobileAccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
@@ -32,17 +32,6 @@ public class AccountController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, savedAccount));
-
-    }
-
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<Account>>> getAccounts() {
-
-        List<Account> allAccounts = accountService.getAllAccounts();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allAccounts));
 
     }
 

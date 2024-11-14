@@ -1,4 +1,4 @@
-package com.yazeedmo.finbro.controller;
+package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.exception.ApiResponse;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api/mobile/transactions")
 @CrossOrigin(origins = "http://localhost")
-public class TransactionController {
+public class MobileTransactionController {
 
     private final TransactionService transactionService;
 
     @Autowired
-    public TransactionController(TransactionService transactionService) {
+    public MobileTransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
 
@@ -32,17 +32,6 @@ public class TransactionController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, savedTransaction));
-
-    }
-
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<Transaction>>> getTransactions() {
-
-        List<Transaction> allTransactions = transactionService.getAllTransactions();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allTransactions));
 
     }
 

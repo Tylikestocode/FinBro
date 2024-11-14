@@ -1,4 +1,4 @@
-package com.yazeedmo.finbro.controller;
+package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.RegularPayment;
 import com.yazeedmo.finbro.exception.ApiResponse;
@@ -12,14 +12,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/regularPayments")
+@RequestMapping("/api/mobile/regularPayments")
 @CrossOrigin(origins = "http://localhost")
-public class RegularPaymentController {
+public class MobileRegularPaymentController {
 
     private final RegularPaymentService regularPaymentService;
 
     @Autowired
-    public RegularPaymentController(RegularPaymentService regularPaymentService) {
+    public MobileRegularPaymentController(RegularPaymentService regularPaymentService) {
         this.regularPaymentService = regularPaymentService;
     }
 
@@ -33,17 +33,6 @@ public class RegularPaymentController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, savedRegularPayment));
-
-    }
-
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<RegularPayment>>> getRegularPayments() {
-
-        List<RegularPayment> allRegularPayments = regularPaymentService.getAllRegularPayments();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allRegularPayments));
 
     }
 

@@ -4,7 +4,7 @@ import 'package:finbro/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserRepository {
-  final String apiUrl = 'https://finbro.yazeedmo.com/api/users';
+  final String apiUrl = 'https://finbro.yazeedmo.com/api/mobile/users';
 
   // Function to create a new User
   Future<Map<String, dynamic>> createUser(User user) async {

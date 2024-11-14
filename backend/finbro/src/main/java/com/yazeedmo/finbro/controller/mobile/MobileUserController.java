@@ -1,4 +1,4 @@
-package com.yazeedmo.finbro.controller;
+package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/mobile/users")
 @CrossOrigin(origins = "http://localhost")
-public class UserController {
+public class MobileUserController {
 
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public MobileUserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -34,19 +34,6 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ApiResponse<>(true, savedUser));
-
-    }
-
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<User>>> getUsers() {
-
-        List<User> allUsers =  userService.getAllUsers();
-
-        ApiResponse<List<User>> apiResponse = new ApiResponse<>(true, allUsers);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(apiResponse);
 
     }
 

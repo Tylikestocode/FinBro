@@ -1,4 +1,4 @@
-package com.yazeedmo.finbro.controller;
+package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.Category;
 import com.yazeedmo.finbro.exception.ApiResponse;
@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/mobile/categories")
 @CrossOrigin(origins = "http://localhost")
-public class CategoryController {
+public class MobileCategoryController {
 
     private final CategoryService categoryService;
 
     @Autowired
-    public CategoryController(CategoryService categoryService) {
+    public MobileCategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -32,17 +32,6 @@ public class CategoryController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, savedCategory));
-
-    }
-
-    @GetMapping()
-    public ResponseEntity<ApiResponse<List<Category>>> getCategories() {
-
-        List<Category> allCategories = categoryService.getAllCategories();
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(new ApiResponse<>(true, allCategories));
 
     }
 

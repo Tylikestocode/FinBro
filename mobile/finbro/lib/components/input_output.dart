@@ -172,14 +172,9 @@ class _PasswordTextField extends State<PasswordTextField> {
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) {
                   if (widget.confirmPasswordFocusNode != null) {
-                    print(
-                        "++++++++++++++++++++++++++++++++++++++++++++NO NULL");
                     FocusScope.of(context)
                         .requestFocus(widget.confirmPasswordFocusNode);
                   } else {
-                    print(
-                        "++++++++++++++++++++++++++++++++++++++++++++NULLLLLL");
-
                     FocusScope.of(context).unfocus();
                   }
                 },
