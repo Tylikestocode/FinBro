@@ -1,26 +1,28 @@
 import UserService from "./Service/UserService.js";
 import AccountService from "./Service/AccountService.js";
 import CategoryService from "./Service/CategoryService.js";
+import RegularPaymentService from "./Service/RegularPaymentService.js";
 
 const userService = new UserService();
 const accountService = new AccountService();
 const categoryService = new CategoryService();
+const regularPaymentService = new RegularPaymentService();
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  console.log("Hellllooooooo");
 
   linkTabsAndMainSections();
 
   fetchAndPopulateUsers();
-  fetchAndPopulateAccounts();
   fetchAndPopulateCategories();
+  fetchAndPopulateAccounts();
+  fetchAndPopulateRegularPayments();
 
   showGraphs();
 
-  setInterval(fetchAndPopulateUsers, 60000);
+  setInterval(fetchAndPopulateUsers, 10000);
   setInterval(fetchAndPopulateAccounts, 60000);
   setInterval(fetchAndPopulateCategories, 60000);
+  setInterval(fetchAndPopulateRegularPayments, 60000);
 
 })
 
@@ -42,7 +44,7 @@ function linkTabsAndMainSections() {
   // Add event listener to each tab
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Reset all active classesr
+      // Reset all active classes
       resetActiveStates();
 
       // Activate the clicked tab
@@ -88,6 +90,38 @@ async function fetchAndPopulateUsers() {
 
 }
 
+async function fetchAndPopulateCategories() {
+
+  try {
+    const allCategories = await categoryService.getCategories();
+    console.log(allCategories);
+
+    let tableBody = $('#category-table tbody');
+    tableBody.empty();
+
+    allCategories.forEach(category => {
+      let row =
+        `
+      <tr>
+        <td>${category.id}</td>
+        <td>${category.name}</td>
+        <td>${category.type}</td>
+        <td>${category.description}</td>
+        <td>${category.userId}</td>
+        <td>${category.userDefined}</td>
+      </tr>
+      `;
+
+      tableBody.append(row);
+
+    })
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
 async function fetchAndPopulateAccounts() {
 
   try {
@@ -122,31 +156,35 @@ async function fetchAndPopulateAccounts() {
 
 }
 
-async function fetchAndPopulateCategories() {
+async function fetchAndPopulateRegularPayments() {
 
   try {
-    const allCategories = await categoryService.getCategories();
-    console.log(allCategories);
-
-    let tableBody = $('#category-table tbody');
+    const allRegularPayments = await regularPaymentService.getRegularPayments();
+    console.log(allRegularPayments);
+    let tableBody = $('#regular-payment-table tbody');
     tableBody.empty();
 
-    allCategories.forEach(category => {
+    allRegularPayments.forEach(regularPayment => {
       let row =
         `
       <tr>
-        <td>${category.id}</td>
-        <td>${category.name}</td>
-        <td>${category.type}</td>
-        <td>${category.description}</td>
-        <td>${category.userId}</td>
-        <td>${category.userDefined}</td>
+        <td>${regularPayment.id}</td>
+        <td>${regularPayment.name}</td>
+        <td>${regularPayment.amount}</td>
+        <td>${regularPayment.frequency}</td>
+        <td>${regularPayment.nextDate}</td>
+        <td>${regularPayment.endDate}</td>
+        <td>${regularPayment.notes}</td>
+        <td>${regularPayment.userId}</td>
+        <td>${regularPayment.accountId}</td>
+        <td>${regularPayment.categoryId}</td>
       </tr>
       `;
 
       tableBody.append(row);
 
-    })
+    });
+    $('#regular-payment-table').DataTable();
   }
   catch (error) {
     console.log(error);

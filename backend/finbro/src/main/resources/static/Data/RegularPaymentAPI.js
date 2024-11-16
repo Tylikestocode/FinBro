@@ -1,9 +1,9 @@
-class CategoryAPI {
+class RegularPaymentAPI {
     constructor() {
-        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/categories";
+        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/regular-payments";
     }
 
-    async getCategories() {
+    async getRegularPayments() {
         try {
             const response = await fetch(this.BASE_URL, {
                 method: "GET",
@@ -14,14 +14,16 @@ class CategoryAPI {
             if (response.ok) {
                 const result = await response.json();
                 return result;
-            } else {
-                throw new Error("Failed to fetch categories");
             }
-        } catch (error) {
-            console.error("Error fetching categories:", error);
+            else {
+                throw new Error("Failed to fetch regular payments");
+            }
+        }
+        catch (error) {
+            console.error("Error fetching regular payments:", error);
             throw error;
         }
     }
 }
 
-export default CategoryAPI;
+export default RegularPaymentAPI;

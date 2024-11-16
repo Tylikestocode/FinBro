@@ -1,6 +1,6 @@
 class UserAPI {
   constructor() {
-    this.BASE_URL = "http://localhost:8081/api/admin/users";
+    this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/users";
   }
 
   async getUsers() {

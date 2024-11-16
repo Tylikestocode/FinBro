@@ -1,5 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
-import 'package:finbro/design/ui_colors.dart';
+import 'package:finbro/ui/components/ui_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,18 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 class FinBroNavigationBar extends StatefulWidget {
   final double screenWidth;
   final double screenHeight;
-  bool homeActive;
-  bool budgetActive;
-  bool profileActive;
+  final bool homeActive;
+  final bool budgetActive;
+  final bool profileActive;
 
-  FinBroNavigationBar(
-      {Key? key,
+  const FinBroNavigationBar(
+      {super.key,
       required this.screenWidth,
       required this.screenHeight,
       this.homeActive = true,
       this.budgetActive = false,
-      this.profileActive = false})
-      : super(key: key);
+      this.profileActive = false});
 
   @override
   State<FinBroNavigationBar> createState() => _FinBroNavigationBar();
@@ -34,7 +32,7 @@ class _FinBroNavigationBar extends State<FinBroNavigationBar> {
             color: Colors.white,
             border: Border(
                 top: BorderSide(
-                    color: Color.fromRGBO(245, 245, 245, 1),
+                    color: const Color.fromRGBO(245, 245, 245, 1),
                     width: widget.screenWidth * 0.005))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,8 +59,7 @@ class HomeActiveIconNavBar extends StatefulWidget {
   final double screenHeight;
 
   const HomeActiveIconNavBar(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<HomeActiveIconNavBar> createState() => _HomeActiveIconNavBar();
@@ -106,8 +103,7 @@ class InActiveBudgetNavBar extends StatefulWidget {
   final double screenHeight;
 
   const InActiveBudgetNavBar(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<InActiveBudgetNavBar> createState() => _InActiveBudgetNavBar();
@@ -142,8 +138,7 @@ class InActiveProfileNavBar extends StatefulWidget {
   final double screenHeight;
 
   const InActiveProfileNavBar(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<InActiveProfileNavBar> createState() => _InActiveProfileNavBar();

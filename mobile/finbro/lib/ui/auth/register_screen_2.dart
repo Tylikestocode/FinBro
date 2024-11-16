@@ -1,16 +1,16 @@
-import 'package:finbro/components/input_output.dart';
-import 'package:finbro/design/ui_colors.dart';
+import 'package:finbro/other/input_output.dart';
+import 'package:finbro/ui/components/ui_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SignUpPageTwo extends StatefulWidget {
-  const SignUpPageTwo({super.key});
+class RegisterScreen2 extends StatefulWidget {
+  const RegisterScreen2({super.key});
 
   @override
-  State<SignUpPageTwo> createState() => _SignUpPageTwo();
+  State<RegisterScreen2> createState() => _SignUpPageTwo();
 }
 
-class _SignUpPageTwo extends State<SignUpPageTwo> {
+class _SignUpPageTwo extends State<RegisterScreen2> {
   final TextEditingController ageController = TextEditingController();
   final FocusNode ageFocusNode = FocusNode();
 

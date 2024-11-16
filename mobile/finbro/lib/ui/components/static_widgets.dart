@@ -1,6 +1,6 @@
+import 'package:finbro/ui/components/ui_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:finbro/design/ui_colors.dart';  // Make sure your colors are imported here
 
 // Create a reusable logo widget
 class LogoWidget extends StatelessWidget {
@@ -8,10 +8,10 @@ class LogoWidget extends StatelessWidget {
   final double height;
 
   const LogoWidget({
-    Key? key,
+    super.key,
     required this.width,
     required this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

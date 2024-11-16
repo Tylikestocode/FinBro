@@ -1,6 +1,6 @@
 class AccountAPI {
     constructor() {
-        this.BASE_URL = "http://localhost:8081/api/admin/accounts";
+        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/accounts";
     }
 
     async getAccounts() {

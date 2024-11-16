@@ -9,8 +9,7 @@ class AiChatBubble extends StatefulWidget {
   final double screenHeight;
 
   const AiChatBubble(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<AiChatBubble> createState() => _AiChatBubbleState();
@@ -73,8 +72,7 @@ class UserChatBubble extends StatefulWidget {
   final double screenHeight;
 
   const UserChatBubble(
-      {Key? key, required this.screenWidth, required this.screenHeight})
-      : super(key: key);
+      {super.key, required this.screenWidth, required this.screenHeight});
 
   @override
   State<UserChatBubble> createState() => _UserChatBubble();
