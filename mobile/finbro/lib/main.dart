@@ -1,5 +1,4 @@
-import 'package:finbro/pages/login_page.dart';
-import 'package:finbro/pages/register_page_two.dart';
+import 'package:finbro/ui/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +12,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginPage());
+        home: LoginScreen());
   }
 }

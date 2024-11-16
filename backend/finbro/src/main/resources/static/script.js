@@ -1,60 +1,238 @@
-const apiSections = document.querySelectorAll('.api-section');
+import UserService from "./Service/UserService.js";
+import AccountService from "./Service/AccountService.js";
+import CategoryService from "./Service/CategoryService.js";
+import RegularPaymentService from "./Service/RegularPaymentService.js";
+
+const userService = new UserService();
+const accountService = new AccountService();
+const categoryService = new CategoryService();
+const regularPaymentService = new RegularPaymentService();
 
 document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.api-button');
-    const accordionButtons = document.querySelectorAll('.accordion-button');
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            apiButtonClick(this);
-        })
-    });
+  linkTabsAndMainSections();
 
-    accordionButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            showApiDetails(this);
-        })
-    });
+  fetchAndPopulateUsers();
+  fetchAndPopulateCategories();
+  fetchAndPopulateAccounts();
+  fetchAndPopulateRegularPayments();
 
-    document.getElementById('users-api').style.display = 'block';
+  showGraphs();
+
+  setInterval(fetchAndPopulateUsers, 10000);
+  setInterval(fetchAndPopulateAccounts, 60000);
+  setInterval(fetchAndPopulateCategories, 60000);
+  setInterval(fetchAndPopulateRegularPayments, 60000);
 
 })
 
+function linkTabsAndMainSections() {
 
-function apiButtonClick(button) {
+  // Select all tabs and content sections
+  const tabs = document.querySelectorAll('.tab');
+  const contentSections = document.querySelectorAll('.content-section');
 
-    const buttons = document.querySelectorAll('.api-button');
+  console.log(tabs.length);
+  console.log(contentSections.length);
 
-    buttons.forEach(btn => btn.classList.remove('active'));
+  // Function to hide all sections and remove active class from tabs
+  function resetActiveStates() {
+    contentSections.forEach(section => section.classList.remove('active'));
+    tabs.forEach(tab => tab.classList.remove('active'));
+  }
 
-    button.classList.add('active')
+  // Add event listener to each tab
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Reset all active classes
+      resetActiveStates();
+
+      // Activate the clicked tab
+      tab.classList.add('active');
+
+      // Show the corresponding content section
+      const contentId = tab.getAttribute('data-content');
+      document.getElementById(contentId).classList.add('active');
+    })
+  })
+
 
 }
 
-function showSection(sectionId) {
+async function fetchAndPopulateUsers() {
 
-    // Hide all sections
-    apiSections.forEach(section => {
-        section.style.display = 'none';
+  try {
+    const allUsers = await userService.getUsers();
+    console.log(allUsers);
+
+    let tableBody = $('#user-table tbody');
+    tableBody.empty();
+
+    allUsers.forEach(user => {
+      let row = `<tr>
+        <td>${user.id}</td>
+        <td>${user.name}</td>
+        <td>${user.surname}</td>
+        <td>${user.age}</td>
+        <td>${user.username}</td>
+        <td>${user.email}</td>
+      </tr>`;
+
+      tableBody.append(row);
     });
 
-    // Show the selected section
-    const sectionToShow = document.getElementById(sectionId);
-    sectionToShow.style.display = 'block';
+    $('#user-table').DataTable();
+
+  }
+  catch (error) {
+    console.log(error);
+  }
 
 }
 
-function showApiDetails(button) {
+async function fetchAndPopulateCategories() {
 
-    const content = button.nextElementSibling;
+  try {
+    const allCategories = await categoryService.getCategories();
+    console.log(allCategories);
 
-    console.log(content.nextElementSibling);
+    let tableBody = $('#category-table tbody');
+    tableBody.empty();
 
-    if (content.style.display == 'block') {
-        content.style.display = 'none';
-    }
-    else {
-        content.style.display = 'block';
-    }
+    allCategories.forEach(category => {
+      let row =
+        `
+      <tr>
+        <td>${category.id}</td>
+        <td>${category.name}</td>
+        <td>${category.type}</td>
+        <td>${category.description}</td>
+        <td>${category.userId}</td>
+        <td>${category.userDefined}</td>
+      </tr>
+      `;
+
+      tableBody.append(row);
+
+    })
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+async function fetchAndPopulateAccounts() {
+
+  try {
+    const allAccounts = await accountService.getAccounts();
+    console.log(allAccounts);
+
+    let tableBody = $('#account-table tbody');
+    tableBody.empty();
+
+    allAccounts.forEach(account => {
+      let row =
+        `<tr>
+        <td>${account.id}</td>
+        <td>${account.name}</td>
+        <td>${account.allowNegativeBalance}</td>
+        <td>${account.minimumBalance}</td>
+        <td>${account.balance}</td>
+        <td>${account.dateCreated}</td>
+        <td>${account.notes}</td>
+        <td>${account.userId}</td>
+        <td>${account.categoryId}</td>
+      </tr>`;
+
+      tableBody.append(row);
+
+    });
+    $('#account-table').DataTable();
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+async function fetchAndPopulateRegularPayments() {
+
+  try {
+    const allRegularPayments = await regularPaymentService.getRegularPayments();
+    console.log(allRegularPayments);
+    let tableBody = $('#regular-payment-table tbody');
+    tableBody.empty();
+
+    allRegularPayments.forEach(regularPayment => {
+      let row =
+        `
+      <tr>
+        <td>${regularPayment.id}</td>
+        <td>${regularPayment.name}</td>
+        <td>${regularPayment.amount}</td>
+        <td>${regularPayment.frequency}</td>
+        <td>${regularPayment.nextDate}</td>
+        <td>${regularPayment.endDate}</td>
+        <td>${regularPayment.notes}</td>
+        <td>${regularPayment.userId}</td>
+        <td>${regularPayment.accountId}</td>
+        <td>${regularPayment.categoryId}</td>
+      </tr>
+      `;
+
+      tableBody.append(row);
+
+    });
+    $('#regular-payment-table').DataTable();
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+function showGraphs() {
+  const charts = document.querySelectorAll(".chart");
+
+  charts.forEach(function (chart) {
+    var ctx = chart.getContext("2d");
+    var myChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [
+          {
+            label: "# of Votes",
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(255, 206, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+              "rgba(75, 192, 192, 1)",
+              "rgba(153, 102, 255, 1)",
+              "rgba(255, 159, 64, 1)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
+  });
 
 }

@@ -58,7 +58,7 @@ public class UserControllerUnitTests {
 
         String json = mapper.writeValueAsString(user1);
 
-        mockMvc.perform(post("/api/users")
+        mockMvc.perform(post("/api/mobile/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isCreated())
@@ -72,7 +72,7 @@ public class UserControllerUnitTests {
 
         Mockito.when(userService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
 
-        mockMvc.perform(get("/api/users"))
+        mockMvc.perform(get("/api/admin/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data[0].id").value(1))
@@ -88,7 +88,7 @@ public class UserControllerUnitTests {
 
         Mockito.when(userService.getUserById((long) 1)).thenReturn(user1);
 
-        mockMvc.perform(get("/api/users/1"))
+        mockMvc.perform(get("/api/mobile/users/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.username").value("testUser1"))
@@ -100,7 +100,7 @@ public class UserControllerUnitTests {
 
         Mockito.when(userService.getUserByUsername("testUser1")).thenReturn(user1);
 
-        mockMvc.perform(get("/api/users/username/testUser1"))
+        mockMvc.perform(get("/api/mobile/users/username/testUser1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.username").value("testUser1"))
@@ -112,7 +112,7 @@ public class UserControllerUnitTests {
 
         Mockito.when(userService.getUserByEmail("test1@example.com")).thenReturn(user1);
 
-        mockMvc.perform(get("/api/users/email/test1@example.com"))
+        mockMvc.perform(get("/api/mobile/users/email/test1@example.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
                 .andExpect(jsonPath("$.data.id").value(1))
@@ -150,7 +150,7 @@ public class UserControllerUnitTests {
 
         String json = mapper.writeValueAsString(user1);
 
-        mockMvc.perform(put("/api/users")
+        mockMvc.perform(put("/api/mobile/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(jsonPath("$.success").value(true))
@@ -163,7 +163,7 @@ public class UserControllerUnitTests {
     public void testDeleteById() throws Exception {
         Mockito.doNothing().when(userService).deleteUserByID((long) 1);
 
-        mockMvc.perform(delete("/api/users/1"))
+        mockMvc.perform(delete("/api/mobile/users/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true));
     }

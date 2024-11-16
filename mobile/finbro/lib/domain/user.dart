@@ -1,11 +1,11 @@
 class User {
   final int? id;
-  final String? name;
-  final String? surname;
-  final int? age;
-  final String username;
-  final String email;
-  final String password;
+  String? name;
+  String? surname;
+  int? age;
+  String username;
+  String email;
+  String password;
 
   User(
       {this.id,
