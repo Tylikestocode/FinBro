@@ -29,6 +29,9 @@ public class UserServiceUnitTests {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private GmailService gmailService;
+
     @InjectMocks
     private UserService userService;
 
@@ -87,13 +90,15 @@ public class UserServiceUnitTests {
 
 
     @Test
-    public void UserService_SaveUser_SavedUser() {
+    public void UserService_SaveUser_SavedUser() throws Exception {
 
         when(userRepository.save(user1)).thenReturn(user1);
 
         User savedUser = userService.createUser(user1);
 
         verify(userRepository).save(user1);
+        verify(gmailService).sendWelcomeEmail(user1.getEmail());
+
         assertThat(savedUser).isNotNull();
 
     }

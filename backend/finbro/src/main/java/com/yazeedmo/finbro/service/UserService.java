@@ -32,6 +32,8 @@ public class UserService {
     private final CategoryService categoryService;
     @Lazy
     private final RegularPaymentService regularPaymentService;
+    @Lazy
+    private final GmailService gmailService;
 
     @Autowired
     public UserService(
@@ -39,13 +41,15 @@ public class UserService {
             @Lazy AccountService accountService,
             @Lazy TransactionService transactionService,
             @Lazy CategoryService categoryService,
-            @Lazy RegularPaymentService regularPaymentService
+            @Lazy RegularPaymentService regularPaymentService,
+            @Lazy GmailService gmailService
     ) {
         this.userRepository = userRepository;
         this.accountService = accountService;
         this.transactionService = transactionService;
         this.categoryService = categoryService;
         this.regularPaymentService = regularPaymentService;
+        this.gmailService = gmailService;
     }
 
 
@@ -53,7 +57,17 @@ public class UserService {
 
        validateUser(user, true);
 
-       return userRepository.save(user);
+       User newUser = userRepository.save(user);
+
+       try {
+           gmailService.sendWelcomeEmail(user.getEmail());
+       }
+       catch (Exception e) {
+           System.out.println("Something happened while trying to send an email");
+           e.printStackTrace();
+       }
+
+       return newUser;
 
     }
 
