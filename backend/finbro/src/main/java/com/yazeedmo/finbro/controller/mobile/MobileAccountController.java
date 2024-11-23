@@ -1,7 +1,7 @@
 package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.Account;
-import com.yazeedmo.finbro.exception.ApiResponse;
+import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

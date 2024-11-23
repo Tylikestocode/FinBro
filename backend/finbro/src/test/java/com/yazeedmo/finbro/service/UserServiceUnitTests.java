@@ -1,6 +1,7 @@
 package com.yazeedmo.finbro.service;
 
 
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.exception.general.InvalidDataFormatException;
@@ -31,6 +32,9 @@ public class UserServiceUnitTests {
 
     @Mock
     private GmailService gmailService;
+
+    @Mock
+    private WebSocketService webSocketService;
 
     @InjectMocks
     private UserService userService;

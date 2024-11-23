@@ -3,14 +3,12 @@ package com.yazeedmo.finbro.controller.mobile;
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.domain.UserDTO;
-import com.yazeedmo.finbro.exception.ApiResponse;
+import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/mobile/users")

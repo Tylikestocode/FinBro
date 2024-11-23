@@ -1,4 +1,5 @@
 import 'package:finbro/ui/auth/login_screen.dart';
+import 'package:finbro/ui/websocket_example.dart';
 import 'package:flutter/material.dart';
 
 void main() {

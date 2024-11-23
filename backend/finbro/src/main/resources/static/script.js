@@ -8,9 +8,16 @@ const accountService = new AccountService();
 const categoryService = new CategoryService();
 const regularPaymentService = new RegularPaymentService();
 
+let stompClient = null;
+
 document.addEventListener('DOMContentLoaded', () => {
 
   linkTabsAndMainSections();
+
+  fetchTotalOnlineUsers();
+  fetchTotalUserCount();
+
+  intializeWebSocketConnection();
 
   fetchAndPopulateUsers();
   fetchAndPopulateCategories();
@@ -18,11 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchAndPopulateRegularPayments();
 
   showGraphs();
-
-  setInterval(fetchAndPopulateUsers, 10000);
-  setInterval(fetchAndPopulateAccounts, 60000);
-  setInterval(fetchAndPopulateCategories, 60000);
-  setInterval(fetchAndPopulateRegularPayments, 60000);
 
 })
 
@@ -44,7 +46,7 @@ function linkTabsAndMainSections() {
   // Add event listener to each tab
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
-      // Reset all active classes
+      // Reset all active classesr
       resetActiveStates();
 
       // Activate the clicked tab
@@ -58,6 +60,48 @@ function linkTabsAndMainSections() {
 
 
 }
+
+async function fetchTotalOnlineUsers() {
+  try {
+    const response = await fetch('https://finbro.yazeedmo.com/api/admin/online-users/count');
+    if (!response.ok) {
+      throw new Error('Failed to fetch online user count');
+    }
+    const result = await response.json();
+
+    if (result.success && result.data.eventType === 'ONLINE_USER_COUNT') {
+      const count = result.data.data;
+      updateOnlineUserCount(count);
+    } else {
+      console.error('Unexpected response structure:', result);
+    }
+  } catch (error) {
+    console.error('Error fetching initial user count:', error);
+  }
+}
+
+async function fetchTotalUserCount() {
+
+  try {
+    const response = await fetch('https://finbro.yazeedmo.com/api/admin/total-users/count');
+    if (!response.ok) {
+      throw new Error('Failed to fetch total user count');
+    }
+    const result = await response.json();
+
+    if (result.success && result.data.eventType === 'TOTAL_USER_COUNT') {
+      const count = result.data.data;
+      console.log("Total Users: " + count);
+      updateTotalUserCount(count);
+    } else {
+      console.error('Unexpected response structure:', result);
+    }
+  } catch (error) {
+    console.error('Error fetching total user count:', error);
+  }
+
+}
+
 
 async function fetchAndPopulateUsers() {
 
@@ -178,7 +222,7 @@ async function fetchAndPopulateRegularPayments() {
         <td>${regularPayment.userId}</td>
         <td>${regularPayment.accountId}</td>
         <td>${regularPayment.categoryId}</td>
-      </tr>
+      </tr>      
       `;
 
       tableBody.append(row);
@@ -191,6 +235,91 @@ async function fetchAndPopulateRegularPayments() {
   }
 
 }
+
+function intializeWebSocketConnection() {
+
+  // Create WebSocket connection
+  const socket = new SockJS('https://finbro.yazeedmo.com/ws');
+  // Wrap WebSocket connection with Stomp
+  stompClient = Stomp.over(socket);
+
+  // Establish connection
+  stompClient.connect({}, onConnected, onError);
+
+  // Callback for successful connection
+  function onConnected(frame) {
+    console.log('Connected: ' + frame);
+
+    stompClient.subscribe('/topic/adminUpdates', function (message) {
+      const event = JSON.parse(message.body);
+      const eventType = event.eventType;
+      switch (eventType) {
+        case 'ONLINE_USER_COUNT':
+          updateOnlineUserCount(event.data);
+          break;
+        case 'TOTAL_USER_COUNT':
+          updateTotalUserCount(event.data);
+          break;
+        case 'USERS_UPDATED':
+          fetchAndPopulateUsers();
+          fetchTotalUserCount();
+          break;
+        case 'CATEGORIES_UPDATED':
+          fetchAndPopulateCategories();
+          break;
+        case 'ACCOUNTS_UPDATED':
+          fetchAndPopulateAccounts();
+          break;
+        case 'REGULAR_PAYMENTS_UPDATED':
+          fetchAndPopulateRegularPayments();
+          break;
+        default:
+          console.log('Unknown event type: ', eventType);
+      }
+    });
+  }
+
+  // Callback for connection errors
+  function onError(error) {
+    console.error('Connection error: ' + error);
+  }
+
+}
+
+function updateOnlineUserCount(count) {
+  // Update the online user count in the card
+  const userCountElement = document.getElementById('online-user-count');
+  userCountElement.textContent = count;
+
+  const cardElement = document.getElementById('online-users-card');
+  if (count === 0) {
+    console.log("No current users");
+    cardElement.classList.replace('text-bg-success', 'text-bg-secondary');
+    cardElement.querySelector('.card-text').textContent = 'No active users at the moment';
+  } else {
+    cardElement.classList.replace('text-bg-secondary', 'text-bg-success');
+    cardElement.querySelector('.card-text').textContent = 'Currently active users';
+  }
+}
+
+function updateTotalUserCount(count) {
+
+  // Update the total user count in the card
+  const userCountElement = document.getElementById('total-user-count');
+  userCountElement.textContent = count;
+
+  // Optionally, dynamically change the card's appearance based on count
+  const cardElement = document.getElementById('total-users-card');
+  if (count === 0) {
+    cardElement.classList.replace('text-bg-info', 'text-bg-secondary');
+    cardElement.querySelector('.card-text').textContent = 'No registered users yet';
+  } else {
+    cardElement.classList.replace('text-bg-secondary', 'text-bg-info');
+    cardElement.querySelector('.card-text').textContent = 'Registered users in the system';
+  }
+
+}
+
 
 function showGraphs() {
   const charts = document.querySelectorAll(".chart");

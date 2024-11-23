@@ -1,6 +1,7 @@
 package com.yazeedmo.finbro.service;
 
 import com.yazeedmo.finbro.domain.Account;
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.exception.account.*;
@@ -26,6 +27,7 @@ public class AccountService {
 
     private final UserService userService;
     private final CategoryService categoryService;
+    private final WebSocketService webSocketService;
 
     public final static int MAX_NOTES_LENGTH = 500;
 
@@ -33,11 +35,13 @@ public class AccountService {
     public AccountService(
             AccountRepository accountRepository,
             UserService userService,
-            CategoryService categoryService
+            CategoryService categoryService,
+            WebSocketService webSocketService
     ) {
         this.accountRepository = accountRepository;
         this.userService = userService;
         this.categoryService = categoryService;
+        this.webSocketService = webSocketService;
     }
 
 
@@ -45,7 +49,7 @@ public class AccountService {
     public Account createAccount(Account account) {
 
         validateAccount(account, true);
-
+        sendAccountsAdminUpdate();
         return accountRepository.save(account);
 
     }
@@ -81,7 +85,7 @@ public class AccountService {
     public Account updateAccount(Account account) {
 
         validateAccount(account, false);
-
+        sendAccountsAdminUpdate();
         return accountRepository.save(account);
 
     }
@@ -91,7 +95,7 @@ public class AccountService {
         if (!accountRepository.existsById(id)) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(id));
         }
-
+        sendAccountsAdminUpdate();
         accountRepository.deleteById(id);
     }
 
@@ -216,6 +220,11 @@ public class AccountService {
             throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(account.getCategoryId()));
         }
 
+    }
+
+    private void sendAccountsAdminUpdate() {
+        AdminEvent adminEvent = new AdminEvent(AdminEvent.EventType.ACCOUNTS_UPDATED);
+        webSocketService.sendAdminUpdate(adminEvent);
     }
 
 }

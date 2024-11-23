@@ -1,5 +1,6 @@
 import 'package:finbro/api/api_result.dart';
 import 'package:finbro/service/user_service.dart';
+import 'package:finbro/service/websocket_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class LoginPageController {
@@ -9,6 +10,8 @@ class LoginPageController {
   final TextEditingController passwordController = TextEditingController();
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
+
+  final WebSocketService webSocketService = WebSocketService();
 
   Future<ApiResult> handleLogin() async {
     String email = emailController.text.trim();

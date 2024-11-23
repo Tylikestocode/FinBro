@@ -1,7 +1,7 @@
 package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.RegularPayment;
-import com.yazeedmo.finbro.exception.ApiResponse;
+import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.service.RegularPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/mobile/regularPayments")
+@RequestMapping("/api/mobile/regular-payments")
 @CrossOrigin(origins = "http://localhost")
 public class MobileRegularPaymentController {
 

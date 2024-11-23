@@ -1,4 +1,6 @@
-package com.yazeedmo.finbro.exception;
+package com.yazeedmo.finbro.domain;
+
+import com.yazeedmo.finbro.exception.ErrorResponse;
 
 public class ApiResponse<T> {
 
