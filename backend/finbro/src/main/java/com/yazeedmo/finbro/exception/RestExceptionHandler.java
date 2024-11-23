@@ -1,5 +1,6 @@
 package com.yazeedmo.finbro.exception;
 
+import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.exception.account.*;
 import com.yazeedmo.finbro.exception.general.*;
 import com.yazeedmo.finbro.exception.user.*;

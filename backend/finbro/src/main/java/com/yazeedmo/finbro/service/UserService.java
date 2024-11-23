@@ -1,5 +1,6 @@
 package com.yazeedmo.finbro.service;
 
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.domain.UserDTO;
@@ -34,6 +35,8 @@ public class UserService {
     private final RegularPaymentService regularPaymentService;
     @Lazy
     private final GmailService gmailService;
+    @Lazy
+    private final WebSocketService webSocketService;
 
     @Autowired
     public UserService(
@@ -42,7 +45,8 @@ public class UserService {
             @Lazy TransactionService transactionService,
             @Lazy CategoryService categoryService,
             @Lazy RegularPaymentService regularPaymentService,
-            @Lazy GmailService gmailService
+            @Lazy GmailService gmailService,
+            @Lazy WebSocketService webSocketService
     ) {
         this.userRepository = userRepository;
         this.accountService = accountService;
@@ -50,6 +54,7 @@ public class UserService {
         this.categoryService = categoryService;
         this.regularPaymentService = regularPaymentService;
         this.gmailService = gmailService;
+        this.webSocketService = webSocketService;
     }
 
 
@@ -67,12 +72,18 @@ public class UserService {
            e.printStackTrace();
        }
 
+       sendUsersAdminUpdate();
        return newUser;
 
     }
 
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
+    }
+
+    public long getCountTotalUsers() {
+        System.out.println("total current users: " + userRepository.countTotalUsers());
+        return userRepository.countTotalUsers();
     }
 
     public User getUserById(Long userId) {
@@ -150,6 +161,8 @@ public class UserService {
 
         validateUser(user, false);
 
+        sendUsersAdminUpdate();
+
         return userRepository.save(user);
 
     }
@@ -159,6 +172,8 @@ public class UserService {
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(id));
         }
+
+        sendUsersAdminUpdate();
 
         userRepository.deleteById(id);
 
@@ -247,6 +262,10 @@ public class UserService {
 
     }
 
+    private void sendUsersAdminUpdate() {
+        AdminEvent adminEvent = new AdminEvent(AdminEvent.EventType.USERS_UPDATED);
+        webSocketService.sendAdminUpdate(adminEvent);
+    }
 
     private String hashPassword(String password) {
         // Hashing will be done here

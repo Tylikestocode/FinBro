@@ -51,6 +51,7 @@ class _SignUpPage extends State<RegisterScreen> {
       _snackBarMessage.showSnackBarMessage(context, result.errorMessage!);
     }
     else {
+      _registerPageController.webSocketService.connectToWebSocket();
       Navigator.pushReplacement(
           context,
       MaterialPageRoute(builder: (context) => const HomeScreen()));

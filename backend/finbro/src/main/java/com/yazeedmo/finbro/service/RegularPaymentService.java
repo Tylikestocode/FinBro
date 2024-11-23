@@ -1,5 +1,6 @@
 package com.yazeedmo.finbro.service;
 
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.Category;
 import com.yazeedmo.finbro.domain.RegularPayment;
 import com.yazeedmo.finbro.domain.Transaction;
@@ -26,6 +27,7 @@ public class RegularPaymentService {
     private final UserService userService;
     private final AccountService accountService;
     private final CategoryService categoryService;
+    private final WebSocketService webSocketService;
 
 
     public final static int MAX_NOTES_LENGTH = 500;
@@ -36,13 +38,15 @@ public class RegularPaymentService {
             TransactionService transactionService,
             UserService userService,
             AccountService accountService,
-            CategoryService categoryService
+            CategoryService categoryService,
+            WebSocketService webSocketService
     ) {
         this.transactionService = transactionService;
         this.regularPaymentRepository = regularPaymentRepository;
         this.userService = userService;
         this.accountService = accountService;
         this.categoryService = categoryService;
+        this.webSocketService = webSocketService;
     }
 
 
@@ -322,7 +326,7 @@ public class RegularPaymentService {
 
     }
 
-    public void validateFrequency(RegularPayment regularPayment) {
+    private void validateFrequency(RegularPayment regularPayment) {
 
         if (regularPayment.getFrequency() == null) {
             throw new MissingParameterException("frequency");
@@ -336,7 +340,7 @@ public class RegularPaymentService {
 
     }
 
-    public void validateName(RegularPayment regularPayment) {
+    private void validateName(RegularPayment regularPayment) {
 
         if (regularPayment.getName() == null || regularPayment.getName().isEmpty()) {
             throw new MissingParameterException("name");
@@ -352,6 +356,11 @@ public class RegularPaymentService {
             throw new ResourceAlreadyExistsException(RegularPayment.class, "name", regularPayment.getName());
         }
 
+    }
+
+    private void sendRegularPaymentsAdminUpdate() {
+        AdminEvent adminEvent = new AdminEvent(AdminEvent.EventType.REGULAR_PAYMENTS_UPDATED);
+        webSocketService.sendAdminUpdate(adminEvent);
     }
 
 

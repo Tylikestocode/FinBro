@@ -1,6 +1,7 @@
 package com.yazeedmo.finbro.service;
 
 import com.yazeedmo.finbro.domain.Account;
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.exception.account.NegativeBalanceException;
@@ -31,6 +32,7 @@ public class TransactionService {
     private final UserService userService;
     private final AccountService accountService;
     private final CategoryService categoryService;
+    private final WebSocketService webSocketService;
 
     public final static int MAX_NOTES_LENGTH = 500;
     public final static int MAX_DESC_LENGTH = 500;
@@ -40,12 +42,14 @@ public class TransactionService {
             TransactionRepository transactionRepository,
             UserService userService,
             AccountService accountService,
-            CategoryService categoryService
+            CategoryService categoryService,
+            WebSocketService webSocketService
     ) {
         this.transactionRepository = transactionRepository;
         this.userService = userService;
         this.accountService = accountService;
         this.categoryService = categoryService;
+        this.webSocketService = webSocketService;
 
     }
 
@@ -262,6 +266,11 @@ public class TransactionService {
             throw new ResourceNotFoundException(Transaction.class, "CategoryId", String.valueOf(transaction.getCategoryId()));
         }
 
+    }
+
+    private void sendTransactionAdminUpdate() {
+        AdminEvent adminEvent = new AdminEvent(AdminEvent.EventType.TRANSACTIONS_UPDATED);
+        webSocketService.sendAdminUpdate(adminEvent);
     }
 
     @Transactional

@@ -2,6 +2,7 @@ import 'package:finbro/api/api_result.dart';
 import 'package:finbro/domain/user.dart';
 import 'package:finbro/service/shared_prefs_service.dart';
 import 'package:finbro/service/user_service.dart';
+import 'package:finbro/service/websocket_service.dart';
 import 'package:finbro/ui/auth/login_screen.dart';
 import 'package:finbro/ui/components/snack_bar_message.dart';
 import 'package:finbro/ui/profile/edit_attribute_screen.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 class ProfileController {
   final sharedPrefsService = SharedPrefsService();
   final userService = UserService();
+  final websocketService = WebSocketService();
 
   final SnackBarMessage _snackBarMessage = SnackBarMessage();
 
@@ -38,6 +40,7 @@ class ProfileController {
 
   Future<void> logout(BuildContext buildContext) async {
     await sharedPrefsService.deleteCurrentUserId();
+    websocketService.disconnectFromWebSocket();
     if (buildContext.mounted) {
       Navigator.pushAndRemoveUntil(
           buildContext,

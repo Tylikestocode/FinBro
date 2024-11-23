@@ -43,6 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   void deleteAccount() async {
+    _profileController.websocketService.disconnectFromWebSocket();
     setState(() {
       _isDeleting = true; // Start loading
     });

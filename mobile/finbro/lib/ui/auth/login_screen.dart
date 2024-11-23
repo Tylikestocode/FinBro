@@ -51,6 +51,7 @@ class _LoginPage extends State<LoginScreen> {
     if (!result.success) {
       _snackBarMessage.showSnackBarMessage(context, result.errorMessage!);
     } else {
+      _loginPageController.webSocketService.connectToWebSocket();
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     }

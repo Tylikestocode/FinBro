@@ -1,5 +1,6 @@
 package com.yazeedmo.finbro.service;
 
+import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.Category;
 import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.exception.general.InvalidDataFormatException;
@@ -21,12 +22,15 @@ public class CategoryService {
 
     private final UserService userService;
 
+    private final WebSocketService webSocketService;
+
     public final static int MAX_DESC_LENGTH = 500;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository, UserService userService) {
+    public CategoryService(CategoryRepository categoryRepository, UserService userService, WebSocketService webSocketService) {
         this.categoryRepository = categoryRepository;
         this.userService = userService;
+        this.webSocketService = webSocketService;
     }
 
 
@@ -35,6 +39,7 @@ public class CategoryService {
 
         validateCategory(category, true);
 
+        sendCategoriesAdminUpdate();
         return categoryRepository.save(category);
 
     }
@@ -84,6 +89,8 @@ public class CategoryService {
 
         validateCategory(category, false);
 
+        sendCategoriesAdminUpdate();
+
         return categoryRepository.save(category);
 
     }
@@ -93,6 +100,8 @@ public class CategoryService {
         if (!categoryRepository.existsById(id)) {
             throw new ResourceNotFoundException(Category.class, "id", String.valueOf(id));
         }
+
+        sendCategoriesAdminUpdate();
 
         categoryRepository.deleteById(id);
 
@@ -196,6 +205,9 @@ public class CategoryService {
 
     }
 
-    // id, name, description, type, is_user_defined, user_id
+    private void sendCategoriesAdminUpdate() {
+        AdminEvent adminEvent = new AdminEvent(AdminEvent.EventType.CATEGORIES_UPDATED);
+        webSocketService.sendAdminUpdate(adminEvent);
+    }
 
 }

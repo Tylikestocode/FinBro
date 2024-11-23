@@ -1,6 +1,6 @@
 package com.yazeedmo.finbro.util;
 
-import com.yazeedmo.finbro.exception.ApiResponse;
+import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.exception.ErrorResponse;
 import com.yazeedmo.finbro.exception.RestExceptionHandler;
 import org.springframework.http.HttpStatus;

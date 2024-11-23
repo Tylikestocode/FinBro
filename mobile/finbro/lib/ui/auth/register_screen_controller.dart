@@ -1,6 +1,7 @@
 import 'package:finbro/api/api_result.dart';
 import 'package:finbro/domain/user.dart';
 import 'package:finbro/service/user_service.dart';
+import 'package:finbro/service/websocket_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class RegisterPageController {
@@ -13,6 +14,8 @@ class RegisterPageController {
   final FocusNode emailFocusNode = FocusNode();
   final FocusNode passwordFocusNode = FocusNode();
   final FocusNode confirmPasswordFocusNode = FocusNode();
+
+  final WebSocketService webSocketService = WebSocketService();
 
   Future<ApiResult> handleRegistration() async {
     String email = emailController.text.trim();
