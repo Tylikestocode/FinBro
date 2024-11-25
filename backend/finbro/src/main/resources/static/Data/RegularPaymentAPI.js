@@ -1,6 +1,8 @@
+import CONFIG from "../util/config.js";
+
 class RegularPaymentAPI {
     constructor() {
-        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/regular-payments";
+        this.BASE_URL = `${CONFIG.BASE_URL}/admin/regular-payments`;
     }
 
     async getRegularPayments() {

@@ -1,6 +1,8 @@
+import CONFIG from "../util/config.js";
+
 class AccountAPI {
     constructor() {
-        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/accounts";
+        this.BASE_URL = `${CONFIG.BASE_URL}/admin/accounts`;
     }
 
     async getAccounts() {

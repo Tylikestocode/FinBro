@@ -1,6 +1,8 @@
+import CONFIG from "../util/config.js";
+
 class CategoryAPI {
     constructor() {
-        this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/categories";
+        this.BASE_URL = `${CONFIG.BASE_URL}/admin/categories`;
     }
 
     async getCategories() {

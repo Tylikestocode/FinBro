@@ -1,12 +1,15 @@
+import WebSocketAPI from "./Data/WebSocketAPI.js";
 import UserService from "./Service/UserService.js";
 import AccountService from "./Service/AccountService.js";
 import CategoryService from "./Service/CategoryService.js";
 import RegularPaymentService from "./Service/RegularPaymentService.js";
+import Tables from "./ui/Tables.js";
 
 const userService = new UserService();
 const accountService = new AccountService();
 const categoryService = new CategoryService();
 const regularPaymentService = new RegularPaymentService();
+const tables = new Tables();
 
 let stompClient = null;
 
@@ -14,15 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   linkTabsAndMainSections();
 
-  fetchTotalOnlineUsers();
-  fetchTotalUserCount();
+  updateOnlineUserCount();
+  updateTotalUserCount();
 
-  intializeWebSocketConnection();
+  initializeWebSocketConnection();
 
-  fetchAndPopulateUsers();
-  fetchAndPopulateCategories();
-  fetchAndPopulateAccounts();
-  fetchAndPopulateRegularPayments();
+  tables.fetchAndPopulateUsers();
+  tables.fetchAndPopulateCategories();
+  tables.fetchAndPopulateAccounts();
+  tables.fetchAndPopulateRegularPayments();
 
   showGraphs();
 
@@ -33,9 +36,6 @@ function linkTabsAndMainSections() {
   // Select all tabs and content sections
   const tabs = document.querySelectorAll('.tab');
   const contentSections = document.querySelectorAll('.content-section');
-
-  console.log(tabs.length);
-  console.log(contentSections.length);
 
   // Function to hide all sections and remove active class from tabs
   function resetActiveStates() {
@@ -61,239 +61,16 @@ function linkTabsAndMainSections() {
 
 }
 
-async function fetchTotalOnlineUsers() {
-  try {
-    const response = await fetch('https://finbro.yazeedmo.com/api/admin/online-users/count');
-    if (!response.ok) {
-      throw new Error('Failed to fetch online user count');
-    }
-    const result = await response.json();
+async function updateOnlineUserCount() {
 
-    if (result.success && result.data.eventType === 'ONLINE_USER_COUNT') {
-      const count = result.data.data;
-      updateOnlineUserCount(count);
-    } else {
-      console.error('Unexpected response structure:', result);
-    }
-  } catch (error) {
-    console.error('Error fetching initial user count:', error);
-  }
-}
+  let count = await userService.getTotalOnlineUsers();
 
-async function fetchTotalUserCount() {
-
-  try {
-    const response = await fetch('https://finbro.yazeedmo.com/api/admin/total-users/count');
-    if (!response.ok) {
-      throw new Error('Failed to fetch total user count');
-    }
-    const result = await response.json();
-
-    if (result.success && result.data.eventType === 'TOTAL_USER_COUNT') {
-      const count = result.data.data;
-      console.log("Total Users: " + count);
-      updateTotalUserCount(count);
-    } else {
-      console.error('Unexpected response structure:', result);
-    }
-  } catch (error) {
-    console.error('Error fetching total user count:', error);
-  }
-
-}
-
-
-async function fetchAndPopulateUsers() {
-
-  try {
-    const allUsers = await userService.getUsers();
-    console.log(allUsers);
-
-    let tableBody = $('#user-table tbody');
-    tableBody.empty();
-
-    allUsers.forEach(user => {
-      let row = `<tr>
-        <td>${user.id}</td>
-        <td>${user.name}</td>
-        <td>${user.surname}</td>
-        <td>${user.age}</td>
-        <td>${user.username}</td>
-        <td>${user.email}</td>
-      </tr>`;
-
-      tableBody.append(row);
-    });
-
-    $('#user-table').DataTable();
-
-  }
-  catch (error) {
-    console.log(error);
-  }
-
-}
-
-async function fetchAndPopulateCategories() {
-
-  try {
-    const allCategories = await categoryService.getCategories();
-    console.log(allCategories);
-
-    let tableBody = $('#category-table tbody');
-    tableBody.empty();
-
-    allCategories.forEach(category => {
-      let row =
-        `
-      <tr>
-        <td>${category.id}</td>
-        <td>${category.name}</td>
-        <td>${category.type}</td>
-        <td>${category.description}</td>
-        <td>${category.userId}</td>
-        <td>${category.userDefined}</td>
-      </tr>
-      `;
-
-      tableBody.append(row);
-
-    })
-  }
-  catch (error) {
-    console.log(error);
-  }
-
-}
-
-async function fetchAndPopulateAccounts() {
-
-  try {
-    const allAccounts = await accountService.getAccounts();
-    console.log(allAccounts);
-
-    let tableBody = $('#account-table tbody');
-    tableBody.empty();
-
-    allAccounts.forEach(account => {
-      let row =
-        `<tr>
-        <td>${account.id}</td>
-        <td>${account.name}</td>
-        <td>${account.allowNegativeBalance}</td>
-        <td>${account.minimumBalance}</td>
-        <td>${account.balance}</td>
-        <td>${account.dateCreated}</td>
-        <td>${account.notes}</td>
-        <td>${account.userId}</td>
-        <td>${account.categoryId}</td>
-      </tr>`;
-
-      tableBody.append(row);
-
-    });
-    $('#account-table').DataTable();
-  }
-  catch (error) {
-    console.log(error);
-  }
-
-}
-
-async function fetchAndPopulateRegularPayments() {
-
-  try {
-    const allRegularPayments = await regularPaymentService.getRegularPayments();
-    console.log(allRegularPayments);
-    let tableBody = $('#regular-payment-table tbody');
-    tableBody.empty();
-
-    allRegularPayments.forEach(regularPayment => {
-      let row =
-        `
-      <tr>
-        <td>${regularPayment.id}</td>
-        <td>${regularPayment.name}</td>
-        <td>${regularPayment.amount}</td>
-        <td>${regularPayment.frequency}</td>
-        <td>${regularPayment.nextDate}</td>
-        <td>${regularPayment.endDate}</td>
-        <td>${regularPayment.notes}</td>
-        <td>${regularPayment.userId}</td>
-        <td>${regularPayment.accountId}</td>
-        <td>${regularPayment.categoryId}</td>
-      </tr>      
-      `;
-
-      tableBody.append(row);
-
-    });
-    $('#regular-payment-table').DataTable();
-  }
-  catch (error) {
-    console.log(error);
-  }
-
-}
-
-function intializeWebSocketConnection() {
-
-  // Create WebSocket connection
-  const socket = new SockJS('https://finbro.yazeedmo.com/ws');
-  // Wrap WebSocket connection with Stomp
-  stompClient = Stomp.over(socket);
-
-  // Establish connection
-  stompClient.connect({}, onConnected, onError);
-
-  // Callback for successful connection
-  function onConnected(frame) {
-    console.log('Connected: ' + frame);
-
-    stompClient.subscribe('/topic/adminUpdates', function (message) {
-      const event = JSON.parse(message.body);
-      const eventType = event.eventType;
-      switch (eventType) {
-        case 'ONLINE_USER_COUNT':
-          updateOnlineUserCount(event.data);
-          break;
-        case 'TOTAL_USER_COUNT':
-          updateTotalUserCount(event.data);
-          break;
-        case 'USERS_UPDATED':
-          fetchAndPopulateUsers();
-          fetchTotalUserCount();
-          break;
-        case 'CATEGORIES_UPDATED':
-          fetchAndPopulateCategories();
-          break;
-        case 'ACCOUNTS_UPDATED':
-          fetchAndPopulateAccounts();
-          break;
-        case 'REGULAR_PAYMENTS_UPDATED':
-          fetchAndPopulateRegularPayments();
-          break;
-        default:
-          console.log('Unknown event type: ', eventType);
-      }
-    });
-  }
-
-  // Callback for connection errors
-  function onError(error) {
-    console.error('Connection error: ' + error);
-  }
-
-}
-
-function updateOnlineUserCount(count) {
   // Update the online user count in the card
   const userCountElement = document.getElementById('online-user-count');
   userCountElement.textContent = count;
 
   const cardElement = document.getElementById('online-users-card');
   if (count === 0) {
-    console.log("No current users");
     cardElement.classList.replace('text-bg-success', 'text-bg-secondary');
     cardElement.querySelector('.card-text').textContent = 'No active users at the moment';
   } else {
@@ -302,7 +79,9 @@ function updateOnlineUserCount(count) {
   }
 }
 
-function updateTotalUserCount(count) {
+async function updateTotalUserCount() {
+
+  let count = await userService.getTotalUserCount();
 
   // Update the total user count in the card
   const userCountElement = document.getElementById('total-user-count');
@@ -315,10 +94,34 @@ function updateTotalUserCount(count) {
     cardElement.querySelector('.card-text').textContent = 'No registered users yet';
   } else {
     cardElement.classList.replace('text-bg-secondary', 'text-bg-info');
-    cardElement.querySelector('.card-text').textContent = 'Registered users in the system';
+    cardElement.querySelector('.card-text').textContent = 'Registered users';
   }
 
 }
+
+function initializeWebSocketConnection() {
+
+  stompClient = new WebSocketAPI();
+
+  // Register handlers for different event types
+  stompClient.registerEventHandler('ONLINE_USER_COUNT', updateOnlineUserCount);
+  stompClient.registerEventHandler('TOTAL_USER_COUNT', updateTotalUserCount);
+  stompClient.registerEventHandler('USERS_UPDATED', () => {
+    tables.fetchAndPopulateUsers();
+    updateOnlineUserCount();
+    updateTotalUserCount();
+  });
+
+  stompClient.registerEventHandler('CATEGORIES_UPDATED', tables.fetchAndPopulateCategories);
+  stompClient.registerEventHandler('ACCOUNTS_UPDATED', tables.fetchAndPopulateAccounts);
+  stompClient.registerEventHandler('REGULAR_PAYMENTS_UPDATED', tables.fetchAndPopulateRegularPayments);
+
+  // Initialize the WebSocket connection
+  stompClient.initialize();
+
+}
+
+
 
 
 function showGraphs() {

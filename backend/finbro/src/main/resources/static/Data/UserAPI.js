@@ -1,6 +1,8 @@
+import CONFIG from "../util/config.js";
+
 class UserAPI {
   constructor() {
-    this.BASE_URL = "https://finbro.yazeedmo.com/api/admin/users";
+    this.BASE_URL = `${CONFIG.BASE_URL}/admin/users`;
   }
 
   async getUsers() {
@@ -22,6 +24,38 @@ class UserAPI {
       throw error;
     }
   }
+
+
+
+  async getTotalOnlineUsers() {
+    try {
+      const response = await fetch(`${CONFIG.BASE_URL}/admin/online-users/count`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch online user count');
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error fetching initial user count:', error);
+    }
+  }
+
+  async getTotalUserCount() {
+
+    try {
+      const response = await fetch(`${CONFIG.BASE_URL}/admin/total-users/count`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch total user count');
+      }
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error('Error fetching total user count:', error);
+    }
+
+  }
 }
+
+
 
 export default UserAPI;
