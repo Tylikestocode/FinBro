@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:finbro/api/api_constants.dart';
 import 'package:finbro/domain/user.dart';
 import 'package:http/http.dart' as http;
 
 class UserAPI {
-  final String apiUrl = 'https://finbro.yazeedmo.com/api/mobile/users';
+  final String apiUrl = '${ApiConstants.BASE_URL}/api/mobile/users';
 
   // Create User
   Future<Map<String, dynamic>> createUser(User user) async {

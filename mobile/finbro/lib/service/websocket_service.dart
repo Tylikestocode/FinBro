@@ -1,3 +1,4 @@
+import 'package:finbro/api/api_constants.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 
 class WebSocketService {
@@ -19,7 +20,7 @@ class WebSocketService {
 
     _stompClient = StompClient(
       config: StompConfig.sockJS(
-        url: 'https://finbro.yazeedmo.com/ws',
+        url: '${ApiConstants.BASE_URL}/ws',
         onConnect: _onConnect,
         stompConnectHeaders: {
           'client-type': 'mobile',
