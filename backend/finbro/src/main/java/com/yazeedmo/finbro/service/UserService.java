@@ -73,6 +73,7 @@ public class UserService {
        }
 
        sendUsersAdminUpdate();
+       
        return newUser;
 
     }
@@ -82,7 +83,6 @@ public class UserService {
     }
 
     public long getCountTotalUsers() {
-        System.out.println("total current users: " + userRepository.countTotalUsers());
         return userRepository.countTotalUsers();
     }
 
@@ -161,9 +161,11 @@ public class UserService {
 
         validateUser(user, false);
 
+        User updatedUser = userRepository.save(user);
+
         sendUsersAdminUpdate();
 
-        return userRepository.save(user);
+        return updatedUser;
 
     }
 
@@ -173,9 +175,9 @@ public class UserService {
             throw new ResourceNotFoundException(User.class, "id", String.valueOf(id));
         }
 
-        sendUsersAdminUpdate();
-
         userRepository.deleteById(id);
+
+        sendUsersAdminUpdate();
 
     }
 

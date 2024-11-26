@@ -18,4 +18,7 @@ public interface RegularPaymentRepository extends CrudRepository<RegularPayment,
     @Query("SELECT * FROM REGULAR_PAYMENTS WHERE user_id = :user_id")
     List<RegularPayment> findAllByUserId(@Param("user_id") Long userId);
 
+    @Query("SELECT COUNT(*) FROM REGULAR_PAYMENTS")
+    long countTotalRegularPayments();
+
 }

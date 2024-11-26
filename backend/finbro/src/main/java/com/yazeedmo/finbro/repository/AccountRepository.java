@@ -14,4 +14,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     @Query("SELECT * FROM ACCOUNTS WHERE user_id = :user_id")
     List<Account> findAllByUserId(@Param("user_id") Long userId);
 
+    @Query("SELECT COUNT(*) FROM ACCOUNTS")
+    long countTotalAccounts();
+
 }

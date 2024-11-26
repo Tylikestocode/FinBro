@@ -58,6 +58,10 @@ public class AccountService {
         return (List<Account>) accountRepository.findAll();
     }
 
+    public long getCountTotalAccounts() {
+        return accountRepository.countTotalAccounts();
+    }
+
     public Account getAccountById(Long accountId) {
 
         if (!accountRepository.existsById(accountId)) {
