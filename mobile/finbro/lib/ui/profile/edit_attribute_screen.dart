@@ -70,7 +70,7 @@ class _EditAttributeScreenState extends State<EditAttributeScreen> {
     if (result.success == true) {
       User currentUser = result.user!;
       switch (widget.title) {
-        case 'First name':
+        case "First Name":
           currentUser.name = _controller.text.trim();
           break;
         case 'Last Name':

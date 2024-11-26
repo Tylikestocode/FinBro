@@ -50,6 +50,10 @@ public class CategoryService {
 
     }
 
+    public long getCountTotalCategories() {
+        return categoryRepository.countTotalCategories();
+    }
+
     public Category getCategoryById(Long categoryId) {
 
         if (!categoryRepository.existsById(categoryId)) {

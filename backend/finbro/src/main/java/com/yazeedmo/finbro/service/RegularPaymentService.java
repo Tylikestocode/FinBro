@@ -119,6 +119,10 @@ public class RegularPaymentService {
 
     }
 
+    public long getCountTotalRegularPayments() {
+        return regularPaymentRepository.countTotalRegularPayments();
+    }
+
     public RegularPayment getRegularPaymentById(Long regularPaymentId) {
 
         if (!regularPaymentRepository.existsById(regularPaymentId)) {

@@ -17,4 +17,7 @@ public interface TransactionRepository extends CrudRepository<Transaction, Long>
     @Query("SELECT * FROM TRANSACTIONS WHERE account_id = :account_id")
     List<Transaction> findAllByAccountId(@Param("account_id") Long accountId);
 
+    @Query("SELECT COUNT(*) FROM TRANSACTIONS")
+    long countTotalTransactions();
+
 }

@@ -23,4 +23,7 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
     @Query("SELECT COUNT(*) FROM CATEGORIES WHERE name = :name")
     boolean existsByName (@Param("name") String name);
 
+    @Query("SELECT COUNT(*) FROM CATEGORIES")
+    long countTotalCategories();
+
 }

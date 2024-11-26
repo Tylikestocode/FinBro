@@ -78,6 +78,10 @@ public class TransactionService {
         return allTransactions;
     }
 
+    public long getCountTotalTransactions() {
+        return transactionRepository.countTotalTransactions();
+    }
+
     public Transaction getTransactionById(Long transactionId) {
 
         if (!transactionRepository.existsById(transactionId)) {

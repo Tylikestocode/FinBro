@@ -70,11 +70,12 @@ class UserService {
 
   // Method to update user information
   Future<ApiResult> updateUser(User user) async {
+
     var response = await _userAPI.updateUser(user);
 
     if (response['success'] == true) {
       var user = User.fromJson(response['data']);
-      Session.getInstance().currentUser = user;
+      _sharedPrefsService.saveCurrentUserId(user.id!);
       return ApiResult.success(user);
     } else if (response['success'] == false) {
       return ApiResult.failure(response['error']['details']);

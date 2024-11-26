@@ -18,6 +18,8 @@ dependencies:
   shared_preferences: ^2.3.3
   stomp_dart_client: ^2.1.0
   web_socket_channel: ^3.0.1
+  path_provider: ^2.1.5
+  permission_handler: ^11.3.1
 
 
 
