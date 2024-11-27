@@ -2,6 +2,7 @@ package com.yazeedmo.finbro.controller.admin;
 
 import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.ApiResponse;
+import com.yazeedmo.finbro.service.ApkService;
 import com.yazeedmo.finbro.service.PdfService;
 import com.yazeedmo.finbro.service.UserService;
 import com.yazeedmo.finbro.service.WebSocketService;
@@ -32,6 +33,9 @@ public class AdminController {
 
     @Autowired
     private PdfService pdfService;
+
+    @Autowired
+    private ApkService apkService;
 
     @GetMapping("/online-users/count")
     public ResponseEntity<ApiResponse<AdminEvent>> getTotalUsersOnline() {
@@ -72,6 +76,34 @@ public class AdminController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body(pdfBytes);
+    }
+
+    @GetMapping("/download-apk")
+    public ResponseEntity<Resource> downloadApk() {
+        File apkFile = apkService.getLatestApk();
+
+        if (!apkFile.exists()) {
+            System.out.println("APK does not exist");
+            return ResponseEntity.notFound().build();
+        }
+
+        System.out.println("Trying to download APK");
+
+        Resource resource = new FileSystemResource(apkFile);
+
+        // Ensure Content-Length header is set
+        long fileLength = apkFile.length();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/vnd.android.package-archive");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + apkFile.getName());
+        headers.add(HttpHeaders.CONTENT_LENGTH, String.valueOf(fileLength));
+
+        System.out.println(fileLength);
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
     }
 
 

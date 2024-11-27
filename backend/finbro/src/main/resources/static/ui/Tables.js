@@ -14,8 +14,6 @@ class Tables {
 
     async fetchAndPopulateUsers() {
 
-        console.log("HEERRREEE");
-
         try {
             const allUsers = await this.userService.getUsers();
             console.log(allUsers);

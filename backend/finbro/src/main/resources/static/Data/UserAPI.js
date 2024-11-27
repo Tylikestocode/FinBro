@@ -25,8 +25,6 @@ class UserAPI {
     }
   }
 
-
-
   async getTotalOnlineUsers() {
     try {
       const response = await fetch(`${CONFIG.BASE_URL}/admin/online-users/count`);
