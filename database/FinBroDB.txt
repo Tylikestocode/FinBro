@@ -84,11 +84,20 @@ VALUES ('Alice', 'Johnson', 28, 'alice.j', 'alice.j@example.com', 'hashed_passwo
        ('Grace', 'Black', 22, 'grace.b', 'grace.b@example.com', 'hashed_password5');
 
 INSERT INTO CATEGORIES (name, type, description, is_user_defined, user_id)
-VALUES ('Savings Account', 'ACCOUNT', 'User savings account category', 0, NULL),
+VALUES ('Savings', 'TRANSACTION', 'Category for savings', 0, NULL),
 	   ('Groceries', 'TRANSACTION', 'Category for grocery expenses', 0, NULL),
-       ('Investments', 'ACCOUNT', 'Category for investment accounts', 0, NULL),
-       ('Entertainment', 'TRANSACTION', 'Category for entertainment expenses', 0, NULL),
-       ('Alice Custom Category', 'TRANSACTION', 'Custom category created by Alice', 1, 1),
+       ('Investments', 'TRANSACTION', 'Category for investment accounts', 0, NULL),
+       ('Leisure', 'TRANSACTION', 'Category for entertainment expenses', 0, NULL),
+	   ('Health', 'TRANSACTION', 'Category for healthcare-related expenses', 0, NULL),
+       ('Home', 'TRANSACTION', 'Category for home-related expenses', 0, NULL),
+       ('Cafe', 'TRANSACTION', 'Category for coffee shop or cafe expenses', 0, NULL),
+       ('Education', 'TRANSACTION', 'Category for educational expenses', 0, NULL),
+       ('Gifts', 'TRANSACTION', 'Category for gifts and presents', 0, NULL),
+       ('Family', 'TRANSACTION', 'Category for family-related expenses', 0, NULL),
+       ('Workout', 'TRANSACTION', 'Category for gym and fitness expenses', 0, NULL),
+       ('Transportation', 'TRANSACTION', 'Category for commuting and transportation expenses', 0, NULL),
+       ('Other', 'TRANSACTION', 'Category for miscellaneous expenses', 0, NULL),
+	   ('Alice Custom Category', 'TRANSACTION', 'Custom category created by Alice', 1, 1),
        ('Bob Customer Category', 'BUDGET', 'Custom category created by Bob', 1, 2);
 
 INSERT INTO ACCOUNTS (name, allow_negative_balance, minimum_balance, balance, date_created, notes, user_id, category_id)

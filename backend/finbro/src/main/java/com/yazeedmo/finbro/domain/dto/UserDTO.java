@@ -1,4 +1,6 @@
-package com.yazeedmo.finbro.domain;
+package com.yazeedmo.finbro.domain.dto;
+
+import com.yazeedmo.finbro.domain.*;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import com.yazeedmo.finbro.domain.User;
 import com.yazeedmo.finbro.exception.account.*;
 import com.yazeedmo.finbro.exception.general.InvalidDataFormatException;
 import com.yazeedmo.finbro.exception.general.MissingParameterException;
+import com.yazeedmo.finbro.exception.general.ResourceAlreadyExistsException;
 import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.repository.AccountRepository;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("BooleanMethodIsAlwaysInverted")
 @Service
@@ -49,8 +51,11 @@ public class AccountService {
     public Account createAccount(Account account) {
 
         validateAccount(account, true);
+
+        Account newAccount = accountRepository.save(account);
         sendAccountsAdminUpdate();
-        return accountRepository.save(account);
+
+        return newAccount;
 
     }
 
@@ -86,11 +91,40 @@ public class AccountService {
 
     }
 
+    public Account getByUserIdAndName(long userId, String name) {
+
+        if (!userService.existsById(userId)) {
+            throw new ResourceNotFoundException(Account.class, "userId", String.valueOf(userId));
+        }
+
+        Optional<Account> account = accountRepository.findByUserIdAndName(userId, name);
+
+        if (account.isEmpty()) {
+            throw new ResourceNotFoundException(Account.class, "AccountName", String.valueOf(name));
+        }
+
+        return account.get();
+
+    }
+
+    public int getCountByUserIdAndName(long userId, String name) {
+
+        if (!userService.existsById(userId)) {
+            throw new ResourceNotFoundException(Account.class, "UserId", String.valueOf(userId));
+        }
+
+        return accountRepository.countByUserIdAndName(userId, name);
+
+    }
+
     public Account updateAccount(Account account) {
 
         validateAccount(account, false);
+
+        Account updatedAccount = accountRepository.save(account);
         sendAccountsAdminUpdate();
-        return accountRepository.save(account);
+
+        return updatedAccount;
 
     }
 
@@ -99,8 +133,10 @@ public class AccountService {
         if (!accountRepository.existsById(id)) {
             throw new ResourceNotFoundException(Account.class, "id", String.valueOf(id));
         }
-        sendAccountsAdminUpdate();
+
         accountRepository.deleteById(id);
+
+        sendAccountsAdminUpdate();
     }
 
 
@@ -117,6 +153,8 @@ public class AccountService {
                 account.setId(null);
             }
 
+            validateAccountName(account);
+
         }
         else {
 
@@ -130,10 +168,19 @@ public class AccountService {
                 throw new ResourceNotFoundException(Account.class, "id", String.valueOf(account.getId()));
             }
 
+            // If account name is changing, first check if account name already exists
+            Account originalAccount = getAccountById(account.getId());
+            if (!originalAccount.getName().equals(account.getName())) {
+                int numAccountsWithNewName = getCountByUserIdAndName(account.getUserId(), account.getName());
+                if (numAccountsWithNewName > 0) {
+                    throw new ResourceAlreadyExistsException(Account.class, "Account Name", account.getName());
+                }
+            }
+
+
         }
 
         // Validation regardless if account is new or not
-        validateAccountName(account);
         validateUserId(account);
         validateBalance(account);
         validateDate(account);
@@ -157,7 +204,11 @@ public class AccountService {
             throw new MissingParameterException("name");
         }
 
-        // Other possible checks in the future
+        int numAccountsWithName = getCountByUserIdAndName(account.getUserId(), account.getName());
+
+        if (numAccountsWithName > 0) {
+            throw new ResourceAlreadyExistsException(Account.class, "Account Name", account.getName());
+        }
 
     }
 
@@ -177,21 +228,20 @@ public class AccountService {
 
     private void validateBalance(Account account) {
 
-        // Balance cannot be less than 0
-        if (account.getBalance() != null && account.getBalance().compareTo(BigDecimal.ZERO) < 0) {
-            throw new NegativeBalanceException(String.valueOf(account.getBalance()));
+        if (account.getMinimumBalance() != null) {
+            // Balance cannot be less than 0
+            if (account.getBalance() != null && account.getBalance().compareTo(BigDecimal.ZERO) < 0) {
+                throw new NegativeBalanceException(String.valueOf(account.getBalance()));
+            }
+            // Minimum balance cannot be less than 0
+            if (account.getMinimumBalance() != null && account.getMinimumBalance().compareTo(BigDecimal.ZERO) < 0) {
+                throw new NegativeBalanceException(String.valueOf(account.getMinimumBalance()));
+            }
+            // If minimum balance is set, balance cannot be less than minimum balance
+            if (account.getMinimumBalance() != null && account.getBalance().compareTo(account.getMinimumBalance()) < 0) {
+                throw new UnderMinimumBalanceException(String.valueOf(account.getBalance()));
+            }
         }
-
-        // Minimum balance cannot be less than 0
-        if (account.getMinimumBalance() != null && account.getMinimumBalance().compareTo(BigDecimal.ZERO) < 0) {
-            throw new NegativeBalanceException(String.valueOf(account.getMinimumBalance()));
-        }
-
-        // If minimum balance is set, balance cannot be less than minimum balance
-        if (account.getMinimumBalance() != null && account.getBalance().compareTo(account.getMinimumBalance()) < 0) {
-            throw new UnderMinimumBalanceException(String.valueOf(account.getBalance()));
-        }
-
     }
 
     private void validateDate(Account account) {

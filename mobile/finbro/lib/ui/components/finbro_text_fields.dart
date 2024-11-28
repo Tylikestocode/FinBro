@@ -45,7 +45,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(
         children: [
           Padding(
@@ -81,7 +81,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
                   border: InputBorder.none,
                   hintText: widget.text,
                   hintStyle: GoogleFonts.poppins(
-                    color: textFieldTextColor,
+                    color: customGrey,
                     fontWeight: FontWeight.bold,
                     fontSize: widget.screenWidth * 0.035,
                   ),

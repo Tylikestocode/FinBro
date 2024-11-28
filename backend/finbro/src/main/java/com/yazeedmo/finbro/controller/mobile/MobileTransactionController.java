@@ -2,6 +2,7 @@ package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.domain.ApiResponse;
+import com.yazeedmo.finbro.domain.dto.TopCategoryDTO;
 import com.yazeedmo.finbro.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mobile/transactions")
@@ -65,6 +67,17 @@ public class MobileTransactionController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, accountTransactions));
+
+    }
+
+    @GetMapping("/top-categories/{id}")
+    public ResponseEntity<ApiResponse<List<TopCategoryDTO>>> getTopCategories(@PathVariable
+                                                                                       Long id) {
+        List<TopCategoryDTO> stats = transactionService.getTopCategoriesForUser(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, stats));
 
     }
 

@@ -36,10 +36,19 @@ public class Category {
     }
 
     public static final List<String> predefinedNames = Arrays.asList(
-            "Savings Account",
+            "Savings",
             "Groceries",
             "Investments",
-            "Entertainment"
+            "Leisure",
+            "Health",
+            "Home",
+            "Cafe",
+            "Education",
+            "Gifts",
+            "Family",
+            "Workout",
+            "Transportation",
+            "Other"
     );
 
     @Id

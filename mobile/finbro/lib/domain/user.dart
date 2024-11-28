@@ -43,6 +43,13 @@ class User {
 
   @override
   String toString() {
-    return 'User{id: $id,\nname: $name,\nsurname: $surname,\nage: $age,\nusername: $username,\nemail: $email,\npassword: $password}\n';
+    return 'User'
+        '{id: $id,\n'
+        'name: $name,\n'
+        'surname: $surname,\n'
+        'age: $age,\n'
+        'username: $username,\n'
+        'email: $email,\n'
+        'password: $password}\n';
   }
 }

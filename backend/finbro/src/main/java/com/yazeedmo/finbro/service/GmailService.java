@@ -102,5 +102,6 @@ public class GmailService {
         sendEmail(service, "me", recipient, subject, bodyText);
 
     }
+
 }
 

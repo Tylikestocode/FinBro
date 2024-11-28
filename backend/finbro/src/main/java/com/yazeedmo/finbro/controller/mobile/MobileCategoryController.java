@@ -23,7 +23,6 @@ public class MobileCategoryController {
     }
 
 
-
     @PostMapping()
     public ResponseEntity<ApiResponse<Category>> createCategory(@RequestBody Category category) {
 
@@ -46,7 +45,7 @@ public class MobileCategoryController {
 
     }
 
-    @GetMapping("/userDefined")
+    @GetMapping("/user-defined")
     public ResponseEntity<ApiResponse<List<Category>>> getAllUserDefinedCategories() {
 
         List<Category> allUserDefinedCategories = categoryService.getAllUserDefinedCategories();
@@ -54,6 +53,17 @@ public class MobileCategoryController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, allUserDefinedCategories));
+
+    }
+
+    @GetMapping("/predefined")
+    public ResponseEntity<ApiResponse<List<Category>>> getAllPredefinedCategories() {
+
+        List<Category> allPredefinedCategories = categoryService.getAllPredefinedCategories();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, allPredefinedCategories));
 
     }
 

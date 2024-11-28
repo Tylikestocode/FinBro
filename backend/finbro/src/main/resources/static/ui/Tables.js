@@ -2,6 +2,7 @@ import UserService from "../Service/UserService.js";
 import AccountService from "../Service/AccountService.js";
 import CategoryService from "../Service/CategoryService.js";
 import RegularPaymentService from "../Service/RegularPaymentService.js";
+import TransactionService from "../Service/TransactionService.js";
 
 class Tables {
 
@@ -10,6 +11,7 @@ class Tables {
         this.accountService = new AccountService();
         this.categoryService = new CategoryService();
         this.regularPaymentService = new RegularPaymentService();
+        this.transactionService = new TransactionService();
     }
 
     async fetchAndPopulateUsers() {
@@ -66,7 +68,10 @@ class Tables {
 
                 tableBody.append(row);
 
-            })
+            });
+
+            $('#category-table').DataTable();
+
         }
         catch (error) {
             console.log(error);
@@ -137,6 +142,39 @@ class Tables {
 
             });
             $('#regular-payment-table').DataTable();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
+    async fetchAndPopulateTransactions() {
+
+        try {
+            const allTransactions = await this.transactionService.getTransactions();
+            console.log(allTransactions);
+            let tableBody = $('#transaction-table tbody');
+            tableBody.empty();
+
+            allTransactions.forEach(transaction => {
+                let row =
+                    `
+                <tr>
+                    <td>${transaction.id}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.description}</td>
+                    <td>${transaction.date}</td>
+                    <td>${transaction.notes}</td>
+                    <td>${transaction.userId}</td>
+                    <td>${transaction.accountId}</td>
+                    <td>${transaction.categoryId}</td>
+                </tr>
+                `;
+
+                tableBody.append(row);
+            });
+
+            $('#transaction-table').DataTable();
         }
         catch (error) {
             console.log(error);
