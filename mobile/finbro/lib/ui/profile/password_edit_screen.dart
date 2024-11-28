@@ -65,7 +65,7 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
       ApiResult result = await _userService.getUserById(currentUserId!);
 
       if (result.success) {
-        User currentUser = result.user!;
+        User currentUser = result.data!;
         if (currentUser.password != _currentPasswordController.text) {
           _currentPasswordErrorText = 'Current password incorrect';
         } else {

@@ -1,12 +1,13 @@
 import 'package:finbro/domain/user.dart';
 
-class ApiResult {
-
+class ApiResult<T> {
   final bool success;
-  final User? user;
+  final T? data;
   final String? errorMessage;
 
-  ApiResult.success(this.user) : success = true, errorMessage = null;
-  ApiResult.failure(this.errorMessage) : success = false, user = null;
+  // Constructor for successful result
+  ApiResult.success(this.data) : success = true, errorMessage = null;
 
+  // Constructor for failure result
+  ApiResult.failure(this.errorMessage) : success = false, data = null;
 }

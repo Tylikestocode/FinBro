@@ -1,3 +1,6 @@
+import 'package:decimal/decimal.dart';
+import 'package:finbro/api/account_api.dart';
+import 'package:finbro/domain/account.dart';
 import 'package:finbro/ui/auth/login_screen.dart';
 import 'package:finbro/ui/file_downloader.dart';
 import 'package:finbro/ui/screens/home_screen.dart';
@@ -12,6 +15,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoginScreen());

@@ -74,6 +74,12 @@ public class CategoryService {
 
     }
 
+    public List<Category> getAllPredefinedCategories() {
+
+        return categoryRepository.findAllByUserDefined(false);
+
+    }
+
     public List<Category> getAllByType(String type) {
 
         return categoryRepository.findAllByType(type.toUpperCase());

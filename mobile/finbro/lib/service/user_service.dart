@@ -1,11 +1,14 @@
 import 'package:finbro/api/api_result.dart';
+import 'package:finbro/domain/account.dart';
 import 'package:finbro/domain/user.dart';
 import 'package:finbro/api/user_api.dart';
+import 'package:finbro/service/account_service.dart';
 import 'package:finbro/service/shared_prefs_service.dart';
 import 'package:finbro/util/session.dart';
 
 class UserService {
   final UserAPI _userAPI = UserAPI();
+  final AccountService _accountService = AccountService();
   final SharedPrefsService _sharedPrefsService = SharedPrefsService();
 
   // Create User
@@ -14,7 +17,8 @@ class UserService {
 
     if (response['success'] == true) {
       var user = User.fromJson(response['data']);
-      _sharedPrefsService.saveCurrentUserId(user.id!);
+      await _sharedPrefsService.saveCurrentUserId(user.id!);
+      await _createMainAccount(user.id!);
       return ApiResult.success(user);
     } else if (response['success'] == false) {
       return ApiResult.failure(response['error']['details']);
@@ -96,4 +100,20 @@ class UserService {
       return "Unknown error occurred";
     }
   }
+
+  Future<void> _createMainAccount(int userId) async {
+
+    Account account = Account(
+        name: 'Main',
+        balance: 0,
+        userId: userId,
+        categoryId: 1
+    );
+
+    print("================================================ About to create Account");
+
+    ApiResult result = await _accountService.createAccount(account);
+
+  }
+
 }

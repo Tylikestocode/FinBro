@@ -68,7 +68,7 @@ class _EditAttributeScreenState extends State<EditAttributeScreen> {
     ApiResult result = await _userService.getUserById(currentUserId!);
 
     if (result.success == true) {
-      User currentUser = result.user!;
+      User currentUser = result.data!;
       switch (widget.title) {
         case "First Name":
           currentUser.name = _controller.text.trim();

@@ -1,3 +1,4 @@
+import 'package:finbro/ui/components/custom_drawer.dart';
 import 'package:finbro/ui/components/splash_screens.dart';
 import 'package:finbro/ui/components/ui_colors.dart';
 import 'package:finbro/ui/profile/profile_controller.dart';
@@ -61,7 +62,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         // Main content
         Scaffold(
-          backgroundColor: otherColour,
+          backgroundColor: tertiary,
+          drawer: CustomDrawer(),
           appBar: AppBar(
             title: const Text('Profile'),
             backgroundColor: primary,
@@ -251,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   value,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: otherColour, // Light blue for value text
+                    color: tertiary, // Light blue for value text
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -269,7 +271,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildDivider() {
     return Divider(
-      color: otherColour.withOpacity(0.4), // Light blue divider
+      color: tertiary.withOpacity(0.4), // Light blue divider
       height: 1,
       thickness: 1,
     );

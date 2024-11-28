@@ -4,6 +4,7 @@ import com.yazeedmo.finbro.domain.Account;
 import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.Transaction;
 import com.yazeedmo.finbro.domain.User;
+import com.yazeedmo.finbro.domain.dto.TopCategoryDTO;
 import com.yazeedmo.finbro.exception.account.NegativeBalanceException;
 import com.yazeedmo.finbro.exception.account.NotesTooLongException;
 import com.yazeedmo.finbro.exception.account.UnderMinimumBalanceException;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionService {
@@ -110,6 +112,10 @@ public class TransactionService {
 
         return transactionRepository.findAllByAccountId(accountId);
 
+    }
+
+    public List<TopCategoryDTO> getTopCategoriesForUser(Long userId) {
+        return transactionRepository.findTopCategoriesByUserId(userId);
     }
 
     public Transaction updateTransaction(Transaction transaction) {
@@ -204,9 +210,12 @@ public class TransactionService {
             throw new NegativeBalanceException(String.valueOf(finalAmount));
         }
 
-        if (finalAmount.compareTo(minimumBalance) < 0) {
-            throw new UnderMinimumBalanceException(String.valueOf(finalAmount));
+        if (minimumBalance != null) {
+            if (finalAmount.compareTo(minimumBalance) < 0) {
+                throw new UnderMinimumBalanceException(String.valueOf(finalAmount));
+            }
         }
+
 
         return true;
 
@@ -306,16 +315,20 @@ public class TransactionService {
         }
 
         // Exception if finalAmount is below minimumBalance
-        if (finalAmount.compareTo(minimumBalance) < 0) {
-            throw new UnderMinimumBalanceException(String.valueOf(finalAmount));
+        if (minimumBalance != null) {
+            if (finalAmount.compareTo(minimumBalance) < 0) {
+                throw new UnderMinimumBalanceException(String.valueOf(finalAmount));
+            }
         }
 
         // Everything is valid -> Save new Transaction and update relevant tables
         Transaction savedTransaction = transactionRepository.save(transaction);
         account.setBalance(finalAmount);
-        accountService.createAccount(account);
+        accountService.updateAccount(account);
 
         savedTransaction.setDate(DateTimeUtil.convertDBTimeToString(savedTransaction.getDate()));
+
+        sendTransactionAdminUpdate();
 
         return savedTransaction;
 

@@ -28,7 +28,7 @@ class _UsernameTextField extends State<UsernameTextField> {
         width: widget.screenWidth * 0.9,
         height: widget.screenHeight * 0.07,
         decoration: BoxDecoration(
-            color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+            color: customWhite, borderRadius: BorderRadius.circular(15)),
         child: Row(children: [
           // Icon
           Padding(
@@ -51,7 +51,7 @@ class _UsernameTextField extends State<UsernameTextField> {
                       border: InputBorder.none,
                       hintText: 'First Name (Optional)', // Modified hintText
                       hintStyle: GoogleFonts.poppins(
-                          color: textFieldTextColor
+                          color: customGrey
                               .withOpacity(0.6), // Optional hint text color
                           fontWeight: FontWeight.bold,
                           fontSize: widget.screenWidth * 0.035)))),
@@ -85,7 +85,7 @@ class _EmailTextField extends State<EmailTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(children: [
         // Icon
         Padding(
@@ -114,7 +114,7 @@ class _EmailTextField extends State<EmailTextField> {
                     border: InputBorder.none,
                     hintText: 'Email',
                     hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
+                        color: customGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: widget.screenWidth * 0.035))))
       ]),
@@ -150,7 +150,7 @@ class _PasswordTextField extends State<PasswordTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(children: [
         // Icon
         Padding(
@@ -186,7 +186,7 @@ class _PasswordTextField extends State<PasswordTextField> {
                     border: InputBorder.none,
                     hintText: 'Password',
                     hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
+                        color: customGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: widget.screenWidth * 0.035)))),
         GestureDetector(
@@ -243,7 +243,7 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(children: [
         // Icon
         Padding(
@@ -274,7 +274,7 @@ class _ConfirmPasswordTextField extends State<ConfirmPasswordTextField> {
                     border: InputBorder.none,
                     hintText: 'Confirm Password',
                     hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
+                        color: customGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: widget.screenWidth * 0.035)))),
         GestureDetector(
@@ -430,7 +430,7 @@ class _FirstNameTextField extends State<FirstNameTextField> {
         width: widget.screenWidth * 0.9,
         height: widget.screenHeight * 0.07,
         decoration: BoxDecoration(
-            color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+            color: customWhite, borderRadius: BorderRadius.circular(15)),
         child: Row(children: [
           // Icon
           Padding(
@@ -453,7 +453,7 @@ class _FirstNameTextField extends State<FirstNameTextField> {
                       border: InputBorder.none,
                       hintText: 'First Name (Optional)', // Modified hintText
                       hintStyle: GoogleFonts.poppins(
-                          color: textFieldTextColor
+                          color: customGrey
                               .withOpacity(0.6), // Optional hint text color
                           fontWeight: FontWeight.bold,
                           fontSize: widget.screenWidth * 0.035)))),
@@ -479,7 +479,7 @@ class _SurnameTextField extends State<SurnameTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(children: [
         // Icon
         Padding(
@@ -502,7 +502,7 @@ class _SurnameTextField extends State<SurnameTextField> {
                     border: InputBorder.none,
                     hintText: 'Last Name (Optional)',
                     hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
+                        color: customGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: widget.screenWidth * 0.035))))
       ]),
@@ -554,7 +554,7 @@ class _AgeTextField extends State<AgeTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-        color: textFieldBack,
+        color: customWhite,
         borderRadius: BorderRadius.circular(15),
       ),
       child: Row(
@@ -589,7 +589,7 @@ class _AgeTextField extends State<AgeTextField> {
                 border: InputBorder.none,
                 hintText: 'Age (Optional)',
                 hintStyle: GoogleFonts.poppins(
-                  color: textFieldTextColor.withOpacity(0.6),
+                  color: customGrey.withOpacity(0.6),
                   fontWeight: FontWeight.bold,
                   fontSize: widget.screenWidth * 0.035,
                 ),
@@ -621,7 +621,7 @@ class _GenderTextField extends State<GenderTextField> {
       width: widget.screenWidth * 0.9,
       height: widget.screenHeight * 0.07,
       decoration: BoxDecoration(
-          color: textFieldBack, borderRadius: BorderRadius.circular(15)),
+          color: customWhite, borderRadius: BorderRadius.circular(15)),
       child: Row(children: [
         // Icon
         Padding(
@@ -644,7 +644,7 @@ class _GenderTextField extends State<GenderTextField> {
                     border: InputBorder.none,
                     hintText: 'Gender',
                     hintStyle: GoogleFonts.poppins(
-                        color: textFieldTextColor,
+                        color: customGrey,
                         fontWeight: FontWeight.bold,
                         fontSize: widget.screenWidth * 0.035))))
       ]),

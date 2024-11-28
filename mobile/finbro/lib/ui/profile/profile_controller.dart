@@ -10,6 +10,7 @@ import 'package:finbro/ui/profile/password_edit_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileController {
+
   final sharedPrefsService = SharedPrefsService();
   final userService = UserService();
   final websocketService = WebSocketService();
@@ -26,8 +27,8 @@ class ProfileController {
     ApiResult result = await userService.getUserById(currentUserId!);
     User? user;
     if (result.success) {
-      user = result.user!;
-      if (user.name != null) {
+      user = result.data!;
+      if (user!.name != null) {
         firstName = user.name!;
       }
       if (user.surname != null) {

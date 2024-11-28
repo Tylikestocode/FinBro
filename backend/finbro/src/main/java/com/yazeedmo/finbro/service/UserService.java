@@ -3,13 +3,14 @@ package com.yazeedmo.finbro.service;
 import com.yazeedmo.finbro.domain.AdminEvent;
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
-import com.yazeedmo.finbro.domain.UserDTO;
+import com.yazeedmo.finbro.domain.dto.UserDTO;
 import com.yazeedmo.finbro.exception.general.InvalidDataFormatException;
 import com.yazeedmo.finbro.exception.general.MissingParameterException;
 import com.yazeedmo.finbro.exception.general.ResourceAlreadyExistsException;
 import com.yazeedmo.finbro.exception.general.ResourceNotFoundException;
 import com.yazeedmo.finbro.exception.user.IncorrectPasswordException;
 import com.yazeedmo.finbro.repository.UserRepository;
+import com.yazeedmo.finbro.util.AdminEventHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,8 @@ public class UserService {
     private final GmailService gmailService;
     @Lazy
     private final WebSocketService webSocketService;
+    @Lazy
+    private final AdminEventHelper adminEventHelper;
 
     @Autowired
     public UserService(
@@ -46,7 +49,8 @@ public class UserService {
             @Lazy CategoryService categoryService,
             @Lazy RegularPaymentService regularPaymentService,
             @Lazy GmailService gmailService,
-            @Lazy WebSocketService webSocketService
+            @Lazy WebSocketService webSocketService,
+            @Lazy AdminEventHelper adminEventHelper
     ) {
         this.userRepository = userRepository;
         this.accountService = accountService;
@@ -55,6 +59,7 @@ public class UserService {
         this.regularPaymentService = regularPaymentService;
         this.gmailService = gmailService;
         this.webSocketService = webSocketService;
+        this.adminEventHelper = adminEventHelper;
     }
 
 
@@ -177,7 +182,7 @@ public class UserService {
 
         userRepository.deleteById(id);
 
-        sendUsersAdminUpdate();
+        this.adminEventHelper.sendAllUpdates();
 
     }
 

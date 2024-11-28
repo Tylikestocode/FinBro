@@ -2,7 +2,7 @@ package com.yazeedmo.finbro.controller.mobile;
 
 import com.yazeedmo.finbro.domain.LoginRequest;
 import com.yazeedmo.finbro.domain.User;
-import com.yazeedmo.finbro.domain.UserDTO;
+import com.yazeedmo.finbro.domain.dto.UserDTO;
 import com.yazeedmo.finbro.domain.ApiResponse;
 import com.yazeedmo.finbro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

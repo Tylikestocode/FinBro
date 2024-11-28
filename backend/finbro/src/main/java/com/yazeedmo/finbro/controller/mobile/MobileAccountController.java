@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/mobile/accounts")
@@ -54,6 +55,33 @@ public class MobileAccountController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new ApiResponse<>(true, userAccounts));
+
+    }
+
+    @GetMapping("/userId-and-name")
+    public ResponseEntity<ApiResponse<Account>> getByUserIdAndName(
+            @RequestParam long userId,
+            @RequestParam String accountName) {
+
+        Account account = accountService.getByUserIdAndName(userId, accountName);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, account));
+    }
+
+
+    @GetMapping("/count-by-userId-and-name")
+    public ResponseEntity<ApiResponse<Integer>> getCountByUserIdAndName(@RequestBody Map<String, String> requestData) {
+
+        long userId = Long.parseLong(requestData.get("userId"));
+        String accountName = requestData.get("accountName");
+
+        int totalAccounts = accountService.getCountByUserIdAndName(userId, accountName);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ApiResponse<>(true, totalAccounts));
 
     }
 

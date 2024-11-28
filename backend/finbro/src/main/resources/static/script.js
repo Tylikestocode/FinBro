@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   tables.fetchAndPopulateCategories();
   tables.fetchAndPopulateAccounts();
   tables.fetchAndPopulateRegularPayments();
+  tables.fetchAndPopulateTransactions();
 
   showGraphs();
 
@@ -126,9 +127,10 @@ function initializeWebSocketConnection() {
     updateTotalUserCount();
   });
 
-  stompClient.registerEventHandler('CATEGORIES_UPDATED', tables.fetchAndPopulateCategories);
-  stompClient.registerEventHandler('ACCOUNTS_UPDATED', tables.fetchAndPopulateAccounts);
-  stompClient.registerEventHandler('REGULAR_PAYMENTS_UPDATED', tables.fetchAndPopulateRegularPayments);
+  stompClient.registerEventHandler('CATEGORIES_UPDATED', tables.fetchAndPopulateCategories.bind(tables));
+  stompClient.registerEventHandler('ACCOUNTS_UPDATED', tables.fetchAndPopulateAccounts.bind(tables));
+  stompClient.registerEventHandler('REGULAR_PAYMENTS_UPDATED', tables.fetchAndPopulateRegularPayments.apply(tables));
+  stompClient.registerEventHandler('TRANSACTIONS_UPDATED', tables.fetchAndPopulateTransactions.bind(tables));
 
   // Initialize the WebSocket connection
   stompClient.initialize();
